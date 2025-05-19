@@ -56,7 +56,7 @@ In questo paragrafo verranno riportati in forma di elenco tutti i **requisiti no
 ## Requisiti di sistema
 
 - Quali saranno i **sistemi operativi supportati**. (oppure **cross-OS**)
-    - La cui scelta influenzerà le decisioni prese in merito all’[Architettura globale](https://www.notion.so/README-md-1e600d0f69db80d4a0ffc5631d41840d?pvs=21).
+    - La cui scelta influenzerà le decisioni prese in merito all’[Architettura globale](#Architettura-globale).
 - Quali saranno i **requisiti minimi - sufficienti - ottimali** per il funzionamento.
 
 ## Diagramma di alto livello
