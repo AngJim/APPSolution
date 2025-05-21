@@ -158,6 +158,10 @@ Elenco dei vari strumenti collaborativi utilizzati all’interno del team e del 
 > [!NOTE]
 > Verranno forniti tutti i mezzi necessari ai collaboratori (es. tutorial, documentazione, supporter dedicato, ecc…) per allinearsi con il team e procedere con regolarità e semplicità.
 
+> [!IMPORTANT]
+> [Tutorial SpringBoot](https://www.youtube.com/watch?v=gJrjgg1KVL4)
+> Questo tutorial per SpringBoot è importante perchè spiega ampiamente tutti i settings e le configurazioni necessarie per riuscire a lavorare con questo framwork.
+
 ---
 
 # Per gli utenti finali
