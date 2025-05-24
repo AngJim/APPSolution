@@ -164,8 +164,9 @@ Elenco dei vari strumenti collaborativi utilizzati all’interno del team e del 
 > Importante da leggere tutta la documentazione e vedere i vari settings e configurazioni per riuscire a completare il progetto.
 
 - [Documentazione Spring Boot](https://docs.spring.io/spring-boot/documentation.html).
-- Video tutorial per [Spring Boot](https://www.youtube.com/watch?v=gJrjgg1KVL4).
-- [Tutorial Spring Boot](https://www.tutorialspoint.com/spring_boot/index.htm). 
+- [Video tutorial per Spring Boot](https://www.youtube.com/watch?v=gJrjgg1KVL4).
+- [Tutorial Spring Boot](https://www.tutorialspoint.com/spring_boot/index.htm).
+- [Tutorial completo per Java](https://www.youtube.com/watch?v=xTtL8E4LzTQ)
 
 ---
 
