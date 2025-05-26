@@ -34,7 +34,10 @@ Verranno specificati tutti i motivi per cui scegliere la nostra soluzione è con
 
 ## Overview
 
-In questa sezione verrà descritto il funzionamento generale e sarà suddiviso in sottoparagrafi. 
+Il cliente ci ha richiesto un gestionale per il suo rifugio di animali che permetta di:
+
+- **Gestire l'anagrafica:** questa richiesta comprenderà la creazione di una **tabella animali** con i dati anagrafici dell'animale ancora da definire; da cui attingeremo i dati da mostrare per **l'interfaccia utente**. Mentre l'amministratore avrà la possibilità di *aggiungere - aggiornare - spostare - eliminare* uno o più record. Abbiamo pensato di creare una sezione dedicata per mostrare agli utenti una lista degli animali adottati, con la loro storia che dia un valore aggiunto al rifugio attraverso una **tabella specifica di animale adottati**.
+- **Gestione adozioni:** per soddisfare questa richiesta sarà necessario creare una **tabella associativa adozioni** con i dati anagrafici dell'adottante e sarà relazionata con una chiave esterna alla chiave primaria dell'animale. L'utente attraverso un Form dedicato riuscirà a completarlo autonomamente e inviando i dati alla tabella. 
 
 ## Requisiti funzionali (o “features”)
 
