@@ -1,30 +1,6 @@
-# Titolo del progetto
+# Cuore a quattro zampe
 
-## Che cos’è <nome-progetto> ?
-
-In questa sezione ci sarà una descrizione dettagliata ma coincisa del progetto, quali sono le sue funzionalità e altri aspetti.
-
-## Da che cosa è nata l’idea e perché
-
-In questa sezione verrà indicato **come è nata l’idea** e quali sono state **le motivazioni** che hanno spinto il team a voler realizzare il progetto e soprattutto il **perché voler realizzare** questo progetto. 
-
-Verranno anche elencati quali sono stati gli spunti, le ispirazioni, le idee e così via.
-
-Quali sono i **target** di riferimento.
-
-## Vision
-
-Rappresenta la **“meta”** del viaggio imprenditoriale che si vuole raggiungere e il posizionamento dell’azienda in uno scenario futuro. 
-
-## Mission
-
-Definisce i presupposti che il team si è proposto di raggiungere, gli obiettivi che il progetto mira a raggiungere per soddisfare concretamente l’azione motivante che muove il team giorno per giorno.
-
-Rappresenta dunque il **mezzo** che si è ideato per riuscire a raggiungere la meta.
-
-[Mission e Vision: significato, differenze, come crearle (+11 esempi)](https://www.startupgeeks.it/mission-vision-valori-aziendali/)
-
-## Perché scegliere <nome-progetto>?
+## Perché scegliere la nostra soluzoine?
 
 Verranno specificati tutti i motivi per cui scegliere la nostra soluzione è conveniente e vantaggioso per i nostri clienti.
 
