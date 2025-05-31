@@ -50,15 +50,23 @@ Questa impostazione consentirà un tracciamento efficiente e dettagliato di tutt
 
 ## Requisiti funzionali (o “features”)
 
-In questo paragrafo verranno descritte e dettagliate tutte le funzionalità che il programma dovrà soddisfare.
+### Ricerca animali
 
-Ognuna di esse dovrà rispondere alle domande:
+### Ricerca per filtri
+
+### Ricerca animali adottati
 
 - *“Cosa farà questa feature?”*
 - *“Come verrà realizzata?”*
 - *“Come si dovrà comportare?”*
 - *“A quali dipendenze è collegata?”*
-
+- *“Qual è la priorità di questa feature rispetto ad altre?”*
+- *“Quali sono i possibili scenari d'uso di questa feature?”*
+- *“Quali sono i potenziali problemi o rischi associati a questa feature?”*
+- *“Qual è l'impatto di questa feature sulle performance del sistema?”*
+- *“Quali sono le implicazioni per la sicurezza?”*
+- *“Come verrà testata questa feature?”*
+  
 ## Requisiti non funzionali (NFR)
 
 In questo paragrafo verranno riportati in forma di elenco tutti i **requisiti non funzionali** e la loro **implementazione** nel sistema.
