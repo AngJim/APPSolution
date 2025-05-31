@@ -12,8 +12,31 @@ Verranno specificati tutti i motivi per cui scegliere la nostra soluzione è con
 
 Il cliente ci ha richiesto un gestionale per il suo rifugio di animali che permetta di:
 
-- **Gestire l'anagrafica:** questa richiesta comprenderà la creazione di una **tabella animali** con i dati anagrafici dell'animale ancora da definire; da cui attingeremo i dati da mostrare per **l'interfaccia utente**. Mentre l'amministratore avrà la possibilità di *aggiungere - aggiornare - spostare - eliminare* uno o più record. Abbiamo pensato di creare una sezione dedicata per mostrare agli utenti una lista degli animali adottati, con la loro storia che dia un valore aggiunto al rifugio attraverso una **tabella specifica di animale adottati**.
-- **Gestione adozioni:** per soddisfare questa richiesta sarà necessario creare una **tabella associativa adozioni** con i dati anagrafici dell'adottante e sarà relazionata con una chiave esterna alla chiave primaria dell'animale. L'utente attraverso un Form dedicato riuscirà a completarlo autonomamente e inviando i dati alla tabella. 
+### Gestione Anagrafica Animali
+Questa funzionalità prevede la creazione di una tabella "Animali", contenente i dati anagrafici di ciascun animale (es. nome, specie, razza, età, sesso, stato di salute, data di ingresso, ecc. – dettagli ancora da definire). I dati contenuti in questa tabella saranno utilizzati per alimentare l'interfaccia utente, che mostrerà le informazioni aggiornate sugli animali presenti nel rifugio.
+
+L’amministratore avrà la possibilità di:
+
+- Aggiungere nuovi animali
+
+- Aggiornare le informazioni esistenti
+
+- Visualizzare animali
+
+- Eliminare uno o più record
+
+Inoltre, si prevede la realizzazione di una **sezione pubblica dedicata agli animali già adottati**, che valorizzi l’esperienza del rifugio mostrando una scheda per ciascun animale con la sua storia e altre informazioni rilevanti. Per gestire questa funzionalità, verrà creata una tabella separata "Animali Adottati", collegata alla tabella principale, che consentirà di archiviare e presentare in modo distinto i dati post-adozione.
+
+### Gestione delle Adozioni
+Per tracciare le adozioni sarà necessaria la creazione di una tabella associativa "Adozioni", che colleghi ciascun animale adottato al relativo adottante. Questa tabella includerà:
+
+- I **dati anagrafici** dell’adottante (nome, cognome, contatti, indirizzo, ecc.),
+
+- Una **chiave esterna** riferita alla chiave primaria della tabella "Animali",
+
+Altri eventuali dati rilevanti (data adozione, stato della pratica, note, ecc.).
+
+Sarà inoltre predisposto un form dedicato all’adozione, accessibile agli utenti interessati, che potranno compilarlo in autonomia. Una volta inviato, il sistema provvederà a registrare le informazioni nella tabella "Adozioni", rendendole disponibili per la consultazione e la gestione da parte degli operatori del rifugio. 
 
 ## Requisiti funzionali (o “features”)
 
