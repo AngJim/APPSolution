@@ -39,7 +39,14 @@ Per tracciare le adozioni sarà necessaria la creazione di una tabella associati
 Sarà inoltre predisposto un form dedicato all’adozione, accessibile agli utenti interessati, che potranno compilarlo in autonomia. Una volta inviato, il sistema provvederà a registrare le informazioni nella tabella "Adozioni", rendendole disponibili per la consultazione e la gestione da parte degli operatori del rifugio.
 
 ### Gestione donazioni
-La funzione donazioni prevederà un form collegato ad una **tabella per tenere lo storico delle donazioni ricevute**. Ci appoggieremo a enti di crowfounding come [Gofoundme](https://www.gofundme.com/it-it) oppure fornire ai nostri donors una lista di prodotti di cui il rifugio ha bisogno e loro avranno la possibilità di donare interamente o parzialmente per sostenerlo.
+La funzione donazioni prevederà un form collegato ad una **tabella per tenere lo storico delle donazioni ricevute**. 
+
+Ci appoggieremo a enti di crowfounding come [Gofoundme](https://www.gofundme.com/it-it) oppure fornire ai nostri donors una lista di prodotti di cui il rifugio ha bisogno e loro avranno la possibilità di donare interamente o parzialmente per sostenerlo.
+
+### Gestione delle visite veterinarie
+Per ottimizzare la gestione delle attività veterinarie, abbiamo previsto una sezione amministrativa dedicata alla gestione autonoma degli appuntamenti, sia di routine che straordinari. Questa funzionalità integrerà una tabella strutturata con i campi informativi (es. data visita, orario previsto, motivasione visita, veterinaio responsabile, ecc...)
+
+Questa impostazione consentirà un tracciamento efficiente e dettagliato di tutte le visite veterinarie.
 
 ## Requisiti funzionali (o “features”)
 
