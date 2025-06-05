@@ -41,7 +41,7 @@ Sarà inoltre predisposto un form dedicato all’adozione, accessibile agli uten
 ### Gestione donazioni
 La funzione donazioni prevederà un form collegato ad una **tabella per tenere lo storico delle donazioni ricevute**. 
 
-Ci appoggieremo a enti di crowfounding come [Gofoundme](https://www.gofundme.com/it-it) oppure fornire ai nostri donors una lista di prodotti di cui il rifugio ha bisogno e loro avranno la possibilità di donare interamente o parzialmente per sostenerlo.
+Ci appoggieremo a organizzazioni di crowfounding come [Gofoundme](https://www.gofundme.com/it-it) oppure fornire ai nostri donors una lista di prodotti di cui il rifugio ha bisogno e loro avranno la possibilità di donare interamente o parzialmente per sostenerlo.
 
 ### Gestione delle visite veterinarie
 Per ottimizzare la gestione delle attività veterinarie, abbiamo previsto una sezione amministrativa dedicata alla gestione autonoma degli appuntamenti, sia di routine che straordinari. Questa funzionalità integrerà una tabella strutturata con i campi informativi (es. data visita, orario previsto, motivasione visita, veterinaio responsabile, ecc...)
@@ -51,21 +51,30 @@ Questa impostazione consentirà un tracciamento efficiente e dettagliato di tutt
 ## Requisiti funzionali (o “features”)
 
 ### Ricerca animali
+Permetterà agli utenti di cercare gli animali per nomi. La realizzazione prevederà l'utilizzo di una query che restituirà tutti gli animali con il nome passato dall'utente in input e successivamente mostrerà a schermo uno o più animali.
 
 ### Ricerca per filtri
+Una funzionalità avanzata permetterà di applicare dei filtri per ricercare animali che abbiano più caratteristiche. Per l'effettiva realizzazione sarà necessario richiamare una query dinamica o in maniera più semplice più query.
 
 ### Ricerca animali adottati
+Questa funzionalità consentirà agli utenti di visualizzare un elenco degli animali che sono stati precedentemente adottati. Per la sua implementazione, sarà necessaria una query al database che recuperi tutti gli animali contrassegnati come "adottati" e li mostri a schermo.
 
-- *“Cosa farà questa feature?”*
-- *“Come verrà realizzata?”*
-- *“Come si dovrà comportare?”*
-- *“A quali dipendenze è collegata?”*
-- *“Qual è la priorità di questa feature rispetto ad altre?”*
-- *“Quali sono i possibili scenari d'uso di questa feature?”*
-- *“Quali sono i potenziali problemi o rischi associati a questa feature?”*
-- *“Qual è l'impatto di questa feature sulle performance del sistema?”*
-- *“Quali sono le implicazioni per la sicurezza?”*
-- *“Come verrà testata questa feature?”*
+### Compila form adozione
+Gli utenti potranno compilare un modulo online per richiedere l'adozione di un animale. La realizzazione richiederà la creazione di un form con campi specifici (es. dati personali dell'utente) e la successiva memorizzazione dei dati inviati in un database associandoli all'animale desiderato.
+
+### Utenti e permessi
+Questa sezione gestirà la registrazione e l'autenticazione degli utenti, oltre alla definizione dei loro livelli di permesso. Sarà necessario implementare un sistema di registrazione/login, un database per archiviare le credenziali e i ruoli degli utenti, e una logica che determini quali funzionalità sono accessibili in base al permesso dell'utente (es. utenti normali possono cercare animali, amministratori possono gestire gli animali).
+
+-[] *“Cosa farà questa feature?”*
+-[] *“Come verrà realizzata?”*
+-[] *“Come si dovrà comportare?”*
+-[] *“A quali dipendenze è collegata?”*
+-[] *“Qual è la priorità di questa feature rispetto ad altre?”*
+-[] *“Quali sono i possibili scenari d'uso di questa feature?”*
+-[] *“Quali sono i potenziali problemi o rischi associati a questa feature?”*
+-[] *“Qual è l'impatto di questa feature sulle performance del sistema?”*
+-[] *“Quali sono le implicazioni per la sicurezza?”*
+-[] *“Come verrà testata questa feature?”*
   
 ## Requisiti non funzionali (NFR)
 
