@@ -65,16 +65,19 @@ Gli utenti potranno compilare un modulo online per richiedere l'adozione di un a
 ### Utenti e permessi
 Questa sezione gestirà la registrazione e l'autenticazione degli utenti, oltre alla definizione dei loro livelli di permesso. Sarà necessario implementare un sistema di registrazione/login, un database per archiviare le credenziali e i ruoli degli utenti, e una logica che determini quali funzionalità sono accessibili in base al permesso dell'utente (es. utenti normali possono cercare animali, amministratori possono gestire gli animali).
 
--[ ] *“Cosa farà questa feature?”*
--[ ] *“Come verrà realizzata?”*
--[ ] *“Come si dovrà comportare?”*
--[ ] *“A quali dipendenze è collegata?”*
--[ ] *“Qual è la priorità di questa feature rispetto ad altre?”*
--[ ] *“Quali sono i possibili scenari d'uso di questa feature?”*
--[ ] *“Quali sono i potenziali problemi o rischi associati a questa feature?”*
--[ ] *“Qual è l'impatto di questa feature sulle performance del sistema?”*
--[ ] *“Quali sono le implicazioni per la sicurezza?”*
--[ ] *“Come verrà testata questa feature?”*
+### Panoramica generale statistiche
+Funzionalità per mostrare una dashboard generale per le statistiche mensili e settimanali per quanto riguarda le visite, animali adottati, donazioni, ecc...
+
+- [ ] *“Cosa farà questa feature?”*
+- [ ] *“Come verrà realizzata?”*
+- [ ] *“Come si dovrà comportare?”*
+- [ ] *“A quali dipendenze è collegata?”*
+- [ ] *“Qual è la priorità di questa feature rispetto ad altre?”*
+- [ ] *“Quali sono i possibili scenari d'uso di questa feature?”*
+- [ ] *“Quali sono i potenziali problemi o rischi associati a questa feature?”*
+- [ ] *“Qual è l'impatto di questa feature sulle performance del sistema?”*
+- [ ] *“Quali sono le implicazioni per la sicurezza?”*
+- [ ] *“Come verrà testata questa feature?”*
   
 ## Requisiti non funzionali (NFR)
 
