@@ -20,7 +20,7 @@ public class Animale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotBlank(message = "Il nome dell'animale non può essere vuoto")
     private String nome;
