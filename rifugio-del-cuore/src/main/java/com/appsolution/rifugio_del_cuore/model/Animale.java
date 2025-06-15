@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "animale")
+@Table(name = "animali")
 public class Animale {
 
     @Id

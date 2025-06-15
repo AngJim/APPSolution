@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rifugio Animali</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #e8e8e8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista Animali del Rifugio</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Specie</th>
+                <th>Età (anni)</th>
+                <th>Mese</th>
+                <th>Genere</th>
+                <th>Taglia</th>
+                <th>Stato</th>
+                <th>Descrizione</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="animale : ${animali}">
+                <td th:text="${animale.nome}">Nome</td>
+                <td th:text="${animale.specie}">Specie</td>
+                <td th:text="${animale.eta}">Età</td>
+                <td th:text="${animale.mese}">Mese</td>
+                <td th:text="${animale.genere}">Genere</td>
+                <td th:text="${animale.taglia}">Taglia</td>
+                <td th:text="${animale.stato}">Stato</td>
+                <td th:text="${animale.descrizione}">Descrizione</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
