@@ -1,6 +1,5 @@
 -- Creazione database
-DROP DATABASE IF EXISTS `rifugio_del_cuore`;
-CREATE DATABASE `rifugio_del_cuore`;
+CREATE DATABASE IF NOT EXISTS `rifugio_del_cuore`;
 USE `rifugio_del_cuore`;
 
 -- Permessi (esegui da root o utente con GRANT OPTION)
