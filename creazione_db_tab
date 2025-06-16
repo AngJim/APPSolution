@@ -29,56 +29,58 @@ INSERT INTO `admin` VALUES
 DROP TABLE IF EXISTS `animali`;
 CREATE TABLE `animali` (
   `id_animale` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(40) NOT NULL,
-  `specie` VARCHAR(40) NOT NULL,
-  `razza` VARCHAR(40) NOT NULL,
-  `anni` INT NOT NULL,
+  `nome` VARCHAR(50) NOT NULL,
+  `specie` VARCHAR(50) NOT NULL,
+  `razza` VARCHAR(50) NOT NULL,
   `genere` ENUM('Maschio','Femmina') NOT NULL,
-  `taglia` VARCHAR(30) NOT NULL,
+  `taglia` ENUM('piccola','media','grande') NOT NULL,
+  `data_nascita` DATE default ('non conosciuta'),
+  `stato_salute` ENUM('Ottimo', 'Buono', 'Bisogno cure', 'Critico') NOT NULL,
   `stato_adozione` ENUM('Disponibile','In corso','Adottato') DEFAULT NULL,
-  `descrizione` TEXT DEFAULT NULL,
   `data_ingresso` date not null,
-  PRIMARY KEY (`id_animale`),
-  CONSTRAINT `animali_chk_1` CHECK ((`anni` >= 0))
+  `immagine_url` VARCHAR(255),
+  `note` TEXT DEFAULT NULL,
+  PRIMARY KEY (`id_animale`)
+  -- CONSTRAINT `animali_chk_1` CHECK ((`anni` >= 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `animali` 
-(`nome`, `specie`, `razza`, `anni`, `genere`, `taglia`, `stato_adozione`, `descrizione`,`data_ingresso`)
-VALUES
-('Fido', 'Cane', 'Labrador', 3, 'Maschio', 'Grande', 'Disponibile', 'Cane energico e affettuoso, ama giocare all\'aperto.','2025-05-01'),
-('Micia', 'Gatto', 'Europeo', 2, 'Femmina', 'Piccola', 'Adottato', 'Gattina tranquilla, adora essere coccolata.','2025-05-01'),
-('Rex', 'Cane', 'Pastore Tedesco', 5, 'Maschio', 'Grande', 'In corso', 'Intelligente e protettivo, ideale per la guardia.','2025-05-01'),
-('Luna', 'Gatto', 'Siamese', 1, 'Femmina', 'Media', 'Disponibile', 'Vivace e curiosa, perfetta per famiglie.','2025-05-01'),
-('Birba', 'Cane', 'Barboncino', 4, 'Maschio', 'Piccola', 'Disponibile', 'Molto socievole e ama stare con i bambini.','2025-05-01'),
-('Leo', 'Cane', 'Bulldog Francese', 2, 'Maschio', 'Media', 'Adottato', 'Adora le passeggiate e stare in compagnia.','2025-05-01'),
-('Stella', 'Gatto', 'Persiano', 6, 'Femmina', 'Media', 'Disponibile', 'Molto dolce e indipendente, pelo lungo.','2025-05-01'),
-('Jack', 'Cane', 'Jack Russell', 3, 'Maschio', 'Piccola', 'In corso', 'Vivace e giocoso, perfetto per persone attive.','2025-05-01'),
-('Maya', 'Gatto', 'Maine Coon', 5, 'Femmina', 'Grande', 'Disponibile', 'Elegante e affettuosa, ama la compagnia.','2025-05-01'),
-('Toby', 'Cane', 'Golden Retriever', 4, 'Maschio', 'Grande', 'Disponibile', 'Molto intelligente e facilmente addestrabile.','2025-05-01');
+/*
+note utili
+- L’età sarà calcolata a runtime in base a `data_nascita`
+- lo stato di salute è gestito con un campo `ENUM` semplice
+- Le immagini saranno salvate in locale e solo il percorso sarà memorizzato in
+`immagine_url`
+*/
+INSERT INTO `animali` (`nome`, `specie`, `razza`, `genere`, `taglia`, `data_nascita`, `stato_salute`, `stato_adozione`, `data_ingresso`, `immagine_url`, `note`) VALUES
+('Leo', 'Cane', 'Labrador', 'Maschio', 'grande', '2020-05-10', 'Ottimo', 'Adottato', '2024-03-01', 'https://example.com/leo.jpg', 'Molto socievole e giocherellone.'),
+('Maya', 'Gatto', 'Europeo', 'Femmina', 'piccola', '2021-08-15', 'Buono', 'Adottato', '2024-04-12', 'https://example.com/maya.jpg', 'Ama stare in braccio e farsi coccolare.'),
+('Rocky', 'Cane', 'Meticcio', 'Maschio', 'media', '2019-11-20', 'Bisogno cure', 'Adottato', '2024-01-20', 'https://example.com/rocky.jpg', 'Ha bisogno di medicine quotidiane.'),
+('Luna', 'Coniglio', 'Nano', 'Femmina', 'piccola', '2022-03-05', 'Ottimo', 'Adottato', '2024-05-01', 'https://example.com/luna.jpg', 'Molto tranquilla, adatta ai bambini.'),
+('Zoe', 'Cane', 'Beagle', 'Femmina', 'media', '2023-01-18', 'Ottimo', 'Adottato', '2024-05-25', 'https://example.com/zoe.jpg', 'Curiosa e affettuosa, ama correre.');
 
 -- Tabella adozioni
 DROP TABLE IF EXISTS `adozioni`;
 CREATE TABLE `adozioni` (
   `id_adozione` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(60) NOT NULL,
-  `cognome` VARCHAR(60) NOT NULL,
+  `id_animale` INT NOT NULL,
+  `nome_adottante` VARCHAR(60) NOT NULL,
+  `cognome_adottante` VARCHAR(60) NOT NULL,
   `email` VARCHAR(100) UNIQUE NOT NULL,
   `telefono` VARCHAR(30) UNIQUE NOT NULL,
-  `data_appuntamento` DATE NOT NULL,
-  `orario_appuntamento` TIME NOT NULL,
-  `id_animale` INT NOT NULL,
+  `data_adozione` DATE NOT NULL,
+  `note_aggiuntive` TEXT DEFAULT NULL,
+  
   PRIMARY KEY (`id_adozione`),
   KEY `fk_adozioni_animale` (`id_animale`),
   CONSTRAINT `fk_adozioni_animale` FOREIGN KEY (`id_animale`) REFERENCES `animali` (`id_animale`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- insert 
+INSERT INTO `adozioni` (`id_animale`, `nome_adottante`, `cognome_adottante`, `email`, `telefono`, `data_adozione`, `note_aggiuntive`) VALUES
+(1, 'Luca', 'Rossi', 'luca.rossi@email.com', '3451234567', '2025-06-10', 'Adottato con entusiasmo. Ambiente idoneo.'),
+(2, 'Giulia', 'Bianchi', 'giulia.bianchi@email.com', '3927654321', '2025-06-12', 'Ha già avuto animali in passato.'),
+(3, 'Marco', 'Verdi', 'marco.verdi@email.com', '3319988776', '2025-06-14', NULL),
+(4, 'Anna', 'Neri', 'anna.neri@email.com', '3476543210', '2025-06-15', 'Abita in campagna, spazio aperto disponibile.'),
+(5, 'Federica', 'Moretti', 'federica.moretti@email.com', '3397788990', '2025-06-16', 'Controllo post-adozione programmato.');
 
-INSERT INTO `adozioni` (`nome`, `cognome`, `email`, `telefono`, `data_appuntamento`, `orario_appuntamento`, `id_animale`) 
-VALUES
-('Giulia', 'Moretti', 'giulia.moretti@email.com', '+390123456701', '2025-06-15', '10:30:00', 1),
-('Lorenzo', 'Esposito', 'lorenzo.esposito@email.com', '+390123456702', '2025-06-16', '11:00:00', 2),
-('Alessia', 'Russo', 'alessia.russo@email.com', '+390123456703', '2025-06-17', '09:45:00', 3),
-('Marco', 'Conti', 'marco.conti@email.com', '+390123456704', '2025-06-18', '14:15:00', 4),
-('Sara', 'Romano', 'sara.romano@email.com', '+390123456705', '2025-06-19', '15:00:00', 5);
 
 
 -- tabella veterinari 
@@ -161,6 +163,37 @@ INSERT INTO `donazioni` (`nome_donatore`, `importo`, `metodo_pagamento`, `data_d
 ('Ilaria Fontana', 45.00, 'bancomat', '2025-06-13', 'Grazie per quello che fate'),
 ('Giorgio Neri', 60.00, 'crowfounding', '2025-06-08', NULL),
 ('Claudia Moretti', 80.00, 'bancomat', '2025-06-02', 'Per gli animali anziani');
+
+
+-- Tabella prenotazioni_adozione
+DROP TABLE IF EXISTS `prenotazioni_adozione`;
+CREATE TABLE `prenotazioni_adozione` (
+`id_prenotazione` INT AUTO_INCREMENT PRIMARY KEY,
+`id_animale` INT NOT NULL,
+`nome` VARCHAR(50) NOT NULL,
+`cognome` VARCHAR(50) NOT NULL,
+`telefono` VARCHAR(20),
+`email` VARCHAR(100) NOT NULL,
+`data_appuntamento` DATE NOT NULL,
+`orario_appuntamento` TIME NOT NULL,
+`note` TEXT,
+`stato` ENUM('In attesa', 'Approvata', 'Rifiutata') DEFAULT 'In attesa',
+`archiviato` BOOLEAN DEFAULT FALSE,
+FOREIGN KEY (id_animale) REFERENCES animali(id_animale)
+ON DELETE CASCADE
+ON UPDATE CASCADE
+);
+
+-- insert 
+INSERT INTO `prenotazioni_adozione` (`id_animale`, `nome`, `cognome`, `telefono`, `email`, `data_appuntamento`, `orario_appuntamento`, `note`, `stato`, `archiviato`) VALUES
+(1, 'Luca', 'Rossi', '3451234567', 'luca.rossi@email.com', '2025-06-20', '10:30:00', 'Vorrei conoscere il cane prima di adottarlo.', 'In attesa', FALSE),
+(2, 'Giulia', 'Bianchi', '3927654321', 'giulia.bianchi@email.com', '2025-06-21', '14:00:00', '', 'Approvata', FALSE),
+(3, 'Marco', 'Verdi', '3319988776', 'marco.verdi@email.com', '2025-06-22', '09:00:00', 'Ho già esperienza con animali.', 'Rifiutata', TRUE),
+(4, 'Anna', 'Neri', '3476543210', 'anna.neri@email.com', '2025-06-23', '11:15:00', NULL, 'In attesa', FALSE),
+(1, 'Sara', 'Conti', '3204455667', 'sara.conti@email.com', '2025-06-24', '16:45:00', 'Famiglia con bambini, ambiente tranquillo.', 'Approvata', FALSE);
+
+
+
 
 
 
