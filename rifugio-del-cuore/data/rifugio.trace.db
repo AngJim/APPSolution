@@ -1,0 +1,6 @@
+2025-06-16 12:49:34.742724+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (ANIMALI: ""ETA"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."ANIMALI"("ID","NOME","SPECIE","RAZZA","ETA","MESE","GENERE","TAGLIA","STATO","DESCRIZIONE")VALUES(?,?,?,?,?,?,?,?,?,?) [22018-232]
+2025-06-16 12:49:34.744740+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (ANIMALI: ""ETA"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."ANIMALI"("ID","NOME","SPECIE","RAZZA","ETA","MESE","GENERE","TAGLIA","STATO","DESCRIZIONE")VALUES(?,?,?,?,?,?,?,?,?,?) [22018-232]

@@ -6,13 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "animali")
@@ -38,25 +35,23 @@ public class Animale {
     @Max(value = 12, message = "Il mese deve essere compreso tra 1 e 12")
     private int mese;
 
-    @NotNull(message = "Il genere dell'animale non può essere nullo")
-    @Enumerated(EnumType.STRING)
-    private Genere genere;
+    @NotBlank(message = "Il genere dell'animale non può essere vuoto")
+    private String genere;
 
     @NotBlank(message = "La taglia dell'animale non può essere vuota")
     private String taglia;
 
-    @NotNull(message = "Lo stato dell'animale non può essere nullo")
-    @Enumerated(EnumType.STRING)
-    private Stato stato;
+    @NotBlank(message = "Lo stato dell'animale non può essere vuoto")
+    private String stato;
 
     @Lob
     private String descrizione;
 
     // Getter e Setter
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getNome() {
@@ -89,10 +84,10 @@ public class Animale {
     public void setMese(int mese) {
         this.mese = mese;
     }
-    public Genere getGenere() {
+    public String getGenere() {
         return genere;
     }
-    public void setGenere(Genere genere) {
+    public void setGenere(String genere) {
         this.genere = genere;
     }
     public String getTaglia() {
@@ -101,10 +96,10 @@ public class Animale {
     public void setTaglia(String taglia) {
         this.taglia = taglia;
     }
-    public Stato getStato() {
+    public String getStato() {
         return stato;
     }
-    public void setStato(Stato stato) {
+    public void setStato(String stato) {
         this.stato = stato;
     }
     public String getDescrizione() {
