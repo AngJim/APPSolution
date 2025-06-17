@@ -10,6 +10,13 @@
         th { background-color: #eee; }
         form { margin-bottom: 20px; }
         input, select, button { margin-right: 10px; padding: 5px; }
+        .btn-danger {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -18,19 +25,16 @@
 
 <form th:action="@{/animali}" method="get">
     <input type="text" name="nome" placeholder="Cerca per nome" />
-    
     <select name="genere">
         <option value="">Tutti i generi</option>
         <option value="Maschio">Maschio</option>
         <option value="Femmina">Femmina</option>
     </select>
-
     <select name="stato">
         <option value="">Tutti gli stati</option>
         <option value="Disponibile">Disponibile</option>
         <option value="Adottato">Adottato</option>
     </select>
-
     <button type="submit">Filtra</button>
 </form>
 
@@ -46,6 +50,7 @@
             <th>Taglia</th>
             <th>Stato</th>
             <th>Descrizione</th>
+            <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
@@ -59,6 +64,12 @@
             <td th:text="${animale.taglia}">Taglia</td>
             <td th:text="${animale.stato}">Stato</td>
             <td th:text="${animale.descrizione}">Descrizione</td>
+            <td>
+                <form th:action="@{/animali/elimina/{id}(id=${animale.id})}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="btn-danger" onclick="return confirm('Sei sicuro di voler eliminare questo animale?');">Elimina</button>
+                </form>
+            </td>
         </tr>
     </tbody>
 </table>
