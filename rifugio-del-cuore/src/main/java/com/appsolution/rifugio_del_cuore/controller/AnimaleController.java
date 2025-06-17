@@ -21,14 +21,14 @@ public class AnimaleController {
     public String animale(
         @RequestParam(required = false) String nome,
         @RequestParam(required = false) String genere,
-        @RequestParam(required = false) String specie,
+        @RequestParam(required = false) String stato,
 
         Model model
     ) {
         List<Animale> animali = animaleRepository.findByFiltri(
             nome != null ? nome : "",
             genere != null ? genere : "",
-            specie != null ? specie : ""
+            stato != null ? stato : ""
         );
 
         model.addAttribute("animali", animali);
