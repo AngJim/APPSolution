@@ -13,9 +13,9 @@ public interface AnimaleRepository extends JpaRepository<Animale, Integer> {
     @Query("SELECT a FROM Animale a " +
            "WHERE (:nome = '' OR LOWER(a.nome) LIKE LOWER(CONCAT('%', :nome, '%'))) " +
            "AND (:genere = '' OR LOWER(a.genere) = LOWER(:genere))" +
-           "AND (:specie = '' OR LOWER(a.specie) = LOWER(:specie)) ")
+           "AND (:stato = '' OR LOWER(a.stato) = LOWER(:stato)) ")
     List<Animale> findByFiltri(
         @Param("nome") String nome, 
         @Param("genere") String genere,
-        @Param("specie") String specie);
+        @Param("stato") String stato);
 }
