@@ -1,4 +1,3 @@
-create database Rifugio_Del_Cuore;
 
 -- Creazione database
 DROP DATABASE IF EXISTS `rifugio_del_cuore`;
@@ -9,8 +8,8 @@ USE `rifugio_del_cuore`;
 GRANT ALL ON `rifugio_del_cuore`.* TO 'ITS_2025'@'localhost';
 
 -- Tabella admin
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin` (
+-- DROP TABLE IF EXISTS `admin`;
+CREATE TABLE if not exists `admin` (
   `id_admin` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(60) NOT NULL,
   `cognome` VARCHAR(60) NOT NULL,
@@ -28,15 +27,15 @@ INSERT INTO `admin` VALUES
 (5,'Francesco','Ferrari','password_hash_5','francesco.ferrari@example.com');
 
 -- Tabella animali
-DROP TABLE IF EXISTS `animali`;
-CREATE TABLE `animali` (
+-- DROP TABLE IF EXISTS `animali`;
+CREATE TABLE if not exists `animali` (
   `id_animale` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(50) NOT NULL,
   `specie` VARCHAR(50) NOT NULL,
   `razza` VARCHAR(50) NOT NULL,
   `genere` ENUM('Maschio','Femmina') NOT NULL,
   `taglia` ENUM('piccola','media','grande') NOT NULL,
-  `data_nascita` DATE DEFAULT NULL,
+  `eta` varchar (10) DEFAULT ('non conosciuta'),
   `stato_salute` ENUM('Ottimo', 'Buono', 'Bisogno cure', 'Critico') NOT NULL,
   `stato_adozione` ENUM('Disponibile','In corso','Adottato') DEFAULT NULL,
   `data_ingresso` date not null,
@@ -52,16 +51,16 @@ note utili
 - Le immagini saranno salvate in locale e solo il percorso sarà memorizzato in
 `immagine_url`
 */
-INSERT INTO `animali` (`nome`, `specie`, `razza`, `genere`, `taglia`, `data_nascita`, `stato_salute`, `stato_adozione`, `data_ingresso`, `immagine_url`, `note`) VALUES
-('Leo', 'Cane', 'Labrador', 'Maschio', 'grande', '2020-05-10', 'Ottimo', 'Adottato', '2024-03-01', 'https://example.com/leo.jpg', 'Molto socievole e giocherellone.'),
-('Maya', 'Gatto', 'Europeo', 'Femmina', 'piccola', '2021-08-15', 'Buono', 'Adottato', '2024-04-12', 'https://example.com/maya.jpg', 'Ama stare in braccio e farsi coccolare.'),
-('Rocky', 'Cane', 'Meticcio', 'Maschio', 'media', '2019-11-20', 'Bisogno cure', 'Adottato', '2024-01-20', 'https://example.com/rocky.jpg', 'Ha bisogno di medicine quotidiane.'),
-('Luna', 'Coniglio', 'Nano', 'Femmina', 'piccola', '2022-03-05', 'Ottimo', 'Adottato', '2024-05-01', 'https://example.com/luna.jpg', 'Molto tranquilla, adatta ai bambini.'),
-('Zoe', 'Cane', 'Beagle', 'Femmina', 'media', '2023-01-18', 'Ottimo', 'Adottato', '2024-05-25', 'https://example.com/zoe.jpg', 'Curiosa e affettuosa, ama correre.');
+INSERT INTO `animali` (`nome`, `specie`, `razza`, `genere`, `taglia`, `eta`, `stato_salute`, `stato_adozione`, `data_ingresso`, `immagine_url`, `note`) VALUES
+('Leo', 'Cane', 'Labrador', 'Maschio', 'grande', '10', 'Ottimo', 'Adottato', '2024-03-01', 'https://example.com/leo.jpg', 'Molto socievole e giocherellone.'),
+('Maya', 'Gatto', 'Europeo', 'Femmina', 'piccola', '2', 'Buono', 'Adottato', '2024-04-12', 'https://example.com/maya.jpg', 'Ama stare in braccio e farsi coccolare.'),
+('Rocky', 'Cane', 'Meticcio', 'Maschio', 'media', '4', 'Bisogno cure', 'Adottato', '2024-01-20', 'https://example.com/rocky.jpg', 'Ha bisogno di medicine quotidiane.'),
+('Luna', 'Coniglio', 'Nano', 'Femmina', 'piccola', '6', 'Ottimo', 'Adottato', '2024-05-01', 'https://example.com/luna.jpg', 'Molto tranquilla, adatta ai bambini.'),
+('Zoe', 'Cane', 'Beagle', 'Femmina', 'media', '1', 'Ottimo', 'Adottato', '2024-05-25', 'https://example.com/zoe.jpg', 'Curiosa e affettuosa, ama correre.');
 
 -- Tabella adozioni
-DROP TABLE IF EXISTS `adozioni`;
-CREATE TABLE `adozioni` (
+-- DROP TABLE IF EXISTS `adozioni`;
+CREATE TABLE if not exists `adozioni` (
   `id_adozione` INT NOT NULL AUTO_INCREMENT,
   `id_animale` INT NOT NULL,
   `nome_adottante` VARCHAR(60) NOT NULL,
@@ -86,8 +85,8 @@ INSERT INTO `adozioni` (`id_animale`, `nome_adottante`, `cognome_adottante`, `em
 
 
 -- tabella veterinari 
-DROP TABLE IF EXISTS `veterinari`;
-CREATE TABLE `veterinari` (
+-- DROP TABLE IF EXISTS `veterinari`;
+CREATE TABLE if not exists `veterinari` (
   `id_veterinario` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(60) NOT NULL,
   `cognome` VARCHAR(60) NOT NULL,
@@ -110,10 +109,10 @@ INSERT INTO `veterinari` (`nome`, `cognome`, `email`, `telefono`, `clinica`, `sp
 
 -- tabella visite 
 -- Rimozione tabella esistente
-DROP TABLE IF EXISTS `visite`;
+-- DROP TABLE IF EXISTS `visite`;
 
 -- creazione tabella visite
-CREATE TABLE `visite` (
+CREATE TABLE if not exists `visite` (
   `id_visita` INT NOT NULL AUTO_INCREMENT,
   `id_animale` INT NOT NULL,
   `id_veterinario` INT not NULL,
@@ -141,8 +140,8 @@ INSERT INTO `visite` (`id_animale`, `id_veterinario`, `data_visita`, `orario_vis
 
 
 -- Tabella donazioni
-DROP TABLE IF EXISTS `donazioni`;
-CREATE TABLE `donazioni` (
+-- DROP TABLE IF EXISTS `donazioni`;
+CREATE TABLE if not exists `donazioni` (
   `id_donazione` INT NOT NULL AUTO_INCREMENT,
   `nome_donatore` VARCHAR(100) NOT NULL,
   `importo` DECIMAL(10,2) NOT NULL,
@@ -157,7 +156,7 @@ CREATE TABLE `donazioni` (
 -- insert
 
 
-
+/*sezzione dei pacchi che abbiamo deciso di non mettere, al messimo come implemantazione futur
 DROP TABLE IF EXISTS `categoria_prodotto`;
 CREATE TABLE `categoria_prodotto` (
   `id_categoria` INT NOT NULL AUTO_INCREMENT,
@@ -173,11 +172,11 @@ INSERT INTO `categoria_prodotto` (`nome_categoria`) VALUES
 ('Altro');
 
 
-
+a 
 DROP TABLE IF EXISTS `donazioni_prodotti`;
 CREATE TABLE `donazioni_prodotti` (
   `id_donazione` INT NOT NULL AUTO_INCREMENT,
-  `id_categoria` INT NOT NULL,
+  `id_categoria` INT DEFAULT NULL,
   `nome_donatore` VARCHAR(100) DEFAULT NULL,
   `numero_pacchi` INT NOT NULL DEFAULT 1,
   `data_donazione` DATE NOT NULL,
@@ -187,13 +186,14 @@ CREATE TABLE `donazioni_prodotti` (
     ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
 INSERT INTO `donazioni_prodotti` (`id_categoria`, `nome_donatore`, `numero_pacchi`, `data_donazione`, `note`) VALUES
 (1, 'Mario Bianchi', 3, '2025-06-10', 'Scatole di croccantini e scatolette umide.'),
 (2, 'Luca Verdi', 1, '2025-06-11', 'Kit di primo soccorso per animali.'),
 (3, 'Elisa Neri', 2, '2025-06-12', 'Palline, corde e giochi interattivi.'),
 (4, 'Marco Rossi', 4, '2025-06-13', 'Coperte e cucce invernali.'),
 (5, 'Anonimo', 1, '2025-06-14', 'Pacco vario non specificato.');
-
+*/
 INSERT INTO `donazioni` (`nome_donatore`, `importo`, `metodo_pagamento`, `data_donazione`, `note`) VALUES
 ('Mario Rossi', 50.00, 'contanti', '2025-06-10', 'Donazione mensile'),
 ('Giulia Bianchi', 100.00, 'bonifico', '2025-06-01', 'In memoria di un caro amico'),
@@ -208,8 +208,8 @@ INSERT INTO `donazioni` (`nome_donatore`, `importo`, `metodo_pagamento`, `data_d
 
 
 -- Tabella prenotazioni_adozione
-DROP TABLE IF EXISTS `prenotazioni_adozione`;
-CREATE TABLE `prenotazioni_adozione` (
+-- DROP TABLE IF EXISTS `prenotazioni_adozione`;
+CREATE TABLE if not exists `prenotazioni_adozione` (
 `id_prenotazione` INT AUTO_INCREMENT PRIMARY KEY,
 `id_animale` INT NOT NULL,
 `nome` VARCHAR(50) NOT NULL,
@@ -233,11 +233,3 @@ INSERT INTO `prenotazioni_adozione` (`id_animale`, `nome`, `cognome`, `telefono`
 (3, 'Marco', 'Verdi', '3319988776', 'marco.verdi@email.com', '2025-06-22', '09:00:00', 'Ho già esperienza con animali.', 'Rifiutata', TRUE),
 (4, 'Anna', 'Neri', '3476543210', 'anna.neri@email.com', '2025-06-23', '11:15:00', NULL, 'In attesa', FALSE),
 (1, 'Sara', 'Conti', '3204455667', 'sara.conti@email.com', '2025-06-24', '16:45:00', 'Famiglia con bambini, ambiente tranquillo.', 'Approvata', FALSE);
-
-
-
-
-
-
-
-
