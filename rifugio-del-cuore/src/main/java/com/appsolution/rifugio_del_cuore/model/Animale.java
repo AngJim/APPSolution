@@ -31,7 +31,7 @@ public class Animale {
     @Min(value = 0, message = "L'età dell'animale deve essere un numero positivo")
     private int eta;
 
-    @Min(value = 1, message = "Il mese deve essere compreso tra 1 e 12")
+    @Min(value = 0, message = "Il mese deve essere compreso tra 1 e 12")
     @Max(value = 12, message = "Il mese deve essere compreso tra 1 e 12")
     private int mese;
 

@@ -74,5 +74,36 @@
     </tbody>
 </table>
 
+<h2>Inserisci Nuovo Animale</h2>
+<form th:action="@{/animali}" method="post">
+    <table>
+        <tr>
+            <td><input type="text" name="nome" placeholder="Nome" required /></td>
+            <td><input type="text" name="specie" placeholder="Specie" required /></td>
+            <td><input type="text" name="razza" placeholder="Razza" /></td>
+            <td><input type="number" name="eta" placeholder="Età" min="0" required /></td>
+            <td><input type="number" name="mese" placeholder="Mese" min="0" max="11" /></td>
+            <td>
+                <select name="genere" required>
+                    <option value="">Genere</option>
+                    <option value="Maschio">Maschio</option>
+                    <option value="Femmina">Femmina</option>
+                </select>
+            </td>
+            <td><input type="text" name="taglia" placeholder="Taglia" /></td>
+            <td>
+                <select name="stato" required>
+                    <option value="Disponibile">Disponibile</option>
+                    <option value="Adottato">Adottato</option>
+                </select>
+            </td>
+            <td><input type="text" name="descrizione" placeholder="Descrizione" /></td>
+            <td>
+                <button type="submit" style="background-color: #5cb85c; color: white; border: none; padding: 6px 10px; cursor: pointer;">Salva</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
 </body>
 </html>
