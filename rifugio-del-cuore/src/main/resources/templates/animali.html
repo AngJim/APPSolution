@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Animali</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f7f7f7; }
+        table { width: 100%; border-collapse: collapse; background-color: white; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #eee; }
+        form { margin-bottom: 20px; }
+        input, select, button { margin-right: 10px; padding: 5px; }
+        .btn-danger {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Animali del Rifugio</h1>
+
+<form th:action="@{/animali}" method="get">
+    <input type="text" name="nome" placeholder="Cerca per nome" />
+    <select name="genere">
+        <option value="">Tutti i generi</option>
+        <option value="Maschio">Maschio</option>
+        <option value="Femmina">Femmina</option>
+    </select>
+    <select name="stato">
+        <option value="">Tutti gli stati</option>
+        <option value="Disponibile">Disponibile</option>
+        <option value="Adottato">Adottato</option>
+    </select>
+    <button type="submit">Filtra</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Specie</th>
+            <th>Razza</th>
+            <th>Età</th>
+            <th>Mese</th>
+            <th>Genere</th>
+            <th>Taglia</th>
+            <th>Stato</th>
+            <th>Descrizione</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="animale : ${animali}">
+            <td th:text="${animale.nome}">Nome</td>
+            <td th:text="${animale.specie}">Specie</td>
+            <td th:text="${animale.razza}">Razza</td>
+            <td th:text="${animale.eta}">Età</td>
+            <td th:text="${animale.mese}">Mese</td>
+            <td th:text="${animale.genere}">Genere</td>
+            <td th:text="${animale.taglia}">Taglia</td>
+            <td th:text="${animale.stato}">Stato</td>
+            <td th:text="${animale.descrizione}">Descrizione</td>
+            <td>
+                <form th:action="@{/animali/elimina/{id}(id=${animale.id})}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="btn-danger" onclick="return confirm('Sei sicuro di voler eliminare questo animale?');">Elimina</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Inserisci Nuovo Animale</h2>
+<form th:action="@{/animali}" method="post">
+    <table>
+        <tr>
+            <td><input type="text" name="nome" placeholder="Nome" required /></td>
+            <td><input type="text" name="specie" placeholder="Specie" required /></td>
+            <td><input type="text" name="razza" placeholder="Razza" /></td>
+            <td><input type="number" name="eta" placeholder="Età" min="0" required /></td>
+            <td><input type="number" name="mese" placeholder="Mese" min="0" max="11" /></td>
+            <td>
+                <select name="genere" required>
+                    <option value="">Genere</option>
+                    <option value="Maschio">Maschio</option>
+                    <option value="Femmina">Femmina</option>
+                </select>
+            </td>
+            <td><input type="text" name="taglia" placeholder="Taglia" /></td>
+            <td>
+                <select name="stato" required>
+                    <option value="Disponibile">Disponibile</option>
+                    <option value="Adottato">Adottato</option>
+                </select>
+            </td>
+            <td><input type="text" name="descrizione" placeholder="Descrizione" /></td>
+            <td>
+                <button type="submit" style="background-color: #5cb85c; color: white; border: none; padding: 6px 10px; cursor: pointer;">Salva</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>
