@@ -53,29 +53,5 @@ public class VisiteController {
         return ResponseEntity.noContent().build();
     }
     
-    // Endpoint aggiuntivi specifici per le visite
-    @GetMapping("/animale/{idAnimale}")
-    public List<Visite> getByAnimale(@PathVariable Integer idAnimale) {
-        return visiteService.getVisiteByAnimale(idAnimale);
-    }
     
-    @GetMapping("/veterinario/{idVeterinario}")
-    public List<Visite> getByVeterinario(@PathVariable Integer idVeterinario) {
-        return visiteService.getVisiteByVeterinario(idVeterinario);
-    }
-    
-    @GetMapping("/data/{dataVisita}")
-    public List<Visite> getByData(@PathVariable String dataVisita) {
-        return visiteService.getVisiteByData(dataVisita);
-    }
-    
-    @GetMapping("/tipo/{tipoVisita}")
-    public List<Visite> getByTipo(@PathVariable String tipoVisita) {
-        return visiteService.getVisiteByTipo(tipoVisita);
-    }
-    
-    @GetMapping("/urgenza/{urgenza}")
-    public List<Visite> getByUrgenza(@PathVariable String urgenza) {
-        return visiteService.getVisiteByUrgenza(urgenza);
-    }
 }
