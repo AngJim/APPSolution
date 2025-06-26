@@ -1,6 +1,8 @@
 package com.appsolution.rifugiodelcuore.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -9,6 +11,7 @@ import jakarta.persistence.Table;
 public class Visite {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id_Visita;
 
     public Integer id_Animale;
@@ -18,6 +21,8 @@ public class Visite {
     public String tipo_Visita;
     public String urgenza;  
     public String note_Aggiuntive;
+
+    
     public Integer getId_Visita() {
         return id_Visita;
     }
@@ -66,10 +71,6 @@ public class Visite {
     public void setNote_Aggiuntive(String note_Aggiuntive) {
         this.note_Aggiuntive = note_Aggiuntive;
     }
-
-
-   
-    
     
 }
 
