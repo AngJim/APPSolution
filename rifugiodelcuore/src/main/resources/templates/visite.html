@@ -15,16 +15,16 @@
   <div class="card-header bg-success text-white">Aggiungi nuova visita</div>
   <div class="card-body">
     <div class="row g-2">
-      <div class="col"><input class="form-control" id="id_Animale" placeholder="id_Animale"></div>
-      <div class="col"><input class="form-control" id="id_Veterinario" placeholder="id_Veterinario"></div>
+      <div class="col"><input class="form-control" id="id_Animale" placeholder="id_Animale *"></div>
+      <div class="col"><input class="form-control" id="id_Veterinario" placeholder="id Veterinario *"></div>
       <div class="col"><input type="date" class="form-control" id="data_Visita"></div>
       <div class="col"><input type="time" class="form-control" id="orario_Visita"></div>
     </div>
     <div class="row g-2 mt-2">
-      <div class="col"><input class="form-control" id="tipo_Visita" placeholder="tipo_visita"></div>
+      <div class="col"><input class="form-control" id="tipo_Visita" placeholder="tipo visita"></div>
       <div class="col"><input class="form-control" id="urgenza" placeholder="urgenza"></div>
     </div>
-    <textarea class="form-control mt-2" id="note_Aggiuntive" placeholder="note_aggiuntive"></textarea>
+    <textarea class="form-control mt-2" id="note_Aggiuntive" placeholder="note aggiuntive"></textarea>
     <button class="btn btn-success mt-3" onclick="createVisita()">Aggiungi visita</button>
   </div>
 </div>
@@ -37,14 +37,14 @@
         <table class="table table-bordered table-hover" id="visiteTable">
           <thead class="table-light">
             <tr>
-              <th>id_Visita</th>
-              <th>id_Animale</th>
-              <th>id_Veterinario</th>
-              <th>data_Visita</th>
-              <th>orario_Visita</th>
-              <th>tipo_Visita</th>
+              <th>id Visita</th>
+              <th>id Animale</th>
+              <th>id Veterinario</th>
+              <th>data Visita</th>
+              <th>orario Visita</th>
+              <th>tipo Visita</th>
               <th>urgenza</th>
-              <th>note_Aggiuntive</th>
+              <th>note Aggiuntive</th>
             </tr>
           </thead>
           <tbody id="visiteBody"></tbody>

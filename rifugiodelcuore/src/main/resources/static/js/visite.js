@@ -48,7 +48,9 @@ function createVisita() {
     orarioVisita: document.getElementById("orario_Visita").value,
     tipoVisita: document.getElementById("tipo_Visita").value,
     urgenza: document.getElementById("urgenza").value,
-    noteAggiuntive: document.getElementById("note_Aggiuntive").value
+    noteAggiuntive: document.getElementById("note_Aggiuntive").value,
+
+  
   };
 console.log("Sto provando a inviare questa visita:", visita);
 
@@ -62,6 +64,11 @@ console.log("Sto provando a inviare questa visita:", visita);
     getVisite();
     clearForm();
   });
+
+  if (!visita.idAnimale || !visita.idVeterinario || !visita.dataVisita || !visita.orarioVisita) {
+  alert("Compila tutti i seguenti campi campi obbligatori correttamente: id Animale id Veterinario data Visita e orario Visita.");
+  return;
+  }
 }
 
 function clearForm() {
