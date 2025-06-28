@@ -35,13 +35,13 @@ public class VisiteService {
     
     public Optional<Visite> updateVisite(Integer id, Visite updatedVisite) {
         return visiteRepository.findById(id).map(visite -> {
-            visite.setId_Animale(updatedVisite.getId_Animale());
-            visite.setId_Veterinario(updatedVisite.getId_Veterinario());
-            visite.setData_Visita(updatedVisite.getData_Visita());
-            visite.setOrario_Visita(updatedVisite.getOrario_Visita());
-            visite.setTipo_Visita(updatedVisite.getTipo_Visita());
+            visite.setIdAnimale(updatedVisite.getIdAnimale());
+            visite.setIdVeterinario(updatedVisite.getIdVeterinario());
+            visite.setDataVisita(updatedVisite.getDataVisita());
+            visite.setOrarioVisita(updatedVisite.getOrarioVisita());
+            visite.setTipoVisita(updatedVisite.getTipoVisita());
             visite.setUrgenza(updatedVisite.getUrgenza());
-            visite.setNote_Aggiuntive(updatedVisite.getNote_Aggiuntive());
+            visite.setNoteAggiuntive(updatedVisite.getNoteAggiuntive());
             return visiteRepository.save(visite);
         });
     }

@@ -12,52 +12,51 @@ public class Visite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id_Visita;
-
-    public Integer id_Animale;
-    public Integer id_Veterinario;
-    public String data_Visita;
-    public String orario_Visita;
-    public String tipo_Visita;
-    public String urgenza;  
-    public String note_Aggiuntive;
-
+    private Long idVisita;
     
-    public Integer getId_Visita() {
-        return id_Visita;
+    private Long idAnimale;
+    private Long idVeterinario;
+    private String dataVisita;
+    private String orarioVisita;
+    private String tipoVisita;
+    private String urgenza;
+    private String noteAggiuntive;
+    
+    public Long getIdVisita() {
+        return idVisita;
     }
-    public void setId_Visita(Integer id_Visita) {
-        this.id_Visita = id_Visita;
+    public void setIdVisita(Long idVisita) {
+        this.idVisita = idVisita;
     }
-    public Integer getId_Animale() {
-        return id_Animale;
+    public Long getIdAnimale() {
+        return idAnimale;
     }
-    public void setId_Animale(Integer id_Animale) {
-        this.id_Animale = id_Animale;
+    public void setIdAnimale(Long idAnimale) {
+        this.idAnimale = idAnimale;
     }
-    public Integer getId_Veterinario() {
-        return id_Veterinario;
+    public Long getIdVeterinario() {
+        return idVeterinario;
     }
-    public void setId_Veterinario(Integer id_Veterinario) {
-        this.id_Veterinario = id_Veterinario;
+    public void setIdVeterinario(Long idVeterinario) {
+        this.idVeterinario = idVeterinario;
     }
-    public String getData_Visita() {
-        return data_Visita;
+    public String getDataVisita() {
+        return dataVisita;
     }
-    public void setData_Visita(String data_Visita) {
-        this.data_Visita = data_Visita;
+    public void setDataVisita(String dataVisita) {
+        this.dataVisita = dataVisita;
     }
-    public String getOrario_Visita() {
-        return orario_Visita;
+    public String getOrarioVisita() {
+        return orarioVisita;
     }
-    public void setOrario_Visita(String orario_Visita) {
-        this.orario_Visita = orario_Visita;
+    public void setOrarioVisita(String orarioVisita) {
+        this.orarioVisita = orarioVisita;
     }
-    public String getTipo_Visita() {
-        return tipo_Visita;
+    public String getTipoVisita() {
+        return tipoVisita;
     }
-    public void setTipo_Visita(String tipo_Visita) {
-        this.tipo_Visita = tipo_Visita;
+    public void setTipoVisita(String tipoVisita) {
+        this.tipoVisita = tipoVisita;
     }
     public String getUrgenza() {
         return urgenza;
@@ -65,11 +64,17 @@ public class Visite {
     public void setUrgenza(String urgenza) {
         this.urgenza = urgenza;
     }
-    public String getNote_Aggiuntive() {
-        return note_Aggiuntive;
+    public String getNoteAggiuntive() {
+        return noteAggiuntive;
     }
-    public void setNote_Aggiuntive(String note_Aggiuntive) {
-        this.note_Aggiuntive = note_Aggiuntive;
+    public void setNoteAggiuntive(String noteAggiuntive) {
+        this.noteAggiuntive = noteAggiuntive;
     }
+
+
+
+
+    
+    
     
 }
