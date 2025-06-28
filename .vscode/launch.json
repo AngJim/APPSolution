@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RifugiodelcuoreApplication<rifugiodelcuore>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.appsolution.rifugiodelcuore.RifugiodelcuoreApplication",
+            "projectName": "rifugiodelcuore",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
