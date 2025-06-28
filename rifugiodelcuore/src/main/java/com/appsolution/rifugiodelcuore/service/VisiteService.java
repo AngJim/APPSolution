@@ -2,13 +2,15 @@ package com.appsolution.rifugiodelcuore.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.appsolution.rifugiodelcuore.model.Visite;
 import com.appsolution.rifugiodelcuore.repository.VisiteRepository;
 
 @Service
 public class VisiteService {
-    
+    @Autowired
     private final VisiteRepository visiteRepository;
     
     public VisiteService(VisiteRepository visiteRepository) {
