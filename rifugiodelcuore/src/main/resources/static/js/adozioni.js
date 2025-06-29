@@ -14,13 +14,12 @@ const API_URL = '/api/adozioni';
         const row = document.createElement('tr');
 
         row.innerHTML = `
-          <td>${adozione.id}</td>
+          <td>${adozione.idAdozione}</td>
           <td>${adozione.nomeAdottante}</td>
           <td>${adozione.cognomeAdottante}</td>
           <td>${adozione.email ?? ''}</td>
           <td>${adozione.telefono}</td>
           <td>${adozione.dataAdozione}</td>
-          <td>${adozione.noteAggiuntive ?? ''}</td>
           <td>
             <button class="btn btn-warning btn-sm me-1" onclick="updateAdozione(${adozione.id})">Modifica</button>
             <button class="btn btn-danger btn-sm" onclick="deleteAdozione(${adozione.id})">Elimina</button>

@@ -22,8 +22,9 @@ const API_URL = '/api/animali';
               <td><input type="number" class="form-control" value="${animale.eta}" id="eta-${animale.id}"></td>
               <td><input class="form-control" value="${animale.taglia}" id="taglia-${animale.id}"></td>
               <td>
-                <button class="btn btn-warning btn-sm me-1" onclick="updateAnimale(${animale.id})">Modifica</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteAnimale(${animale.id})">Elimina</button>
+                  <button class="btn btn-warning btn-sm me-1" onclick="updateAnimale(${animale.id})">Modifica</button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteAnimale(${animale.id})">Elimina</button>
+                  <button class="btn btn-info btn-sm me-1" onclick="openAdozioneForm(${animale.id})">Registra Adozione</button>
               </td>
             `;
 
@@ -92,4 +93,38 @@ const API_URL = '/api/animali';
       document.getElementById("eta").value = '';
       document.getElementById("immagineUrl").value = '';
       document.getElementById("descrizione").value = '';
+    }
+
+    let adozioneModal;
+
+    function openAdozioneForm(idAnimale) {
+      document.getElementById('idAnimaleAdozione').value = idAnimale;
+      document.getElementById('adozioneForm').reset();
+
+      if (!adozioneModal) {
+        adozioneModal = new bootstrap.Modal(document.getElementById('adozioneModal'));
+      }
+      adozioneModal.show();
+    }
+
+    function submitAdozione() {
+      const adozione = {
+        idAnimale: parseInt(document.getElementById("idAnimaleAdozione").value),
+        nomeAdottante: document.getElementById("nomeAdottante").value,
+        cognomeAdottante: document.getElementById("cognomeAdottante").value,
+        email: document.getElementById("email").value,
+        telefono: document.getElementById("telefono").value,
+        dataAdozione: document.getElementById("dataAdozione").value,
+        noteAggiuntive: document.getElementById("noteAggiuntive").value
+      };
+
+      fetch("/api/adozioni", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(adozione)
+      })
+      .then(() => {
+        adozioneModal.hide();
+        window.location.href = "adozioni.html"; // Redirect
+      });
     }
