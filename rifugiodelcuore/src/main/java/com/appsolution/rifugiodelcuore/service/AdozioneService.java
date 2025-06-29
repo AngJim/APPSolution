@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.appsolution.rifugiodelcuore.repository.AdozioneRepository;
 import com.appsolution.rifugiodelcuore.model.Adozione;
-import com.appsolution.rifugiodelcuore.model.Animale;
 
 @Service
 public class AdozioneService {
