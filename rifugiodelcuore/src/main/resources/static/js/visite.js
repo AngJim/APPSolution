@@ -17,8 +17,8 @@ function getVisite() {
 
         row.innerHTML = `
           <td>${visita.idVisita}</td>
-          <td>${visita.idAnimale}</td>
-          <td>${visita.idVeterinario}</td>
+          <td>${visita.microchipAnimale}</td>
+          <td>${visita.codiceFiscaleVeterinario}</td>
           <td>${visita.dataVisita}</td>
           <td>${visita.orarioVisita}</td>
           <td>${visita.tipoVisita}</td>
@@ -39,11 +39,12 @@ function getVisite() {
 
 
 
+
 // Funzione per creare una nuova visita
 function createVisita() {
   const visita = {
-    idAnimale: parseInt(document.getElementById("id_Animale").value),
-    idVeterinario: parseInt(document.getElementById("id_Veterinario").value),
+    microchipAnimale: document.getElementById("microchipAnimale").value,
+    codiceFiscaleVeterinario: document.getElementById("codiceFiscaleVeterinario").value,
     dataVisita: document.getElementById("data_Visita").value,
     orarioVisita: document.getElementById("orario_Visita").value,
     tipoVisita: document.getElementById("tipo_Visita").value,
@@ -64,16 +65,18 @@ console.log("Sto provando a inviare questa visita:", visita);
     getVisite();
     clearForm();
   });
+/* funzione per allert campi obbligatori
+  if (!visita.microchip || !visita.codiceFiscaleVeterinario || !visita.dataVisita || !visita.orarioVisita) {
 
-  if (!visita.idAnimale || !visita.idVeterinario || !visita.dataVisita || !visita.orarioVisita) {
   alert("Compila tutti i seguenti campi campi obbligatori correttamente: id Animale id Veterinario data Visita e orario Visita.");
   return;
   }
+  */
 }
 
 function clearForm() {
-  document.getElementById("id_Animale").value = '';
-  document.getElementById("id_Veterinario").value = '';
+  document.getElementById("microchipAnimale").value = '';
+  document.getElementById("codiceFiscaleVeterinario").value = '';
   document.getElementById("data_Visita").value = '';
   document.getElementById("orario_Visita").value = '';
   document.getElementById("tipo_Visita").value = '';
