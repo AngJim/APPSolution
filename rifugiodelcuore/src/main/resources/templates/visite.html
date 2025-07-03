@@ -34,7 +34,17 @@
     </div>
     <div class="row g-2 mt-2">
       <div class="col"><input class="form-control" id="tipo_Visita" placeholder="tipo visita"></div>
-      <div class="col"><input class="form-control" id="urgenza" placeholder="urgenza"></div>
+      
+      
+      
+      <div class="col">
+        <select class="form-select" id="urgenza">
+          <option value="">Seleziona urgenza</option>
+          <option value="Bassa">Bassa</option>
+          <option value="Media">Media</option>
+          <option value="Alta">Alta</option>
+        </select>
+      </div>
     </div>
     <textarea class="form-control mt-2" id="note_Aggiuntive" placeholder="note aggiuntive"></textarea>
     <button class="btn btn-success mt-3" onclick="createVisita()">Aggiungi visita</button>
