@@ -110,6 +110,51 @@
   </div>
 
 <script th:src="@{/js/visite.js}"></script>
+
+
+
+<!-- Modale modifica visita -->
+<div class="modal fade" id="modificaModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title">Modifica visita</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="modifica_idVisita">
+        <div class="row g-2">
+          <div class="col"><input class="form-control" id="modifica_microchipAnimale" placeholder="microchip Animale"></div>
+          <div class="col"><input class="form-control" id="modifica_codiceFiscaleVeterinario" placeholder="codice Fiscale Veterinario"></div>
+        </div>
+        <div class="row g-2 mt-2">
+          <div class="col"><input type="date" class="form-control" id="modifica_dataVisita"></div>
+          <div class="col"><input type="time" class="form-control" id="modifica_orarioVisita"></div>
+        </div>
+        <div class="row g-2 mt-2">
+          <div class="col"><input class="form-control" id="modifica_tipoVisita" placeholder="tipo Visita"></div>
+          <div class="col">
+            <select class="form-select" id="modifica_urgenza">
+              <option value="Bassa">Bassa</option>
+              <option value="Media">Media</option>
+              <option value="Alta">Alta</option>
+            </select>
+          </div>
+        </div>
+        <textarea class="form-control mt-2" id="modifica_noteAggiuntive" placeholder="note aggiuntive"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button class="btn btn-warning" onclick="salvaModifica()">Salva modifiche</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 </body>
 
 

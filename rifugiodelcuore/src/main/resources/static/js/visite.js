@@ -14,18 +14,21 @@ function getVisite() {
   console.log("Dati ricevuti dal backend:", visite);
       visite.forEach(visita => {
         const row = document.createElement('tr');
-
-        row.innerHTML = `
-        <td>${visita.idVisita}</td>
-        <td>${visita.microchipAnimale}</td>
-        <td>${visita.codiceFiscaleVeterinario}</td>
-        <td>${visita.dataVisita}</td>
-        <td>${visita.orarioVisita}</td>
-        <td>${visita.tipoVisita}</td>
-        <td>${visita.urgenza}</td>
-        <td>${visita.noteAggiuntive}</td>
-        <td><button class="btn btn-danger btn-sm" onclick="eliminaVisita(${visita.idVisita})">Elimina</button></td>
-    `;
+  row.innerHTML = `
+    <td>${visita.idVisita}</td>
+    <td>${visita.microchipAnimale}</td>
+    <td>${visita.codiceFiscaleVeterinario}</td>
+    <td>${visita.dataVisita}</td>
+    <td>${visita.orarioVisita}</td>
+    <td>${visita.tipoVisita}</td>
+    <td>${visita.urgenza}</td>
+    <td>${visita.noteAggiuntive}</td>
+    <td>
+      
+    <button class="btn btn-warning btn-sm me-2" onclick='apriModifica(${JSON.stringify(visita)})'>Modifica</button>
+    <button class="btn btn-danger btn-sm" onclick="eliminaVisita(${visita.idVisita})">Elimina</button>
+    </td>
+  `;
 
         tbody.appendChild(row);
       });
@@ -84,7 +87,7 @@ function clearForm() {
   document.getElementById("urgenza").value = '';
   document.getElementById("note_Aggiuntive").value = '';
 }
-
+// Funzione per eliminare una visita
 function eliminaVisita(id) {
   if (confirm("Sei sicuro di voler eliminare questa visita?")) {
     fetch(`${API_URL}/${id}`, {
@@ -93,4 +96,45 @@ function eliminaVisita(id) {
     .then(() => getVisite())
     .catch(error => console.error("Errore durante l'eliminazione:", error));
   }
+}
+
+
+// Funzione per aprire il modal di modifica
+function apriModifica(visita) {
+  document.getElementById('modifica_idVisita').value = visita.idVisita;
+  document.getElementById('modifica_microchipAnimale').value = visita.microchipAnimale;
+  document.getElementById('modifica_codiceFiscaleVeterinario').value = visita.codiceFiscaleVeterinario;
+  document.getElementById('modifica_dataVisita').value = visita.dataVisita;
+  document.getElementById('modifica_orarioVisita').value = visita.orarioVisita;
+  document.getElementById('modifica_tipoVisita').value = visita.tipoVisita;
+  document.getElementById('modifica_urgenza').value = visita.urgenza;
+  document.getElementById('modifica_noteAggiuntive').value = visita.noteAggiuntive;
+
+  const modal = new bootstrap.Modal(document.getElementById('modificaModal'));
+  modal.show();
+}
+
+// Funzione per salvare le modifiche
+function salvaModifica() {
+  const visitaModificata = {
+    idVisita: document.getElementById('modifica_idVisita').value,
+    microchipAnimale: document.getElementById('modifica_microchipAnimale').value,
+    codiceFiscaleVeterinario: document.getElementById('modifica_codiceFiscaleVeterinario').value,
+    dataVisita: document.getElementById('modifica_dataVisita').value,
+    orarioVisita: document.getElementById('modifica_orarioVisita').value,
+    tipoVisita: document.getElementById('modifica_tipoVisita').value,
+    urgenza: document.getElementById('modifica_urgenza').value,
+    noteAggiuntive: document.getElementById('modifica_noteAggiuntive').value
+  };
+
+  fetch(`${API_URL}/${visitaModificata.idVisita}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(visitaModificata)
+  })
+  .then(() => {
+    getVisite();
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modificaModal'));
+    modal.hide();
+  });
 }
