@@ -1,6 +1,6 @@
 # Cuore a quattro zampe
 
-## Perché scegliere la nostra soluzoine?
+## Perché scegliere la nostra soluzione?
 
 Verranno specificati tutti i motivi per cui scegliere la nostra soluzione è conveniente e vantaggioso per i nostri clienti.
 
