@@ -16,15 +16,16 @@ function getVisite() {
         const row = document.createElement('tr');
 
         row.innerHTML = `
-          <td>${visita.idVisita}</td>
-          <td>${visita.microchipAnimale}</td>
-          <td>${visita.codiceFiscaleVeterinario}</td>
-          <td>${visita.dataVisita}</td>
-          <td>${visita.orarioVisita}</td>
-          <td>${visita.tipoVisita}</td>
-          <td>${visita.urgenza}</td>
-          <td>${visita.noteAggiuntive}</td>
-        `;
+        <td>${visita.idVisita}</td>
+        <td>${visita.microchipAnimale}</td>
+        <td>${visita.codiceFiscaleVeterinario}</td>
+        <td>${visita.dataVisita}</td>
+        <td>${visita.orarioVisita}</td>
+        <td>${visita.tipoVisita}</td>
+        <td>${visita.urgenza}</td>
+        <td>${visita.noteAggiuntive}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="eliminaVisita(${visita.idVisita})">Elimina</button></td>
+    `;
 
         tbody.appendChild(row);
       });
@@ -84,3 +85,12 @@ function clearForm() {
   document.getElementById("note_Aggiuntive").value = '';
 }
 
+function eliminaVisita(id) {
+  if (confirm("Sei sicuro di voler eliminare questa visita?")) {
+    fetch(`${API_URL}/${id}`, {
+      method: "DELETE"
+    })
+    .then(() => getVisite())
+    .catch(error => console.error("Errore durante l'eliminazione:", error));
+  }
+}
