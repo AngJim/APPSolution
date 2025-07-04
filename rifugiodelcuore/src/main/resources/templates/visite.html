@@ -27,14 +27,57 @@
   <div class="card-header bg-success text-white">Aggiungi nuova visita</div>
   <div class="card-body">
     <div class="row g-2">
-      <div class="col"><input class="form-control" id="id_Animale" placeholder="id_Animale *"></div>
-      <div class="col"><input class="form-control" id="id_Veterinario" placeholder="id Veterinario *"></div>
+      <div class="col"><input class="form-control" id="microchipAnimale" placeholder="microchip Animale*"></div>
+      <div class="col"><input class="form-control" id="codiceFiscaleVeterinario" placeholder="codice Fiscale Veterinario*"></div>
       <div class="col"><input type="date" class="form-control" id="data_Visita"></div>
       <div class="col"><input type="time" class="form-control" id="orario_Visita"></div>
     </div>
     <div class="row g-2 mt-2">
-      <div class="col"><input class="form-control" id="tipo_Visita" placeholder="tipo visita"></div>
-      <div class="col"><input class="form-control" id="urgenza" placeholder="urgenza"></div>
+      <select class="form-select" id="tipo_Visita">
+  <!-- Opzioni per il tipo di visita (menu a tendina)-->
+  <option value="">Seleziona tipo visita</option>
+  <optgroup label="Routine">
+    <option value="Controllo generale">Controllo generale</option>
+    <option value="Visita post-adozione">Visita post-adozione</option>
+  </optgroup>
+  <optgroup label="Prevenzione">
+    <option value="Vaccinazione">Vaccinazione</option>
+    <option value="Sverminazione">Sverminazione</option>
+    <option value="Trattamento antipulci/zecche">Trattamento antipulci/zecche</option>
+  </optgroup>
+  <optgroup label="Diagnostica">
+    <option value="Analisi di laboratorio">Analisi di laboratorio</option>
+    <option value="Radiografia">Radiografia</option>
+    <option value="Ecografia">Ecografia</option>
+    <option value="Endoscopia">Endoscopia</option>
+    <option value="Biopsia">Biopsia</option>
+  </optgroup>
+  <optgroup label="Chirurgia">
+    <option value="Sterilizzazione">Sterilizzazione</option>
+    <option value="Chirurgia ortopedica">Chirurgia ortopedica</option>
+    <option value="Rimozione neoplasie">Rimozione neoplasie</option>
+  </optgroup>
+  <optgroup label="Emergenze">
+    <option value="Emergenza">Emergenza</option>
+  </optgroup>
+  <optgroup label="Altro">
+    <option value="Valutazione comportamentale">Valutazione comportamentale</option>
+    <option value="Controllo post-operatorio">Controllo post-operatorio</option>
+    <option value="Terapia farmacologica">Terapia farmacologica</option>
+  </optgroup>
+</select>
+
+      
+      
+      
+      <div class="col">
+        <select class="form-select" id="urgenza">
+          <option value="">Seleziona urgenza</option>
+          <option value="Bassa">Bassa</option>
+          <option value="Media">Media</option>
+          <option value="Alta">Alta</option>
+        </select>
+      </div>
     </div>
     <textarea class="form-control mt-2" id="note_Aggiuntive" placeholder="note aggiuntive"></textarea>
     <button class="btn btn-success mt-3" onclick="createVisita()">Aggiungi visita</button>
@@ -50,13 +93,14 @@
           <thead class="table-light">
             <tr>
               <th>id Visita</th>
-              <th>id Animale</th>
-              <th>id Veterinario</th>
+              <th>microchip Animale</th>
+              <th>codice Fiscale Veterinario</th>
               <th>data Visita</th>
               <th>orario Visita</th>
               <th>tipo Visita</th>
               <th>urgenza</th>
               <th>note Aggiuntive</th>
+              <th>Azioni</th>
             </tr>
           </thead>
           <tbody id="visiteBody"></tbody>
@@ -66,6 +110,51 @@
   </div>
 
 <script th:src="@{/js/visite.js}"></script>
+
+
+
+<!-- Modale modifica visita -->
+<div class="modal fade" id="modificaModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title">Modifica visita</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="modifica_idVisita">
+        <div class="row g-2">
+          <div class="col"><input class="form-control" id="modifica_microchipAnimale" placeholder="microchip Animale"></div>
+          <div class="col"><input class="form-control" id="modifica_codiceFiscaleVeterinario" placeholder="codice Fiscale Veterinario"></div>
+        </div>
+        <div class="row g-2 mt-2">
+          <div class="col"><input type="date" class="form-control" id="modifica_dataVisita"></div>
+          <div class="col"><input type="time" class="form-control" id="modifica_orarioVisita"></div>
+        </div>
+        <div class="row g-2 mt-2">
+          <div class="col"><input class="form-control" id="modifica_tipoVisita" placeholder="tipo Visita"></div>
+          <div class="col">
+            <select class="form-select" id="modifica_urgenza">
+              <option value="Bassa">Bassa</option>
+              <option value="Media">Media</option>
+              <option value="Alta">Alta</option>
+            </select>
+          </div>
+        </div>
+        <textarea class="form-control mt-2" id="modifica_noteAggiuntive" placeholder="note aggiuntive"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button class="btn btn-warning" onclick="salvaModifica()">Salva modifiche</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 </body>
 
 
