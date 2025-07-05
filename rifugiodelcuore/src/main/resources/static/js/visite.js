@@ -44,19 +44,55 @@ function getVisite() {
 
 
 
-// Funzione per creare una nuova visita
+// Funzione per creare una nuova visita e  inviare i dati al backend con i vari controlli
 function createVisita() {
-  const visita = {
-    microchipAnimale: document.getElementById("microchipAnimale").value,
-    codiceFiscaleVeterinario: document.getElementById("codiceFiscaleVeterinario").value,
-    dataVisita: document.getElementById("data_Visita").value,
-    orarioVisita: document.getElementById("orario_Visita").value,
-    tipoVisita: document.getElementById("tipo_Visita").value,
-    urgenza: document.getElementById("urgenza").value,
-    noteAggiuntive: document.getElementById("note_Aggiuntive").value,
+  const microchip = document.getElementById("microchipAnimale").value.trim();
+  const codiceFiscale = document.getElementById("codiceFiscaleVeterinario").value.trim();
+  const dataVisita = document.getElementById("data_Visita").value;
+  const orarioVisita = document.getElementById("orario_Visita").value;
+  const tipoVisita = document.getElementById("tipo_Visita").value;
+  const urgenza = document.getElementById("urgenza").value;
+  const note = document.getElementById("note_Aggiuntive").value.trim();
 
-  
+  // Validazione base
+  if (!microchip || !codiceFiscale || !dataVisita || !orarioVisita || !tipoVisita || !urgenza) {
+    alert("Compila tutti i campi obbligatori.");
+    return;
+  }
+
+  // Esempio di validazione microchip (solo numeri, almeno 8 cifre)
+  if (!/^\d{8,}$/.test(microchip)) {
+    alert("Il microchip deve contenere almeno 8 cifre numeriche.");
+    return;
+  }
+
+  // Esempio di validazione codice fiscale (16 caratteri alfanumerici)
+  if (!/^[A-Z0-9]{16}$/i.test(codiceFiscale)) {
+    alert("Il codice fiscale deve essere composto da 16 caratteri alfanumerici.");
+    return;
+  }
+
+  const visita = {
+    microchipAnimale: microchip,
+    codiceFiscaleVeterinario: codiceFiscale,
+    dataVisita,
+    orarioVisita,
+    tipoVisita,
+    urgenza,
+    noteAggiuntive: note
   };
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(visita)
+  })
+  .then(() => {
+    getVisite();
+    clearForm();
+  });
+}
+
 console.log("Sto provando a inviare questa visita:", visita);
 
 
@@ -76,7 +112,7 @@ console.log("Sto provando a inviare questa visita:", visita);
   return;
   }
   */
-}
+
 
 function clearForm() {
   document.getElementById("microchipAnimale").value = '';
@@ -116,16 +152,52 @@ function apriModifica(visita) {
 
 // Funzione per salvare le modifiche
 function salvaModifica() {
+  const id = document.getElementById('modifica_idVisita').value;
+  const microchip = document.getElementById('modifica_microchipAnimale').value.trim();
+  const codiceFiscale = document.getElementById('modifica_codiceFiscaleVeterinario').value.trim();
+  const data = document.getElementById('modifica_dataVisita').value;
+  const orario = document.getElementById('modifica_orarioVisita').value;
+  const tipo = document.getElementById('modifica_tipoVisita').value;
+  const urgenza = document.getElementById('modifica_urgenza').value;
+  const note = document.getElementById('modifica_noteAggiuntive').value.trim();
+
+  if (!microchip || !codiceFiscale || !data || !orario || !tipo || !urgenza) {
+    alert("Compila tutti i campi obbligatori.");
+    return;
+  }
+
+  if (!/^\d{8,}$/.test(microchip)) {
+    alert("Il microchip deve contenere almeno 8 cifre numeriche.");
+    return;
+  }
+
+  if (!/^[A-Z0-9]{16}$/i.test(codiceFiscale)) {
+    alert("Il codice fiscale deve essere composto da 16 caratteri alfanumerici.");
+    return;
+  }
+
   const visitaModificata = {
-    idVisita: document.getElementById('modifica_idVisita').value,
-    microchipAnimale: document.getElementById('modifica_microchipAnimale').value,
-    codiceFiscaleVeterinario: document.getElementById('modifica_codiceFiscaleVeterinario').value,
-    dataVisita: document.getElementById('modifica_dataVisita').value,
-    orarioVisita: document.getElementById('modifica_orarioVisita').value,
-    tipoVisita: document.getElementById('modifica_tipoVisita').value,
-    urgenza: document.getElementById('modifica_urgenza').value,
-    noteAggiuntive: document.getElementById('modifica_noteAggiuntive').value
+    idVisita: id,
+    microchipAnimale: microchip,
+    codiceFiscaleVeterinario: codiceFiscale,
+    dataVisita: data,
+    orarioVisita: orario,
+    tipoVisita: tipo,
+    urgenza: urgenza,
+    noteAggiuntive: note
   };
+
+  fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(visitaModificata)
+  })
+  .then(() => {
+    getVisite();
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modificaModal'));
+    modal.hide();
+  });
+}
 
   fetch(`${API_URL}/${visitaModificata.idVisita}`, {
     method: "PUT",
@@ -137,4 +209,4 @@ function salvaModifica() {
     const modal = bootstrap.Modal.getInstance(document.getElementById('modificaModal'));
     modal.hide();
   });
-}
+
