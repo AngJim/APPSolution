@@ -3,6 +3,18 @@ const API_URL = '/api/visite';
 // Quando la pagina è pronta, carica le visite
 window.onload = getVisite;
 
+// Funzione per gestire gli errori di validazione
+function mostraErrore(idElemento, messaggio) {
+  const erroreDiv = document.getElementById(idElemento);
+  erroreDiv.textContent = messaggio;
+  erroreDiv.classList.remove('d-none');
+}
+// funzione nascondere eventuali errori precedenti:
+function nascondiErrore(idElemento) {
+  const erroreDiv = document.getElementById(idElemento);
+  erroreDiv.classList.add('d-none');
+}
+
 function getVisite() {
   
 
@@ -46,6 +58,8 @@ function getVisite() {
 
 // Funzione per creare una nuova visita e  inviare i dati al backend con i vari controlli
 function createVisita() {
+  nascondiErrore("formError");
+
   const microchip = document.getElementById("microchipAnimale").value.trim();
   const codiceFiscale = document.getElementById("codiceFiscaleVeterinario").value.trim();
   const dataVisita = document.getElementById("data_Visita").value;
@@ -54,21 +68,19 @@ function createVisita() {
   const urgenza = document.getElementById("urgenza").value;
   const note = document.getElementById("note_Aggiuntive").value.trim();
 
-  // Validazione base
+  // Controlli per i campi obbligatori che non possono essere vuoti (microchip, codice fiscale, data, orario, tipo e urgenza) altrimenti mostra un errore
   if (!microchip || !codiceFiscale || !dataVisita || !orarioVisita || !tipoVisita || !urgenza) {
-    alert("Compila tutti i campi obbligatori.");
+    mostraErrore("formError", "Compila tutti i campi obbligatori: microchip, codice fiscale, data, orario, tipo e urgenza.");
     return;
   }
-
-  // Esempio di validazione microchip (solo numeri, almeno 8 cifre)
+  // Controlli per il microchip (almeno 8 cifre numeriche) altrimenti mostra un errore
   if (!/^\d{8,}$/.test(microchip)) {
-    alert("Il microchip deve contenere almeno 8 cifre numeriche.");
+    mostraErrore("formError", "Il microchip deve contenere almeno 8 cifre numeriche.");
     return;
   }
-
-  // Esempio di validazione codice fiscale (16 caratteri alfanumerici)
+  // Controlli per il codice fiscale (16 caratteri alfanumerici) altrimenti mostra un errore
   if (!/^[A-Z0-9]{16}$/i.test(codiceFiscale)) {
-    alert("Il codice fiscale deve essere composto da 16 caratteri alfanumerici.");
+    mostraErrore("formError", "Il codice fiscale deve essere composto da 16 caratteri alfanumerici.");
     return;
   }
 
@@ -105,13 +117,7 @@ console.log("Sto provando a inviare questa visita:", visita);
     getVisite();
     clearForm();
   });
-/* funzione per allert campi obbligatori
-  if (!visita.microchip || !visita.codiceFiscaleVeterinario || !visita.dataVisita || !visita.orarioVisita) {
 
-  alert("Compila tutti i seguenti campi campi obbligatori correttamente: id Animale id Veterinario data Visita e orario Visita.");
-  return;
-  }
-  */
 
 
 function clearForm() {
@@ -150,8 +156,10 @@ function apriModifica(visita) {
   modal.show();
 }
 
-// Funzione per salvare le modifiche
+// Funzione per salvare le modifiche con i controlli
 function salvaModifica() {
+  nascondiErrore("modificaError");
+
   const id = document.getElementById('modifica_idVisita').value;
   const microchip = document.getElementById('modifica_microchipAnimale').value.trim();
   const codiceFiscale = document.getElementById('modifica_codiceFiscaleVeterinario').value.trim();
@@ -161,20 +169,22 @@ function salvaModifica() {
   const urgenza = document.getElementById('modifica_urgenza').value;
   const note = document.getElementById('modifica_noteAggiuntive').value.trim();
 
+  // controlli per i campi obbligatori che non possono essere vuoti (microchip, codice fiscale, data, orario, tipo e urgenza)
   if (!microchip || !codiceFiscale || !data || !orario || !tipo || !urgenza) {
-    alert("Compila tutti i campi obbligatori.");
+    mostraErrore("modificaError", "Compila tutti i campi obbligatori: microchip, codice fiscale, data, orario, tipo e urgenza.");
     return;
   }
-
+  // controlli per il microchip (almeno 8 cifre numeriche)
   if (!/^\d{8,}$/.test(microchip)) {
-    alert("Il microchip deve contenere almeno 8 cifre numeriche.");
+    mostraErrore("modificaError", "Il microchip deve contenere almeno 8 cifre numeriche.");
+    return;
+  }
+// controlli per il codice fiscale (16 caratteri alfanumerici)
+  if (!/^[A-Z0-9]{16}$/i.test(codiceFiscale)) {
+    mostraErrore("modificaError", "Il codice fiscale deve essere composto da 16 caratteri alfanumerici.");
     return;
   }
 
-  if (!/^[A-Z0-9]{16}$/i.test(codiceFiscale)) {
-    alert("Il codice fiscale deve essere composto da 16 caratteri alfanumerici.");
-    return;
-  }
 
   const visitaModificata = {
     idVisita: id,

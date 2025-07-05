@@ -26,6 +26,7 @@
 <div class="card mb-4">
   <div class="card-header bg-success text-white">Aggiungi nuova visita</div>
   <div class="card-body">
+  <div id="formError" class="alert alert-danger d-none" role="alert"></div>
     <div class="row g-2">
       <div class="col"><input class="form-control" id="microchipAnimale" placeholder="microchip Animale*"></div>
       <div class="col"><input class="form-control" id="codiceFiscaleVeterinario" placeholder="codice Fiscale Veterinario*"></div>
@@ -122,6 +123,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+        <div id="modificaError" class="alert alert-danger d-none" role="alert"></div>
         <input type="hidden" id="modifica_idVisita">
         <div class="row g-2">
           <div class="col"><input class="form-control" id="modifica_microchipAnimale" placeholder="microchip Animale"></div>
@@ -132,7 +134,7 @@
           <div class="col"><input type="time" class="form-control" id="modifica_orarioVisita"></div>
         </div>
         <div class="row g-2 mt-2">
-          <div class="col"><input class="form-control" id="modifica_tipoVisita" placeholder="tipo Visita"></div>
+          <div class="col"><input class="form-control" id="modifica_tipoVisita" placeholder="tipo Visita*"></div>
           <div class="col">
             <select class="form-select" id="modifica_urgenza">
               <option value="Bassa">Bassa</option>
@@ -141,7 +143,7 @@
             </select>
           </div>
         </div>
-        <textarea class="form-control mt-2" id="modifica_noteAggiuntive" placeholder="note aggiuntive"></textarea>
+        <textarea class="form-control mt-2" id="modifica_noteAggiuntive" placeholder="note aggiuntive (facoltativo)"></textarea>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
