@@ -1,30 +1,95 @@
+/* visite.css */
 
+/* Colore di sfondo generale */
 body {
-  background-color: #f8f9fa;
+  background-color: #fceee3 !important;
 }
 
-h1 {
-  font-size: 2rem;
-  font-weight: bold;
+/* Titolo */
+h1, h2 {
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
 }
+
+/* Card */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Input */
+input.form-control,
+select.form-select,
+textarea.form-control {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 10px 14px;
+}
+
+/* Spaziatura tra righe */
+.row.g-2 > .col,
+textarea,
+select {
+  margin-top: 10px;
+}
+
+/* Bottone verde stile “Dona Ora” */
+.btn-success {
+  background-color: #00a651;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.btn-success:hover {
+  background-color: #009246;
+}
+
+/* Bottone grigio stile “Annulla” */
+.btn-secondary {
+  background-color: #d6d6d6;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #c0c0c0;
+}
+
+/* Alert errori */
+.alert-danger {
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+/* Logo tondo */
+.logo-tondo {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+
 
 .card {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 10px;
+  transition: transform 0.3s ease;
 }
 
-input, select, textarea {
-  border-radius: 6px;
+.card:hover {
+  transform: scale(1.01);
 }
 
 button {
-  transition: transform 0.2s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
-  transform: scale(1.03);
-}
-
-.table-hover tbody tr:hover {
-  background-color: #e6f7e6;
+  transform: scale(1.05);
 }
