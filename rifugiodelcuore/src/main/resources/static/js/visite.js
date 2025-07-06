@@ -134,7 +134,7 @@ function createVisita() {
   const urgenza = document.getElementById("urgenza").value;
   const note = document.getElementById("note_Aggiuntive").value.trim();
   
-  // Controlli per i campi obbligatori
+  // Controlli per i campi obbligatori (microchip, codice fiscale, data, orario, tipo e urgenza)
   if (!microchip || !codiceFiscale || !dataVisita || !orarioVisita || !tipoVisita || !urgenza) {
     mostraErrore("formError", "Compila tutti i campi obbligatori correttamente: microchip, codice fiscale, data, orario, tipo e urgenza.");
     return;
@@ -214,7 +214,7 @@ function salvaModifica() {
   const urgenza = document.getElementById('modifica_urgenza').value;
   const note = document.getElementById('modifica_noteAggiuntive').value.trim();
 
-  // Controlli per i campi obbligatori
+  // Controlli per i campi obbligatori (microchip, codice fiscale, data, orario, tipo e urgenza)
   if (!microchip || !codiceFiscale || !data || !orario || !tipo || !urgenza) {
     mostraErrore("modificaError", "Compila tutti i campi obbligatori correttamente: microchip, codice fiscale, data, orario, tipo e urgenza.");
     return;
