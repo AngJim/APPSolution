@@ -48,11 +48,11 @@ function getVisite() {
           <td>${visita.urgenza}</td>
           <td>${visita.noteAggiuntive || ''}</td>
           
-          <td>
-          <button class="btn btn-warning btn-sm me-2"
-                  onclick='apriModifica(${JSON.stringify(visita)})'>Modifica</button>
-          <button class="btn btn-danger btn-sm"
-                  onclick='eliminaVisita(${visita.idVisita})'>Elimina</button>
+          <td id="azioni-${visita.idVisita}">
+            <button class="btn btn-warning btn-sm me-2"
+                    onclick='apriModifica(${JSON.stringify(visita)})'>Modifica</button>
+            <button class="btn btn-danger btn-sm"
+                    onclick='confermaInline(${visita.idVisita})'>Elimina</button>
           </td>
           `;
         tbody.appendChild(row);
@@ -209,5 +209,27 @@ function eliminaVisita(id) {
     .then(() => getVisite())
     .catch(error => console.error("Errore durante l'eliminazione:", error));
   }
+}
+
+
+
+function confermaInline(id) {
+  const td = document.getElementById(`azioni-${id}`);
+  td.innerHTML = `
+    <span class="text-danger">Confermi?</span>
+    <button class="btn btn-danger btn-sm ms-1" onclick='confermaElimina(${id})'>✔</button>
+    <button class="btn btn-secondary btn-sm ms-1" onclick='annullaElimina(${id})'>✖</button>
+  `;
+}
+
+function confermaElimina(id) {
+  fetch(`${API_URL}/${id}`, {
+    method: "DELETE"
+  })
+  .then(() => getVisite());
+}
+
+function annullaElimina(id) {
+  getVisite(); // Ricarica per ripristinare le azioni
 }
 
