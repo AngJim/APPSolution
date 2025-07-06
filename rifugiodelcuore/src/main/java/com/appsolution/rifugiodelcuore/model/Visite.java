@@ -14,31 +14,30 @@ public class Visite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVisita;
     
-    private Long idAnimale;
-    private Long idVeterinario;
+    private String microchipAnimale;
+    private String codiceFiscaleVeterinario;
     private String dataVisita;
     private String orarioVisita;
     private String tipoVisita;
     private String urgenza;
     private String noteAggiuntive;
-    
     public Long getIdVisita() {
         return idVisita;
     }
     public void setIdVisita(Long idVisita) {
         this.idVisita = idVisita;
     }
-    public Long getIdAnimale() {
-        return idAnimale;
+    public String getMicrochipAnimale() {
+        return microchipAnimale;
     }
-    public void setIdAnimale(Long idAnimale) {
-        this.idAnimale = idAnimale;
+    public void setMicrochipAnimale(String microchipAnimale) {
+        this.microchipAnimale = microchipAnimale;
     }
-    public Long getIdVeterinario() {
-        return idVeterinario;
+    public String getCodiceFiscaleVeterinario() {
+        return codiceFiscaleVeterinario;
     }
-    public void setIdVeterinario(Long idVeterinario) {
-        this.idVeterinario = idVeterinario;
+    public void setCodiceFiscaleVeterinario(String codiceFiscaleVeterinario) {
+        this.codiceFiscaleVeterinario = codiceFiscaleVeterinario;
     }
     public String getDataVisita() {
         return dataVisita;
@@ -70,7 +69,8 @@ public class Visite {
     public void setNoteAggiuntive(String noteAggiuntive) {
         this.noteAggiuntive = noteAggiuntive;
     }
-
+    
+    
 
 
 
