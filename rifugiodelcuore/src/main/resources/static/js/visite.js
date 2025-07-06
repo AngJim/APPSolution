@@ -1,7 +1,6 @@
 const API_URL = '/api/visite';
 
-// Variabile per tenere traccia dell'ID della visita da eliminare
-let visitaDaEliminareId = null;
+
 
 // Debug: aggiungiamo dei console.log per tracciare l'esecuzione
 console.log('Script caricato');
@@ -10,47 +9,6 @@ console.log('Script caricato');
 document.addEventListener("DOMContentLoaded", () => {
   console.log('DOM caricato');
   getVisite();
-
-  // Usando delegazione degli eventi per il bottone di conferma
-  // Questo funziona anche se il bottone viene ricreato da Bootstrap
-  document.addEventListener("click", (event) => {
-    if (event.target && event.target.id === "confermaEliminazioneBtn") {
-      console.log('Click su conferma eliminazione (delegato), ID:', visitaDaEliminareId);
-      
-      if (visitaDaEliminareId != null) {
-        console.log('Invio richiesta DELETE per ID:', visitaDaEliminareId);
-        
-        fetch(`${API_URL}/${visitaDaEliminareId}`, {
-          method: "DELETE"
-        })
-        .then(response => {
-          console.log('Risposta DELETE:', response);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response;
-        })
-        .then(() => {
-          console.log('Eliminazione completata');
-          getVisite();
-          visitaDaEliminareId = null;
-          const modalElement = document.getElementById('confermaEliminazioneModal');
-          const modal = bootstrap.Modal.getInstance(modalElement);
-          if (modal) modal.hide();
-        })
-        .catch(error => {
-          console.error("Errore durante l'eliminazione:", error);
-          alert('Errore durante l\'eliminazione: ' + error.message);
-        });
-      } else {
-        console.log('visitaDaEliminareId è null');
-      }
-    }
-  });
-
-  // Verifica che il bottone esista al caricamento della pagina
-  const btnConferma = document.getElementById("confermaEliminazioneBtn");
-  console.log('Bottone conferma trovato al caricamento:', btnConferma);
 });
 
 // Funzione per gestire gli errori di validazione
@@ -89,13 +47,14 @@ function getVisite() {
           <td>${visita.tipoVisita}</td>
           <td>${visita.urgenza}</td>
           <td>${visita.noteAggiuntive || ''}</td>
+          
           <td>
-            <button class="btn btn-warning btn-sm me-2"
-                    onclick='apriModifica(${JSON.stringify(visita)})'>Modifica</button>
-            <button class="btn btn-danger btn-sm"
-                    onclick='eliminaVisita(${visita.idVisita})'>Elimina</button>
+          <button class="btn btn-warning btn-sm me-2"
+                  onclick='apriModifica(${JSON.stringify(visita)})'>Modifica</button>
+          <button class="btn btn-danger btn-sm"
+                  onclick='eliminaVisita(${visita.idVisita})'>Elimina</button>
           </td>
-        `;
+          `;
         tbody.appendChild(row);
       });
     })
@@ -104,23 +63,7 @@ function getVisite() {
     });
 }
 
-// Funzione per eliminare una visita - questa viene chiamata dal bottone nella tabella
-function eliminaVisita(id) {
-  console.log('eliminaVisita chiamata con ID:', id);
-  visitaDaEliminareId = id;
-  console.log('visitaDaEliminareId impostato a:', visitaDaEliminareId);
-  
-  const modalElement = document.getElementById('confermaEliminazioneModal');
-  console.log('Modal element trovato:', modalElement);
-  
-  if (modalElement) {
-    const modal = new bootstrap.Modal(modalElement);
-    console.log('Modal Bootstrap creato:', modal);
-    modal.show();
-  } else {
-    console.error('Modal di conferma eliminazione non trovato!');
-  }
-}
+
 
 // Funzione per creare una nuova visita
 function createVisita() {
@@ -257,3 +200,14 @@ function salvaModifica() {
     console.error("Errore durante la modifica:", error);
   });
 }
+
+function eliminaVisita(id) {
+  if (confirm("Sei sicuro di voler eliminare questa visita?")) {
+    fetch(`${API_URL}/${id}`, {
+      method: "DELETE"
+    })
+    .then(() => getVisite())
+    .catch(error => console.error("Errore durante l'eliminazione:", error));
+  }
+}
+
