@@ -1,0 +1,30 @@
+
+body {
+  background-color: #f8f9fa;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+input, select, textarea {
+  border-radius: 6px;
+}
+
+button {
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+.table-hover tbody tr:hover {
+  background-color: #e6f7e6;
+}
