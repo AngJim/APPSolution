@@ -134,12 +134,44 @@
           <div class="col"><input type="time" class="form-control" id="modifica_orarioVisita"></div>
         </div>
         <div class="row g-2 mt-2">
-          <div class="col"><input class="form-control" id="modifica_tipoVisita" placeholder="tipo Visita*"></div>
-          <div class="col">
-            <select class="form-select" id="modifica_urgenza">
-              <option value="Bassa">Bassa</option>
-              <option value="Media">Media</option>
-              <option value="Alta">Alta</option>
+          <div class="col"><select class="form-select" id="modifica_tipoVisita">
+          <option value="">Seleziona tipo visita</option>
+            <optgroup label="Routine">
+              <option value="Controllo generale">Controllo generale</option>
+              <option value="Visita post-adozione">Visita post-adozione</option>
+            </optgroup>
+            <optgroup label="Prevenzione">
+              <option value="Vaccinazione">Vaccinazione</option>
+              <option value="Sverminazione">Sverminazione</option>
+              <option value="Trattamento antipulci/zecche">Trattamento antipulci/zecche</option>
+            </optgroup>
+            <optgroup label="Diagnostica">
+              <option value="Analisi di laboratorio">Analisi di laboratorio</option>
+              <option value="Radiografia">Radiografia</option>
+              <option value="Ecografia">Ecografia</option>
+              <option value="Endoscopia">Endoscopia</option>
+              <option value="Biopsia">Biopsia</option>
+            </optgroup>
+            <optgroup label="Chirurgia">
+              <option value="Sterilizzazione">Sterilizzazione</option>
+              <option value="Chirurgia ortopedica">Chirurgia ortopedica</option>
+              <option value="Rimozione neoplasie">Rimozione neoplasie</option>
+            </optgroup>
+            <optgroup label="Emergenze">
+              <option value="Emergenza">Emergenza</option>
+            </optgroup>
+            <optgroup label="Altro">
+              <option value="Valutazione comportamentale">Valutazione comportamentale</option>
+              <option value="Controllo post-operatorio">Controllo post-operatorio</option>
+              <option value="Terapia farmacologica">Terapia farmacologica</option>
+            </optgroup>
+            </select>
+            </div>
+            <div class="col">
+              <select class="form-select" id="modifica_urgenza">
+                <option value="Bassa">Bassa</option>
+                <option value="Media">Media</option>
+                <option value="Alta">Alta</option>
             </select>
           </div>
         </div>
