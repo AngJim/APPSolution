@@ -93,3 +93,36 @@ button {
 button:hover {
   transform: scale(1.05);
 }
+
+
+
+
+
+
+
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,166,81,0.25);
+  transform: scale(1.01);
+}
+
+
+
+
+
+.modal-content {
+  border-radius: 20px;
+  transition: transform 0.2s ease;
+}
+
+.modal-content:has(.modal-body:hover) {
+  transform: scale(1.01);
+}
