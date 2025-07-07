@@ -65,6 +65,61 @@ function getVisite() {
 
 
 
+
+
+
+
+
+
+function filtraVisite() {
+  const microchip = document.getElementById("filtro_microchip").value;
+  const codiceFiscale = document.getElementById("filtro_codiceFiscale").value;
+  const data = document.getElementById("filtro_data").value;
+  const tipo = document.getElementById("filtro_tipo").value;
+  const urgenza = document.getElementById("filtro_urgenza").value;
+
+  const params = new URLSearchParams();
+  if (microchip) params.append("microchip", microchip);
+  if (codiceFiscale) params.append("codiceFiscale", codiceFiscale);
+  if (data) params.append("dataVisita", data);
+  if (tipo) params.append("tipoVisita", tipo);
+  if (urgenza) params.append("urgenza", urgenza);
+
+  fetch(`${API_URL}/filtra?${params.toString()}`)
+    .then(res => res.json())
+    .then(visite => {
+      const tbody = document.getElementById('visiteBody');
+      tbody.innerHTML = '';
+      visite.forEach(visita => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${visita.idVisita}</td>
+          <td>${visita.microchipAnimale}</td>
+          <td>${visita.codiceFiscaleVeterinario}</td>
+          <td>${visita.dataVisita}</td>
+          <td>${visita.orarioVisita}</td>
+          <td>${visita.tipoVisita}</td>
+          <td>${visita.urgenza}</td>
+          <td>${visita.noteAggiuntive || ''}</td>
+          <td id="azioni-${visita.idVisita}">
+            <button class="btn btn-warning btn-sm me-2"
+                    onclick='apriModifica(${JSON.stringify(visita)})'>Modifica</button>
+            <button class="btn btn-danger btn-sm"
+                    onclick='confermaInline(${visita.idVisita})'>Elimina</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(error => console.error("Errore durante il filtro:", error));
+}
+
+
+
+
+
+
+
 // Funzione per creare una nuova visita
 function createVisita() {
   nascondiErrore("formError");
@@ -235,7 +290,7 @@ function annullaElimina(id) {
 
 
 
-
+//funzione per mostrare il banner in alto a scomparsa quando si scrolla
 let lastScrollTop = 0;
 const header = document.querySelector('.header-banner');
 

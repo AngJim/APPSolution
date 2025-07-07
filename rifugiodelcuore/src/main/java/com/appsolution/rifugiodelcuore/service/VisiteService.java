@@ -45,5 +45,17 @@ public class VisiteService {
             return visiteRepository.save(visite);
         });
     }
+
+
+    public List<Visite> filtra(String microchip, String codiceFiscale, String data, String tipo, String urgenza) {
+    return visiteRepository.findAll().stream()
+        .filter(v -> microchip == null || microchip.isEmpty() || v.getMicrochipAnimale().contains(microchip))
+        .filter(v -> codiceFiscale == null || codiceFiscale.isEmpty() || v.getCodiceFiscaleVeterinario().contains(codiceFiscale))
+        .filter(v -> data == null || data.isEmpty() || v.getDataVisita().toString().equals(data))
+        .filter(v -> tipo == null || tipo.isEmpty() || v.getTipoVisita().equalsIgnoreCase(tipo))
+        .filter(v -> urgenza == null || urgenza.isEmpty() || v.getUrgenza().equalsIgnoreCase(urgenza))
+        .toList();
+    }
+
     
 }

@@ -107,6 +107,37 @@
     <div class="card">
       <div class="card-header bg-success text-white">Elenco visite animali</div>
       <div class="card-body">
+      <!-- FILTRI -->
+          <div class="card mb-3">
+            <div class="card-header bg-secondary text-white">Filtri di ricerca</div>
+            <div class="card-body">
+              <div class="row g-2">
+                <div class="col"><input type="text" class="form-control" id="filtro_microchip" placeholder="Microchip Animale"></div>
+                <div class="col"><input type="text" class="form-control" id="filtro_codiceFiscale" placeholder="Codice Fiscale Veterinario"></div>
+                <div class="col"><input type="date" class="form-control" id="filtro_data"></div>
+                <div class="col">
+              <select class="form-select" id="filtro_tipo">
+                <option value="">Tipo Visita</option>
+                <option>Controllo generale</option>
+                <option>Vaccinazione</option>
+                <option>Sverminazione</option>
+                <!-- ... puoi copiare le stesse voci già usate sopra -->
+              </select>
+            </div>
+            <div class="col">
+              <select class="form-select" id="filtro_urgenza">
+                <option value="">Urgenza</option>
+                <option>Bassa</option>
+                <option>Media</option>
+                <option>Alta</option>
+              </select>
+            </div>
+            <div class="col">
+              <button class="btn btn-secondary w-100" onclick="filtraVisite()">Filtra</button>
+            </div>
+            </div>
+          </div>
+        </div>
         <table class="table table-bordered table-hover" id="visiteTable">
           <thead class="table-light">
             <tr>
