@@ -18,6 +18,7 @@ public class Veterinario {
     private String cognome;
     private String telefono;
     private String email;
+    private String codiceFiscale;
     private String clinica;
     private String specializzazione;
     private String tipoContratto;
@@ -51,6 +52,12 @@ public class Veterinario {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getCodiceFiscale() {
+        return codiceFiscale;
+    }
+    public void setCodiceFiscale(String codiceFiscale) {
+        this.codiceFiscale = codiceFiscale;
     }
     public String getClinica() {
         return clinica;
