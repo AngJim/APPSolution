@@ -59,11 +59,5 @@ public class VisiteController {
         visiteService.deleteVisite(id);
         return ResponseEntity.noContent().build();
     }
-    
-    
-
-   
-    
+        
 }
-
-
