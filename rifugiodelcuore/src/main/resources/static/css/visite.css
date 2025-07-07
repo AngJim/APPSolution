@@ -126,3 +126,11 @@ textarea:focus {
 .modal-content:has(.modal-body:hover) {
   transform: scale(1.01);
 }
+
+
+.header-banner {
+  border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
