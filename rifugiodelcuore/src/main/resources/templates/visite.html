@@ -10,18 +10,34 @@
 
 <body>
 
-  <!-- BANNER SUPERIORE -->
-  <div class="header-banner bg-white py-3 shadow-sm">
-    <div class="container d-flex align-items-center justify-content-center justify-content-md-start">
-      <img src="/images/logo.png" alt="Logo Rifugio" class="logo-tondo me-3">
-      <h1 class="mb-0">Rifugio del Cuore</h1>
-    </div>
+<!-- BANNER SUPERIORE -->
+<div class="header-banner bg-white py-3 shadow-sm">
+  <div class="container d-flex align-items-center justify-content-center justify-content-md-start">
+    <img src="/images/logo.png" alt="Logo Rifugio" class="logo-tondo me-3">
+    <h1 class="mb-0">Rifugio del Cuore</h1>
   </div>
-  
-  
+</div>
 
-  <div class="container">
-    <h1 class="mb-4 text-center">Gestione visite veterinarie</h1>
+<!-- NUOVA STRUTTURA -->
+<div class="main-wrapper d-flex">
+  
+  <!-- SIDEBAR -->
+  <div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4">
+    <img src="/images/logo.png" class="logo-tondo mb-3" alt="Logo">
+    <h4>Menù</h4>
+    <ul class="nav flex-column text-center w-100">
+      <li class="nav-item"><a class="nav-link text-white" href="#">Home</a></li>
+      <a class="nav-link text-white" th:href="@{/animali}">Animali</a>
+      <a class="nav-link text-white" th:href="@{/adozioni}">Adozioni</a>
+      <li class="nav-item"><a class="nav-link text-white" href="#">Visite Mediche</a></li>
+      <li class="nav-item"><a class="nav-link text-white" href="#">Donazioni</a></li>
+    </ul>
+  </div>
+
+  <!-- CONTENUTO PRINCIPALE -->
+  <div class="main-content flex-grow-1 px-4">
+    <div class="container">
+      <h1 class="mb-4 text-center">Gestione visite veterinarie</h1>
 
    <!-- Form per aggiungere una visita -->
 <div class="card mb-4">

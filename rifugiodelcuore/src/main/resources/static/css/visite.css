@@ -134,3 +134,36 @@ textarea:focus {
   top: 0;
   z-index: 1030;
 }
+
+
+
+
+.main-wrapper {
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background-color: #009246;
+  color: white;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.sidebar .nav-link {
+  padding: 10px;
+  font-weight: 500;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.main-content {
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
