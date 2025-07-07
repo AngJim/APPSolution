@@ -35,8 +35,8 @@ public class VisiteService {
     
     public Optional<Visite> updateVisite(Integer id, Visite updatedVisite) {
         return visiteRepository.findById(id).map(visite -> {
-            visite.setIdAnimale(updatedVisite.getIdAnimale());
-            visite.setIdVeterinario(updatedVisite.getIdVeterinario());
+            visite.setMicrochipAnimale(updatedVisite.getMicrochipAnimale());
+            visite.setCodiceFiscaleVeterinario(updatedVisite.getCodiceFiscaleVeterinario());
             visite.setDataVisita(updatedVisite.getDataVisita());
             visite.setOrarioVisita(updatedVisite.getOrarioVisita());
             visite.setTipoVisita(updatedVisite.getTipoVisita());
