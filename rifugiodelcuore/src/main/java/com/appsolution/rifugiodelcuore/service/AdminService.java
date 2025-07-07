@@ -19,7 +19,7 @@ public class AdminService {
     }
 
     public Admin save(Admin admin) {
-        // Salva la password così com'è, senza crittografia (NON SICURO!)
+        // Salva la password così com'è, senza crittografia a causa di malfunzionamenti con Spring Security
         return adminRepository.save(admin);
     }
 
