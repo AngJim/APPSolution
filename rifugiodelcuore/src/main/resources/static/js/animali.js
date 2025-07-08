@@ -21,6 +21,7 @@ const API_URL = '/api/animali';
               <td><input class="form-control" value="${animale.genere}" id="genere-${animale.id}"></td>
               <td><input type="number" class="form-control" value="${animale.eta}" id="eta-${animale.id}"></td>
               <td><input class="form-control" value="${animale.taglia}" id="taglia-${animale.id}"></td>
+              <td><input class="form-control" value="${animale.descrizione || ''}" id="descrizione-${animale.id}"></td>
               <td>
                   <button class="btn btn-warning btn-sm me-1" onclick="updateAnimale(${animale.id})">Modifica</button>
                   <button class="btn btn-danger btn-sm" onclick="deleteAnimale(${animale.id})">Elimina</button>
@@ -62,7 +63,8 @@ const API_URL = '/api/animali';
         razza: document.getElementById(`razza-${id}`).value,
         genere: document.getElementById(`genere-${id}`).value,
         taglia: document.getElementById(`taglia-${id}`).value,
-        eta: parseInt(document.getElementById(`eta-${id}`).value)
+        eta: parseInt(document.getElementById(`eta-${id}`).value),
+        descrizione: document.getElementById(`descrizione-${id}`).value
       };
 
       fetch(`${API_URL}/${id}`)
