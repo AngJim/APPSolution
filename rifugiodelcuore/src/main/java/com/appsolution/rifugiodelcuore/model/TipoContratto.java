@@ -1,0 +1,11 @@
+package com.appsolution.rifugiodelcuore.model;
+
+public enum TipoContratto {
+    SUBORDINATO_TEMPO_INDETERMINATO,
+    SUBORDINATO_TEMPO_DETERMINATO,
+    PARTITA_IVA,
+    PRESTAZIONE_OCCASIONALE,
+    CONVENZIONE_CLINICA,
+    VOLONTARIATO,
+    ALTRO
+}
