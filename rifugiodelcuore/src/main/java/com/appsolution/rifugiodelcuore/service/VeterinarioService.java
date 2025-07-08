@@ -26,6 +26,25 @@ public class VeterinarioService {
     }
 
     public Veterinario saveVeterinario(Veterinario veterinario) {
+        
+        // (Validazione email (regex))
+        if (!veterinario.getEmail().matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+            throw new IllegalArgumentException("Formato email non valido.");
+        }        
+
+        // (Validazione codice fiscale (regex))
+        if (!veterinario.getCodiceFiscale().matches("^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]$")) {
+            throw new IllegalArgumentException("Formato del codice fiscale non valido.");
+        }
+
+        if (veterinarioRepository.existsByCodiceFiscale(veterinario.getCodiceFiscale())) {
+            throw new IllegalArgumentException("Codice fiscale già presente nel sistema.");
+        }
+
+        if (veterinarioRepository.existsByEmail(veterinario.getEmail())) {
+            throw new IllegalArgumentException("Email già registrata.");
+        }
+  
         return veterinarioRepository.save(veterinario);
     }
 
@@ -40,19 +59,19 @@ public class VeterinarioService {
         existingVeterinario.setCognome(updatedVeterinario.getCognome());
         existingVeterinario.setTelefono(updatedVeterinario.getTelefono());
         existingVeterinario.setEmail(updatedVeterinario.getEmail());
+        existingVeterinario.setCodiceFiscale(updatedVeterinario.getCodiceFiscale());
         existingVeterinario.setClinica(updatedVeterinario.getClinica());
         existingVeterinario.setSpecializzazione(updatedVeterinario.getSpecializzazione());
         existingVeterinario.setTipoContratto(updatedVeterinario.getTipoContratto());
         return veterinarioRepository.save(existingVeterinario);
     }
     
+    //filtra per nome e cognome
     public List<Veterinario> searchVeterinari(String query) {
-        return veterinarioRepository.findAll().stream()
-            .filter(v -> v.getNome().toLowerCase().contains(query.toLowerCase()) ||
-                         v.getCognome().toLowerCase().contains(query.toLowerCase()) ||
-                         v.getClinica().toLowerCase().contains(query.toLowerCase()))
-            .toList();
+        return veterinarioRepository.searchByquery(query);
     }
+
+    
 
     
 }
