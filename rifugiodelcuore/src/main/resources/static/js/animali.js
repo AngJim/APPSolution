@@ -21,6 +21,14 @@ const API_URL = '/api/animali';
               <td><input class="form-control" value="${animale.genere}" id="genere-${animale.id}"></td>
               <td><input type="number" class="form-control" value="${animale.eta}" id="eta-${animale.id}"></td>
               <td><input class="form-control" value="${animale.taglia}" id="taglia-${animale.id}"></td>
+              <td><input class="form-control" value="${animale.microchipAnimale}" id="microchip-${animale.id}"></td>
+              <td>
+                <select class="form-select" id="stato-${animale.id}">
+                  <option value="Disponibile" ${animale.statoAnimale === 'Disponibile' ? 'selected' : ''}>Disponibile</option>
+                  <option value="Adottato" ${animale.statoAnimale === 'Adottato' ? 'selected' : ''}>Adottato</option>
+                  <option value="In cura" ${animale.statoAnimale === 'In cura' ? 'selected' : ''}>In cura</option>
+                </select>
+              </td>
               <td><input class="form-control" value="${animale.descrizione || ''}" id="descrizione-${animale.id}"></td>
               <td>
                   <button class="btn btn-warning btn-sm me-1" onclick="updateAnimale(${animale.id})">Modifica</button>
@@ -36,13 +44,15 @@ const API_URL = '/api/animali';
 
     function createAnimale() {
       const animale = {
-        nome: document.getElementById("nome").value,
-        specie: document.getElementById("specie").value,
-        razza: document.getElementById("razza").value,
-        genere: document.getElementById("genere").value,
-        taglia: document.getElementById("taglia").value,
-        eta: parseInt(document.getElementById("eta").value),
-        descrizione: document.getElementById("descrizione").value
+      nome: document.getElementById("nome").value,
+      specie: document.getElementById("specie").value,
+      razza: document.getElementById("razza").value,
+      genere: document.getElementById("genere").value,
+      taglia: document.getElementById("taglia").value,
+      eta: parseInt(document.getElementById("eta").value),
+      descrizione: document.getElementById("descrizione").value,
+      microchipAnimale: document.getElementById("microchipAnimale").value,
+      statoAnimale: document.getElementById("statoAnimale").value
       };
 
       fetch(API_URL, {
@@ -64,6 +74,8 @@ const API_URL = '/api/animali';
         genere: document.getElementById(`genere-${id}`).value,
         taglia: document.getElementById(`taglia-${id}`).value,
         eta: parseInt(document.getElementById(`eta-${id}`).value),
+        microchipAnimale: document.getElementById(`microchip-${id}`).value,
+        statoAnimale: document.getElementById(`stato-${id}`).value,
         descrizione: document.getElementById(`descrizione-${id}`).value
       };
 
@@ -92,6 +104,8 @@ const API_URL = '/api/animali';
       document.getElementById("genere").value = '';
       document.getElementById("taglia").value = '';
       document.getElementById("eta").value = '';
+      document.getElementById("microchipAnimale").value = '';
+      document.getElementById("statoAnimale").value = '';
       document.getElementById("descrizione").value = '';
     }
 

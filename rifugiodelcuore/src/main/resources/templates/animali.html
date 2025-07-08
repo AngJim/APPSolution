@@ -70,6 +70,13 @@
             </div>
             <div class="col"><input type="number" class="form-control" id="eta" placeholder="Età"></div>
           </div>
+          <div class="col"><input class="form-control" id="microchipAnimale" placeholder="Microchip"></div>
+          <select class="form-select mt-2" id="statoAnimale">
+            <option value="">Stato Animale</option>
+            <option value="Disponibile">Disponibile</option>
+            <option value="Adottato">Adottato</option>
+            <option value="In cura">In cura</option>
+          </select>
           <textarea class="form-control mt-2" id="descrizione" placeholder="Descrizione"></textarea>
           <button class="btn btn-success mt-3" onclick="createAnimale()">Aggiungi</button>
         </div>
@@ -90,6 +97,8 @@
                 <th>Età</th>
                 <th>Taglia</th>
                 <th>Descrizione</th>
+                <th>Microchip</th>
+                <th>Stato</th>
                 <th>Azioni</th>
               </tr>
             </thead>

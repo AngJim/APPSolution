@@ -20,6 +20,21 @@ public class Animale {
     private String genere;
     private String taglia;
     private Integer eta;
+    private String microchipAnimale;
+    private String statoAnimale;
+    
+    public String getMicrochipAnimale() {
+        return microchipAnimale;
+    }
+    public void setMicrochipAnimale(String microchipAnimale) {
+        this.microchipAnimale = microchipAnimale;
+    }
+    public String getStatoAnimale() {
+        return statoAnimale;
+    }
+    public void setStatoAnimale(String statoAnimale) {
+        this.statoAnimale = statoAnimale;
+    }
     private String descrizione;
 
     
