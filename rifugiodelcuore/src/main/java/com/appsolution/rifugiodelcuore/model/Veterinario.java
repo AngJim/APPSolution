@@ -1,15 +1,20 @@
 package com.appsolution.rifugiodelcuore.model;
+import com.appsolution.rifugiodelcuore.model.TipoContratto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "veterinari")
 public class Veterinario {
     
+    @Id
     @Column(name = "id_veterinario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idVeterinario;
@@ -21,7 +26,8 @@ public class Veterinario {
     private String codiceFiscale;
     private String clinica;
     private String specializzazione;
-    private String tipoContratto;
+    @Enumerated(EnumType.STRING)
+    private TipoContratto tipoContratto;
     
     public int getIdVeterinario() {
         return idVeterinario;
@@ -71,10 +77,10 @@ public class Veterinario {
     public void setSpecializzazione(String specializzazione) {
         this.specializzazione = specializzazione;
     }
-    public String getTipoContratto() {
+    public TipoContratto getTipoContratto() {
         return tipoContratto;
     }
-    public void setTipoContratto(String tipoContratto) {
+    public void setTipoContratto(TipoContratto tipoContratto) {
         this.tipoContratto = tipoContratto;
     }
 
