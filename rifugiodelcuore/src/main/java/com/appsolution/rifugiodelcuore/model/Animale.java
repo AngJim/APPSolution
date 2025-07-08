@@ -22,7 +22,8 @@ public class Animale {
     private Integer eta;
     private String microchipAnimale;
     private String statoAnimale;
-    
+    private String vaccinazioni;
+
     public String getMicrochipAnimale() {
         return microchipAnimale;
     }
@@ -86,6 +87,12 @@ public class Animale {
     }
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+    public String getVaccinazioni() {
+        return vaccinazioni;
+    }
+    public void setVaccinazioni(String vaccinazioni) {
+        this.vaccinazioni = vaccinazioni;
     }
 
 }

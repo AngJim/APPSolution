@@ -29,6 +29,7 @@ const API_URL = '/api/animali';
                   <option value="In cura" ${animale.statoAnimale === 'In cura' ? 'selected' : ''}>In cura</option>
                 </select>
               </td>
+              <td><input class="form-control" value="${animale.vaccinazioni || ''}" id="vaccinazioni-${animale.id}"></td>
               <td><input class="form-control" value="${animale.descrizione || ''}" id="descrizione-${animale.id}"></td>
               <td>
                   <button class="btn btn-warning btn-sm me-1" onclick="updateAnimale(${animale.id})">Modifica</button>
@@ -52,7 +53,9 @@ const API_URL = '/api/animali';
       eta: parseInt(document.getElementById("eta").value),
       descrizione: document.getElementById("descrizione").value,
       microchipAnimale: document.getElementById("microchipAnimale").value,
-      statoAnimale: document.getElementById("statoAnimale").value
+      statoAnimale: document.getElementById("statoAnimale").value,
+      vaccinazioni: document.getElementById("vaccinazioni").value
+
       };
 
       fetch(API_URL, {
@@ -76,7 +79,9 @@ const API_URL = '/api/animali';
         eta: parseInt(document.getElementById(`eta-${id}`).value),
         microchipAnimale: document.getElementById(`microchip-${id}`).value,
         statoAnimale: document.getElementById(`stato-${id}`).value,
-        descrizione: document.getElementById(`descrizione-${id}`).value
+        descrizione: document.getElementById(`descrizione-${id}`).value,
+        vaccinazioni: document.getElementById(`vaccinazioni-${id}`).value
+
       };
 
       fetch(`${API_URL}/${id}`)
