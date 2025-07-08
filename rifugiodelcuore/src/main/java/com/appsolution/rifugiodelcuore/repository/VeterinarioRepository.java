@@ -14,4 +14,7 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Intege
            "LOWER(v.nome) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
            "LOWER(v.cognome) LIKE LOWER(CONCAT('%', :query, '%'))")
     List<Veterinario> searchByquery(@Param("query") String query);
+
+    boolean existsByCodiceFiscale(String codiceFiscale);
+    boolean existsByEmail(String email);
 }
