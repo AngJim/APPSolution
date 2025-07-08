@@ -41,7 +41,6 @@ const API_URL = '/api/animali';
         genere: document.getElementById("genere").value,
         taglia: document.getElementById("taglia").value,
         eta: parseInt(document.getElementById("eta").value),
-        immagineUrl: document.getElementById("immagineUrl").value,
         descrizione: document.getElementById("descrizione").value
       };
 
@@ -91,7 +90,6 @@ const API_URL = '/api/animali';
       document.getElementById("genere").value = '';
       document.getElementById("taglia").value = '';
       document.getElementById("eta").value = '';
-      document.getElementById("immagineUrl").value = '';
       document.getElementById("descrizione").value = '';
     }
 

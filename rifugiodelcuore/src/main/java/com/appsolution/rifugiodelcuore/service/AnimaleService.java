@@ -41,7 +41,6 @@ public class AnimaleService {
             animale.setGenere(updatedAnimale.getGenere());
             animale.setTaglia(updatedAnimale.getTaglia());
             animale.setEta(updatedAnimale.getEta());
-            animale.setImmagineUrl(updatedAnimale.getImmagineUrl());
             animale.setDescrizione(updatedAnimale.getDescrizione());
             return animaleRepository.save(animale);
         });

@@ -20,7 +20,6 @@ public class Animale {
     private String genere;
     private String taglia;
     private Integer eta;
-    private String immagineUrl;
     private String descrizione;
 
     
@@ -66,12 +65,7 @@ public class Animale {
     public void setEta(Integer eta) {
         this.eta = eta;
     }
-    public String getImmagineUrl() {
-        return immagineUrl;
-    }
-    public void setImmagineUrl(String immagineUrl) {
-        this.immagineUrl = immagineUrl;
-    }
+    
     public String getDescrizione() {
         return descrizione;
     }
