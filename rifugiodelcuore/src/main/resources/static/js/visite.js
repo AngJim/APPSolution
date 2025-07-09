@@ -1,31 +1,60 @@
 const API_URL = '/api/visite';
 
-// Quando la pagina è pronta, carica le visite
-window.onload = getVisite;
+
+
+// Debug: aggiungiamo dei console.log per tracciare l'esecuzione
+console.log('Script caricato');
+
+// Un solo event listener per il DOM
+document.addEventListener("DOMContentLoaded", () => {
+  console.log('DOM caricato');
+  getVisite();
+});
+
+// Funzione per gestire gli errori di validazione
+function mostraErrore(idElemento, messaggio) {
+  const erroreDiv = document.getElementById(idElemento);
+  erroreDiv.textContent = messaggio;
+  erroreDiv.classList.remove('d-none');
+}
+
+// Funzione per nascondere eventuali errori precedenti
+function nascondiErrore(idElemento) {
+  const erroreDiv = document.getElementById(idElemento);
+  erroreDiv.classList.add('d-none');
+}
 
 function getVisite() {
-  
-
+  console.log('Caricamento visite...');
   fetch(API_URL)
-    .then(res => res.json())
+    .then(res => {
+      console.log('Risposta GET visite:', res);
+      return res.json();
+    })
     .then(visite => {
+      console.log('Visite caricate:', visite);
       const tbody = document.getElementById('visiteBody');
-      tbody.innerHTML = ''; // Pulisce la tabella
-  console.log("Dati ricevuti dal backend:", visite);
+      tbody.innerHTML = '';
+
       visite.forEach(visita => {
         const row = document.createElement('tr');
-
         row.innerHTML = `
           <td>${visita.idVisita}</td>
-          <td>${visita.idAnimale}</td>
-          <td>${visita.idVeterinario}</td>
+          <td>${visita.microchipAnimale}</td>
+          <td>${visita.codiceFiscaleVeterinario}</td>
           <td>${visita.dataVisita}</td>
           <td>${visita.orarioVisita}</td>
           <td>${visita.tipoVisita}</td>
           <td>${visita.urgenza}</td>
-          <td>${visita.noteAggiuntive}</td>
-        `;
-
+          <td>${visita.noteAggiuntive || ''}</td>
+          
+          <td id="azioni-${visita.idVisita}">
+            <button class="btn btn-warning btn-sm me-2"
+                    onclick='apriModifica(${JSON.stringify(visita)})'>Modifica</button>
+            <button class="btn btn-danger btn-sm"
+                    onclick='confermaInline(${visita.idVisita})'>Elimina</button>
+          </td>
+          `;
         tbody.appendChild(row);
       });
     })
@@ -39,21 +68,97 @@ function getVisite() {
 
 
 
+
+
+
+function filtraVisite() {
+  const microchip = document.getElementById("filtro_microchip").value;
+  const codiceFiscale = document.getElementById("filtro_codiceFiscale").value;
+  const data = document.getElementById("filtro_data").value;
+  const tipo = document.getElementById("filtro_tipo").value;
+  const urgenza = document.getElementById("filtro_urgenza").value;
+
+  const params = new URLSearchParams();
+  if (microchip) params.append("microchip", microchip);
+  if (codiceFiscale) params.append("codiceFiscale", codiceFiscale);
+  if (data) params.append("dataVisita", data);
+  if (tipo) params.append("tipoVisita", tipo);
+  if (urgenza) params.append("urgenza", urgenza);
+
+  fetch(`${API_URL}/filtra?${params.toString()}`)
+    .then(res => res.json())
+    .then(visite => {
+      const tbody = document.getElementById('visiteBody');
+      tbody.innerHTML = '';
+      visite.forEach(visita => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${visita.idVisita}</td>
+          <td>${visita.microchipAnimale}</td>
+          <td>${visita.codiceFiscaleVeterinario}</td>
+          <td>${visita.dataVisita}</td>
+          <td>${visita.orarioVisita}</td>
+          <td>${visita.tipoVisita}</td>
+          <td>${visita.urgenza}</td>
+          <td>${visita.noteAggiuntive || ''}</td>
+          <td id="azioni-${visita.idVisita}">
+            <button class="btn btn-warning btn-sm me-2"
+                    onclick='apriModifica(${JSON.stringify(visita)})'>Modifica</button>
+            <button class="btn btn-danger btn-sm"
+                    onclick='confermaInline(${visita.idVisita})'>Elimina</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(error => console.error("Errore durante il filtro:", error));
+}
+
+
+
+
+
+
+
 // Funzione per creare una nuova visita
 function createVisita() {
-  const visita = {
-    idAnimale: parseInt(document.getElementById("id_Animale").value),
-    idVeterinario: parseInt(document.getElementById("id_Veterinario").value),
-    dataVisita: document.getElementById("data_Visita").value,
-    orarioVisita: document.getElementById("orario_Visita").value,
-    tipoVisita: document.getElementById("tipo_Visita").value,
-    urgenza: document.getElementById("urgenza").value,
-    noteAggiuntive: document.getElementById("note_Aggiuntive").value,
+  nascondiErrore("formError");
 
+  const microchip = document.getElementById("microchipAnimale").value.trim();
+  const codiceFiscale = document.getElementById("codiceFiscaleVeterinario").value.trim();
+  const dataVisita = document.getElementById("data_Visita").value;
+  const orarioVisita = document.getElementById("orario_Visita").value;
+  const tipoVisita = document.getElementById("tipo_Visita").value;
+  const urgenza = document.getElementById("urgenza").value;
+  const note = document.getElementById("note_Aggiuntive").value.trim();
   
-  };
-console.log("Sto provando a inviare questa visita:", visita);
+  // Controlli per i campi obbligatori (microchip, codice fiscale, data, orario, tipo e urgenza)
+  if (!microchip || !codiceFiscale || !dataVisita || !orarioVisita || !tipoVisita || !urgenza) {
+    mostraErrore("formError", "Compila tutti i campi obbligatori correttamente: microchip, codice fiscale, data, orario, tipo e urgenza.");
+    return;
+  }
 
+  // Controlli per il microchip (almeno 8 cifre numeriche)
+  if (!/^\d{8,}$/.test(microchip)) {
+    mostraErrore("formError", "Il microchip deve contenere almeno 8 cifre numeriche.");
+    return;
+  }
+
+  // Controlli per il codice fiscale (16 caratteri alfanumerici)
+  if (!/^[A-Z0-9]{16}$/i.test(codiceFiscale)) {
+    mostraErrore("formError", "Il codice fiscale deve essere composto da 16 caratteri alfanumerici.");
+    return;
+  }
+
+  const visita = {
+    microchipAnimale: microchip,
+    codiceFiscaleVeterinario: codiceFiscale,
+    dataVisita,
+    orarioVisita,
+    tipoVisita,
+    urgenza,
+    noteAggiuntive: note
+  };
 
   fetch(API_URL, {
     method: "POST",
@@ -63,17 +168,15 @@ console.log("Sto provando a inviare questa visita:", visita);
   .then(() => {
     getVisite();
     clearForm();
+  })
+  .catch(error => {
+    console.error("Errore durante l'inserimento della visita:", error);
   });
-
-  if (!visita.idAnimale || !visita.idVeterinario || !visita.dataVisita || !visita.orarioVisita) {
-  alert("Compila tutti i seguenti campi campi obbligatori correttamente: id Animale id Veterinario data Visita e orario Visita.");
-  return;
-  }
 }
 
 function clearForm() {
-  document.getElementById("id_Animale").value = '';
-  document.getElementById("id_Veterinario").value = '';
+  document.getElementById("microchipAnimale").value = '';
+  document.getElementById("codiceFiscaleVeterinario").value = '';
   document.getElementById("data_Visita").value = '';
   document.getElementById("orario_Visita").value = '';
   document.getElementById("tipo_Visita").value = '';
@@ -81,3 +184,122 @@ function clearForm() {
   document.getElementById("note_Aggiuntive").value = '';
 }
 
+// Funzione per aprire il modal di modifica
+function apriModifica(visita) {
+  document.getElementById('modifica_idVisita').value = visita.idVisita;
+  document.getElementById('modifica_microchipAnimale').value = visita.microchipAnimale;
+  document.getElementById('modifica_codiceFiscaleVeterinario').value = visita.codiceFiscaleVeterinario;
+  document.getElementById('modifica_dataVisita').value = visita.dataVisita;
+  document.getElementById('modifica_orarioVisita').value = visita.orarioVisita;
+  document.getElementById('modifica_tipoVisita').value = visita.tipoVisita;
+  document.getElementById('modifica_urgenza').value = visita.urgenza;
+  document.getElementById('modifica_noteAggiuntive').value = visita.noteAggiuntive;
+
+  const modal = new bootstrap.Modal(document.getElementById('modificaModal'));
+  modal.show();
+}
+
+// Funzione per salvare le modifiche
+function salvaModifica() {
+  nascondiErrore("modificaError");
+
+  const id = document.getElementById('modifica_idVisita').value;
+  const microchip = document.getElementById('modifica_microchipAnimale').value.trim();
+  const codiceFiscale = document.getElementById('modifica_codiceFiscaleVeterinario').value.trim();
+  const data = document.getElementById('modifica_dataVisita').value;
+  const orario = document.getElementById('modifica_orarioVisita').value;
+  const tipo = document.getElementById('modifica_tipoVisita').value;
+  const urgenza = document.getElementById('modifica_urgenza').value;
+  const note = document.getElementById('modifica_noteAggiuntive').value.trim();
+
+  // Controlli per i campi obbligatori (microchip, codice fiscale, data, orario, tipo e urgenza)
+  if (!microchip || !codiceFiscale || !data || !orario || !tipo || !urgenza) {
+    mostraErrore("modificaError", "Compila tutti i campi obbligatori correttamente: microchip, codice fiscale, data, orario, tipo e urgenza.");
+    return;
+  }
+
+  // Controlli per il microchip (almeno 8 cifre numeriche)
+  if (!/^\d{8,}$/.test(microchip)) {
+    mostraErrore("modificaError", "Il microchip deve contenere almeno 8 cifre numeriche.");
+    return;
+  }
+
+  // Controlli per il codice fiscale (16 caratteri alfanumerici)
+  if (!/^[A-Z0-9]{16}$/i.test(codiceFiscale)) {
+    mostraErrore("modificaError", "Il codice fiscale deve essere composto da 16 caratteri alfanumerici.");
+    return;
+  }
+
+  const visitaModificata = {
+    idVisita: id,
+    microchipAnimale: microchip,
+    codiceFiscaleVeterinario: codiceFiscale,
+    dataVisita: data,
+    orarioVisita: orario,
+    tipoVisita: tipo,
+    urgenza: urgenza,
+    noteAggiuntive: note
+  };
+
+  fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(visitaModificata)
+  })
+  .then(() => {
+    getVisite();
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modificaModal'));
+    modal.hide();
+  })
+  .catch(error => {
+    console.error("Errore durante la modifica:", error);
+  });
+}
+
+function eliminaVisita(id) {
+  if (confirm("Sei sicuro di voler eliminare questa visita?")) {
+    fetch(`${API_URL}/${id}`, {
+      method: "DELETE"
+    })
+    .then(() => getVisite())
+    .catch(error => console.error("Errore durante l'eliminazione:", error));
+  }
+}
+
+
+
+function confermaInline(id) {
+  const td = document.getElementById(`azioni-${id}`);
+  td.innerHTML = `
+    <span class="text-danger">Confermi?</span>
+    <button class="btn btn-danger btn-sm ms-1" onclick='confermaElimina(${id})'>✔</button>
+    <button class="btn btn-secondary btn-sm ms-1" onclick='annullaElimina(${id})'>✖</button>
+  `;
+}
+
+function confermaElimina(id) {
+  fetch(`${API_URL}/${id}`, {
+    method: "DELETE"
+  })
+  .then(() => getVisite());
+}
+
+function annullaElimina(id) {
+  getVisite(); // Ricarica per ripristinare le azioni
+}
+
+
+
+//funzione per mostrare il banner in alto a scomparsa quando si scrolla
+let lastScrollTop = 0;
+const header = document.querySelector('.header-banner');
+
+window.addEventListener('scroll', function () {
+  const currentScroll = window.scrollY;
+  if (currentScroll > lastScrollTop) {
+    header.classList.add('hidden'); // scorrendo in basso
+  } else {
+    header.classList.remove('hidden'); // scorrendo in alto
+  }
+  lastScrollTop = currentScroll;
+});

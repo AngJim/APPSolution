@@ -1,6 +1,7 @@
 package com.appsolution.rifugiodelcuore.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.appsolution.rifugiodelcuore.model.Visite;
 import com.appsolution.rifugiodelcuore.service.VisiteService;
@@ -59,5 +60,16 @@ public class VisiteController {
         visiteService.deleteVisite(id);
         return ResponseEntity.noContent().build();
     }
-        
+
+    @GetMapping("/filtra")
+    public List<Visite> filtraVisite(
+    @RequestParam(required = false) String microchip,
+    @RequestParam(required = false) String codiceFiscale,
+    @RequestParam(required = false) String dataVisita,
+    @RequestParam(required = false) String tipoVisita,
+    @RequestParam(required = false) String urgenza
+    ) {
+        return visiteService.filtra(microchip, codiceFiscale, dataVisita, tipoVisita, urgenza);
+    }
+
 }
