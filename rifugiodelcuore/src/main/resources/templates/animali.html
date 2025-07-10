@@ -42,6 +42,10 @@
       <div class="card mb-4">
         <div class="card-header bg-success text-white">Aggiungi nuovo animale</div>
         <div class="card-body">
+          <!-- Messaggio di errore -->
+          <div id="erroreForm" class="alert alert-danger d-none" role="alert">
+            Compila tutti i campi obbligatori: microchip, specie, stato e almeno una vaccinazione.
+          </div>
           <div class="row g-2">
             <div class="col"><input class="form-control" id="nome" placeholder="Nome"></div>
             <div class="col">

@@ -199,17 +199,32 @@ function editVaccinations(id) {
 }
 
 function createAnimale() {
+  const microchip = document.getElementById("microchipAnimale").value.trim();
+  const specie = document.getElementById("specie").value;
+  const stato = document.getElementById("statoAnimale").value;
+  const vaccinazioni = selectedVaccinations;
+
+  // VALIDAZIONE
+  if (!microchip || !specie || !stato || vaccinazioni.length === 0) {
+    const erroreForm = document.getElementById("erroreForm");
+    erroreForm.classList.remove("d-none");
+    return;
+  }
+
+  // Nasconde eventuale errore precedente
+  document.getElementById("erroreForm").classList.add("d-none");
+
   const animale = {
     nome: document.getElementById("nome").value,
-    specie: document.getElementById("specie").value,
+    specie,
     razza: document.getElementById("razza").value,
     genere: document.getElementById("genere").value,
     taglia: document.getElementById("taglia").value,
     eta: parseInt(document.getElementById("eta").value),
     descrizione: document.getElementById("descrizione").value,
-    microchipAnimale: document.getElementById("microchipAnimale").value,
-    statoAnimale: document.getElementById("statoAnimale").value,
-    vaccinazioni: selectedVaccinations.join(', ')
+    microchipAnimale: microchip,
+    statoAnimale: stato,
+    vaccinazioni: vaccinazioni.join(', ')
   };
 
   fetch(API_URL, {
@@ -222,6 +237,18 @@ function createAnimale() {
     getAnimali();
   });
 }
+
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(animale)
+  })
+  .then(() => {
+    clearForm();
+    getAnimali();
+  });
+
 
 function updateAnimale(id) {
   const updated = {
