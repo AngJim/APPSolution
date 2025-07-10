@@ -75,18 +75,37 @@ document.addEventListener('click', function(event) {
 document.getElementById('vaccinazioniDropdown').addEventListener('change', function(event) {
   if (event.target.type === 'checkbox') {
     const vaccination = event.target.value;
-    
-    if (event.target.checked) {
-      if (!selectedVaccinations.includes(vaccination)) {
-        selectedVaccinations.push(vaccination);
+
+    if (vaccination === 'Non vaccinato') {
+      if (event.target.checked) {
+        // Deseleziona tutte le altre
+        selectedVaccinations = ['Non vaccinato'];
+        document.querySelectorAll('#vaccinazioniDropdown input[type="checkbox"]').forEach(checkbox => {
+          if (checkbox.value !== 'Non vaccinato') {
+            checkbox.checked = false;
+          }
+        });
+      } else {
+        selectedVaccinations = [];
       }
     } else {
-      selectedVaccinations = selectedVaccinations.filter(v => v !== vaccination);
+      // Se selezioni un'altra, deseleziona "Non vaccinato"
+      document.querySelector('#vaccinazioniDropdown input[value="Non vaccinato"]').checked = false;
+      selectedVaccinations = selectedVaccinations.filter(v => v !== 'Non vaccinato');
+
+      if (event.target.checked) {
+        if (!selectedVaccinations.includes(vaccination)) {
+          selectedVaccinations.push(vaccination);
+        }
+      } else {
+        selectedVaccinations = selectedVaccinations.filter(v => v !== vaccination);
+      }
     }
-    
+
     updateVaccinationDisplay();
   }
 });
+
 
 function updateVaccinationDisplay() {
   const selectedDiv = document.getElementById('vaccinazioniSelected');
@@ -143,8 +162,7 @@ function getAnimali() {
             <div class="vaccination-container" style="min-height: 40px;">
               ${vaccinazioniHtml}
             </div>
-            <button class="btn btn-sm btn-outline-secondary mt-1" onclick="editVaccinations(${animale.id})">Modifica</button>
-            <input type="hidden" id="vaccinazioni-${animale.id}" value="${vaccinazioni}">
+              <input type="text" class="form-control" id="vaccinazioni-${animale.id}" value="${vaccinazioni}">
           </td>
           <td>
             <button class="btn btn-warning btn-sm me-1" onclick="updateAnimale(${animale.id})">Modifica</button>
@@ -290,6 +308,6 @@ function submitAdozione() {
   })
   .then(() => {
     adozioneModal.hide();
-    window.location.href = "adozioni.html";
+    window.location.href = "adozioni";
   });
 }
