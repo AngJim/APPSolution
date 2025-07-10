@@ -42,6 +42,9 @@ public class AnimaleService {
             animale.setTaglia(updatedAnimale.getTaglia());
             animale.setEta(updatedAnimale.getEta());
             animale.setDescrizione(updatedAnimale.getDescrizione());
+            animale.setVaccinazioni(updatedAnimale.getVaccinazioni());
+            animale.setStatoAnimale(updatedAnimale.getStatoAnimale());
+            animale.setMicrochipAnimale(updatedAnimale.getMicrochipAnimale());
             return animaleRepository.save(animale);
         });
     }
