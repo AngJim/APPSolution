@@ -586,3 +586,16 @@ function salvaModificaAnimale() {
   });
 }
 
+//funzione per mostrare il banner in alto a scomparsa quando si scrolla
+let lastScrollTop = 0;
+const header = document.querySelector('.header-banner');
+
+window.addEventListener('scroll', function () {
+  const currentScroll = window.scrollY;
+  if (currentScroll > lastScrollTop) {
+    header.classList.add('hidden'); // scorrendo in basso
+  } else {
+    header.classList.remove('hidden'); // scorrendo in alto
+  }
+  lastScrollTop = currentScroll;
+});
