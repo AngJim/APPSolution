@@ -3,6 +3,13 @@ const API_URL = '/api/animali';
 // Carica animali all'avvio
 window.onload = getAnimali;
 
+
+
+// === FILTRI ANIMALI ===
+["filtroSpecie", "filtroGenere", "filtroTaglia", "filtroStato", "filtroNome"].forEach(id => {
+  document.getElementById(id).addEventListener("input", getAnimaliFiltrati);
+});
+
 // Sezione per rendere disponibili il menù a tendina delle razze in base alla specie selezionata
 const razze = {
   Cane: [
@@ -171,6 +178,78 @@ function getAnimali() {
       });
     });
 }
+
+
+
+
+// Funzione per filtrare gli animali in base ai criteri selezionati
+function getAnimaliFiltrati() {
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(animali => {
+      const specie = document.getElementById("filtroSpecie").value;
+      const genere = document.getElementById("filtroGenere").value;
+      const taglia = document.getElementById("filtroTaglia").value;
+      const stato = document.getElementById("filtroStato").value;
+      const nomeMicrochip = document.getElementById("filtroNome").value.toLowerCase();
+
+      const tbody = document.getElementById("animaliBody");
+      tbody.innerHTML = '';
+
+      animali
+        .filter(animale => {
+          return (!specie || animale.specie === specie) &&
+                 (!genere || animale.genere === genere) &&
+                 (!taglia || animale.taglia === taglia) &&
+                 (!stato || animale.statoAnimale === stato) &&
+                 (!nomeMicrochip || 
+                   (animale.nome && animale.nome.toLowerCase().includes(nomeMicrochip)) ||
+                   (animale.microchipAnimale && animale.microchipAnimale.toLowerCase().includes(nomeMicrochip))
+                 );
+        })
+        .forEach(animale => {
+          const row = document.createElement('tr');
+          const vaccinazioni = animale.vaccinazioni || '';
+          const vaccinazioniHtml = vaccinazioni.split(',').map(v => v.trim()).filter(v => v).map(v =>
+            `<span class="vaccination-item">${v}</span>`
+          ).join(' ');
+
+          row.innerHTML = `
+            <td>${animale.id}</td>
+            <td>${animale.nome}</td>
+            <td>${animale.specie}</td>
+            <td>${animale.razza}</td>
+            <td>${animale.genere}</td>
+            <td>${animale.eta}</td>
+            <td>${animale.taglia}</td>
+            <td>${animale.descrizione || ''}</td>
+            <td>${animale.microchipAnimale}</td>
+            <td>${animale.statoAnimale}</td>
+            <td><div class="vaccination-container">${vaccinazioniHtml}</div></td>
+            <td>
+              <span id="conferma-${animale.id}">
+                <button class="btn btn-danger btn-sm" onclick="chiediConfermaEliminazione(${animale.id})">Elimina</button>
+              </span>
+              <button class="btn btn-warning btn-sm me-1" onclick="apriModificaAnimale(${animale.id})">Modifica</button>
+              <button class="btn btn-info btn-sm me-1" onclick="openAdozioneForm(${animale.id})">Registra Adozione</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+    });
+}
+
+// Funzione per resettare i filtri e ricaricare tutti gli animali
+function resetFiltri() {
+  document.getElementById("filtroSpecie").value = "";
+  document.getElementById("filtroGenere").value = "";
+  document.getElementById("filtroTaglia").value = "";
+  document.getElementById("filtroStato").value = "";
+  document.getElementById("filtroNome").value = "";
+  getAnimaliFiltrati();
+}
+
+
 
 // Funzione per confermare l'eliminazione
 function chiediConfermaEliminazione(id) {

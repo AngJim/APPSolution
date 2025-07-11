@@ -170,6 +170,57 @@
       <div class="card">
         <div class="card-header bg-success text-white">Elenco animali</div>
         <div class="card-body">
+          
+
+
+
+          <!-- FILTRI -->
+          <div class="card mb-3 border-success">
+          <div class="card-header bg-success text-white">
+            <strong>Filtri</strong>
+          </div>
+          <div class="card-body bg-light">
+              <div class="row g-2">
+                <div class="col-md">
+                  <select class="form-select" id="filtroSpecie">
+                    <option value="">Specie</option>
+                    <option value="Cane">Cane</option>
+                    <option value="Gatto">Gatto</option>
+                  </select>
+                </div>
+                <div class="col-md">
+                  <select class="form-select" id="filtroGenere">
+                    <option value="">Genere</option>
+                    <option value="Maschio">Maschio</option>
+                    <option value="Femmina">Femmina</option>
+                  </select>
+                </div>
+                <div class="col-md">
+                  <select class="form-select" id="filtroTaglia">
+                    <option value="">Taglia</option>
+                    <option value="Piccola">Piccola</option>
+                    <option value="Media">Media</option>
+                    <option value="Grande">Grande</option>
+                  </select>
+                </div>
+                <div class="col-md">
+                  <select class="form-select" id="filtroStato">
+                    <option value="">Stato</option>
+                    <option value="Disponibile">Disponibile</option>
+                    <option value="Adottato">Adottato</option>
+                    <option value="In cura">In cura</option>
+                  </select>
+                </div>
+                <div class="col-md">
+                  <input type="text" class="form-control" id="filtroNome" placeholder="Nome o microchip">
+                </div>
+                <div class="col-md">
+                  <button class="btn btn-outline-secondary w-100" onclick="resetFiltri()">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <table class="table table-bordered table-hover" id="animaliTable">
             <thead class="table-light">
               <tr>
