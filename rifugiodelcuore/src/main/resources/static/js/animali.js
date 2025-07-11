@@ -158,7 +158,9 @@ function getAnimali() {
             </div>
           </td>
           <td>
-            <button class="btn btn-danger btn-sm" onclick="deleteAnimale(${animale.id})">Elimina</button>
+            <span id="conferma-${animale.id}">
+              <button class="btn btn-danger btn-sm" onclick="chiediConfermaEliminazione(${animale.id})">Elimina</button>
+            </span>
             <button class="btn btn-warning btn-sm me-1" onclick="apriModificaAnimale(${animale.id})">Modifica</button>
             <button class="btn btn-info btn-sm me-1" onclick="openAdozioneForm(${animale.id})">Registra Adozione</button>
           </td>
@@ -169,6 +171,32 @@ function getAnimali() {
       });
     });
 }
+
+// Funzione per confermare l'eliminazione
+function chiediConfermaEliminazione(id) {
+  const span = document.getElementById(`conferma-${id}`);
+
+  span.innerHTML = `
+    <div class="text-danger text-center small">
+      Confermi?
+      <button class="btn btn-danger btn-sm ms-1" onclick="confermaEliminazione(${id})">
+        <i class="bi bi-check2"></i>
+      </button>
+      <button class="btn btn-secondary btn-sm" onclick="annullaConferma(${id})">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  `;
+}
+
+// Funzione per confermare l'eliminazione
+function annullaConferma(id) {
+  const span = document.getElementById(`conferma-${id}`);
+  span.innerHTML = `
+    <button class="btn btn-danger btn-sm" onclick="chiediConfermaEliminazione(${id})">Elimina</button>
+  `;
+}
+
 
 function editVaccinations(id) {
   const currentVaccinations = document.getElementById(`vaccinazioni-${id}`).value;
@@ -210,7 +238,7 @@ function createAnimale() {
 
   let valid = true;
   // Validazione campi obbligatori
-  // Regex per microchip: almeno 10 caratteri numerici
+  // Regex per microchip: almeno 15 caratteri numerici
   const microchipRegex = /^[a-zA-Z0-9]{15,}$/;
   if (!microchip || !microchipRegex.test(microchip)) {
     microchipEl.classList.add("is-invalid");
@@ -292,11 +320,9 @@ fetch(API_URL)
 
 
 
-function deleteAnimale(id) {
-  if (confirm('Sei sicuro di voler eliminare questo animale?')) {
-    fetch(`${API_URL}/${id}`, { method: "DELETE" })
-      .then(() => getAnimali());
-  }
+function confermaEliminazione(id) {
+  fetch(`${API_URL}/${id}`, { method: "DELETE" })
+    .then(() => getAnimali());
 }
 
 function clearForm() {
