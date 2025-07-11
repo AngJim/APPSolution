@@ -199,44 +199,98 @@ function editVaccinations(id) {
 }
 
 function createAnimale() {
-  const microchip = document.getElementById("microchipAnimale").value.trim();
-  const specie = document.getElementById("specie").value;
-  const stato = document.getElementById("statoAnimale").value;
+  const microchipEl = document.getElementById("microchipAnimale");
+  const specieEl = document.getElementById("specie");
+  const statoEl = document.getElementById("statoAnimale");
+  const etaEl = document.getElementById("eta");
+  const eta = parseInt(etaEl.value.trim());
+  const microchip = microchipEl.value.trim();
+  const specie = specieEl.value.trim();
+  const stato = statoEl.value.trim();
   const vaccinazioni = selectedVaccinations;
 
-  // VALIDAZIONE
-  if (!microchip || !specie || !stato || vaccinazioni.length === 0) {
-    const erroreForm = document.getElementById("erroreForm");
-    erroreForm.classList.remove("d-none");
-    return;
+  const erroreForm = document.getElementById("erroreForm");
+
+  // Reset validazione
+  [microchipEl, specieEl, statoEl, etaEl].forEach(el => el.classList.remove("is-invalid"));
+
+  let valid = true;
+  // Validazione campi obbligatori
+  // Regex per microchip: almeno 10 caratteri numerici
+  const microchipRegex = /^[a-zA-Z0-9]{15,}$/;
+  if (!microchip || !microchipRegex.test(microchip)) {
+    microchipEl.classList.add("is-invalid");
+    valid = false;
   }
-
-  // Nasconde eventuale errore precedente
-  document.getElementById("erroreForm").classList.add("d-none");
-
-  const animale = {
-    nome: document.getElementById("nome").value,
-    specie,
-    razza: document.getElementById("razza").value,
-    genere: document.getElementById("genere").value,
-    taglia: document.getElementById("taglia").value,
-    eta: parseInt(document.getElementById("eta").value),
-    descrizione: document.getElementById("descrizione").value,
-    microchipAnimale: microchip,
-    statoAnimale: stato,
-    vaccinazioni: vaccinazioni.join(', ')
-  };
-
-  fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(animale)
-  })
-  .then(() => {
-    clearForm();
-    getAnimali();
-  });
+  // Controllo specie e stato 
+  if (!specie) {
+    specieEl.classList.add("is-invalid");
+    valid = false;
+  }
+  // Controllo stato
+  if (!stato) {
+    statoEl.classList.add("is-invalid");
+    valid = false;
+  }
+  // Controllo età non negativa e non superiore a 50
+  if (isNaN(eta) || eta < 0 || eta > 50) {
+  etaEl.classList.add("is-invalid");
+  valid = false;
+  }
+  // Controllo vaccinazioni altre a "Non vaccinato" almeno una selezionata
+  if (vaccinazioni.length === 0) {
+    document.getElementById("vaccinazioniContainer").classList.add("is-invalid");
+    valid = false;
+  } else {
+    document.getElementById("vaccinazioniContainer").classList.remove("is-invalid");
+  }
+  if (!valid) {
+  erroreForm.textContent = "Compila correttamente tutti i campi obbligatori.";
+  erroreForm.classList.remove("d-none");
+  return;
 }
+
+// Controllo microchip duplicato
+fetch(API_URL)
+  .then(res => res.json())
+  .then(animali => {
+    const duplicato = animali.some(a => a.microchipAnimale === microchip);
+    if (duplicato) {
+      erroreForm.textContent = "Microchip già presente nel sistema.";
+      erroreForm.classList.remove("d-none");
+      microchipEl.classList.add("is-invalid");
+      return;
+    }
+
+    erroreForm.classList.add("d-none");
+
+    const animale = {
+      nome: document.getElementById("nome").value,
+      specie,
+      razza: document.getElementById("razza").value,
+      genere: document.getElementById("genere").value,
+      taglia: document.getElementById("taglia").value,
+      eta,
+      descrizione: document.getElementById("descrizione").value,
+      microchipAnimale: microchip,
+      statoAnimale: stato,
+      vaccinazioni: vaccinazioni.join(', ')
+    };
+
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(animale)
+    })
+    .then(() => {
+      clearForm();
+      getAnimali();
+    });
+  });
+
+  
+}
+
 
 
   fetch(API_URL, {
@@ -338,3 +392,27 @@ function submitAdozione() {
     window.location.href = "adozioni";
   });
 }
+
+
+
+
+
+
+["microchipAnimale","specie","statoAnimale"].forEach(id => {
+  document.getElementById(id).addEventListener("input", e => {
+    if (e.target.value.trim()) {
+      e.target.classList.remove("is-invalid");
+      if (!document.querySelector("#vaccinazioniContainer").classList.contains("is-invalid")) {
+        document.getElementById("erroreForm").classList.add("d-none");
+      }
+    }
+  });
+});
+
+document.getElementById("vaccinazioniDropdown").addEventListener("change", () => {
+  const container = document.getElementById("vaccinazioniContainer");
+  if (selectedVaccinations.length > 0) {
+    container.classList.remove("is-invalid");
+    document.getElementById("erroreForm").classList.add("d-none");
+  }
+});
