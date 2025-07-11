@@ -143,33 +143,27 @@ function getAnimali() {
 
         row.innerHTML = `
           <td>${animale.id}</td>
-          <td><input class="form-control" value="${animale.nome}" id="nome-${animale.id}"></td>
-          <td><input class="form-control" value="${animale.specie}" id="specie-${animale.id}"></td>
-          <td><input class="form-control" value="${animale.razza}" id="razza-${animale.id}"></td>
-          <td><input class="form-control" value="${animale.genere}" id="genere-${animale.id}"></td>
-          <td><input type="number" class="form-control" value="${animale.eta}" id="eta-${animale.id}"></td>
-          <td><input class="form-control" value="${animale.taglia}" id="taglia-${animale.id}"></td>
-          <td><input class="form-control" value="${animale.descrizione || ''}" id="descrizione-${animale.id}"></td>
-          <td><input class="form-control" value="${animale.microchipAnimale}" id="microchip-${animale.id}"></td>
-          <td>
-            <select class="form-select" id="stato-${animale.id}">
-              <option value="Disponibile" ${animale.statoAnimale === 'Disponibile' ? 'selected' : ''}>Disponibile</option>
-              <option value="Adottato" ${animale.statoAnimale === 'Adottato' ? 'selected' : ''}>Adottato</option>
-              <option value="In cura" ${animale.statoAnimale === 'In cura' ? 'selected' : ''}>In cura</option>
-            </select>
-          </td>
+          <td>${animale.nome}</td>
+          <td>${animale.specie}</td>
+          <td>${animale.razza}</td>
+          <td>${animale.genere}</td>
+          <td>${animale.eta}</td>
+          <td>${animale.taglia}</td>
+          <td>${animale.descrizione || ''}</td>
+          <td>${animale.microchipAnimale}</td>
+          <td>${animale.statoAnimale}</td>
           <td>
             <div class="vaccination-container" style="min-height: 40px;">
               ${vaccinazioniHtml}
             </div>
-              <input type="text" class="form-control" id="vaccinazioni-${animale.id}" value="${vaccinazioni}">
           </td>
           <td>
-            <button class="btn btn-warning btn-sm me-1" onclick="updateAnimale(${animale.id})">Modifica</button>
             <button class="btn btn-danger btn-sm" onclick="deleteAnimale(${animale.id})">Elimina</button>
+            <button class="btn btn-warning btn-sm me-1" onclick="apriModificaAnimale(${animale.id})">Modifica</button>
             <button class="btn btn-info btn-sm me-1" onclick="openAdozioneForm(${animale.id})">Registra Adozione</button>
           </td>
         `;
+
 
         tbody.appendChild(row);
       });
@@ -232,8 +226,8 @@ function createAnimale() {
     statoEl.classList.add("is-invalid");
     valid = false;
   }
-  // Controllo età non negativa e non superiore a 50
-  if (isNaN(eta) || eta < 0 || eta > 50) {
+  // Controllo età non negativa e non superiore a 20
+  if (isNaN(eta) || eta < 0 || eta > 20) {
   etaEl.classList.add("is-invalid");
   valid = false;
   }
@@ -293,43 +287,10 @@ fetch(API_URL)
 
 
 
-  fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(animale)
-  })
-  .then(() => {
-    clearForm();
-    getAnimali();
-  });
 
 
-function updateAnimale(id) {
-  const updated = {
-    nome: document.getElementById(`nome-${id}`).value,
-    specie: document.getElementById(`specie-${id}`).value,
-    razza: document.getElementById(`razza-${id}`).value,
-    genere: document.getElementById(`genere-${id}`).value,
-    taglia: document.getElementById(`taglia-${id}`).value,
-    eta: parseInt(document.getElementById(`eta-${id}`).value),
-    microchipAnimale: document.getElementById(`microchip-${id}`).value,
-    statoAnimale: document.getElementById(`stato-${id}`).value,
-    descrizione: document.getElementById(`descrizione-${id}`).value,
-    vaccinazioni: document.getElementById(`vaccinazioni-${id}`).value
-  };
 
-  fetch(`${API_URL}/${id}`)
-    .then(res => res.json())
-    .then(animale => {
-      const newAnimale = { ...animale, ...updated };
-      return fetch(`${API_URL}/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newAnimale)
-      });
-    })
-    .then(() => getAnimali());
-}
+
 
 function deleteAnimale(id) {
   if (confirm('Sei sicuro di voler eliminare questo animale?')) {
@@ -416,3 +377,107 @@ document.getElementById("vaccinazioniDropdown").addEventListener("change", () =>
     document.getElementById("erroreForm").classList.add("d-none");
   }
 });
+
+
+
+
+let animaleCorrenteId = null;
+
+function apriModificaAnimale(id) {
+  fetch(`${API_URL}/${id}`)
+    .then(res => res.json())
+    .then(animale => {
+      animaleCorrenteId = id;
+
+      document.getElementById("mod-nome").value = animale.nome || '';
+      document.getElementById("mod-specie").value = animale.specie || '';
+      document.getElementById("mod-razza").value = animale.razza || '';
+      document.getElementById("mod-genere").value = animale.genere || '';
+      document.getElementById("mod-taglia").value = animale.taglia || '';
+      document.getElementById("mod-eta").value = animale.eta || '';
+      document.getElementById("mod-microchip").value = animale.microchipAnimale || '';
+      document.getElementById("mod-stato").value = animale.statoAnimale || '';
+      document.getElementById("mod-descrizione").value = animale.descrizione || '';
+      document.getElementById("mod-vaccinazioni").value = animale.vaccinazioni || '';
+
+      new bootstrap.Modal(document.getElementById('modificaAnimaleModal')).show();
+    });
+}
+
+
+
+
+function salvaModificaAnimale() {
+  const errore = document.getElementById("erroreModifica");
+  errore.classList.add("d-none");
+
+  // Raccolta dati
+  const animale = {
+    nome: document.getElementById("mod-nome").value.trim(),
+    specie: document.getElementById("mod-specie").value.trim(),
+    razza: document.getElementById("mod-razza").value.trim(),
+    genere: document.getElementById("mod-genere").value.trim(),
+    taglia: document.getElementById("mod-taglia").value.trim(),
+    eta: parseInt(document.getElementById("mod-eta").value.trim()),
+    microchipAnimale: document.getElementById("mod-microchip").value.trim(),
+    statoAnimale: document.getElementById("mod-stato").value.trim(),
+    vaccinazioni: document.getElementById("mod-vaccinazioni").value.trim(),
+    descrizione: document.getElementById("mod-descrizione").value.trim()
+  };
+
+  // Reset classi invalid
+  ["mod-specie", "mod-stato", "mod-eta", "mod-microchip", "mod-vaccinazioni"].forEach(id => {
+    document.getElementById(id).classList.remove("is-invalid");
+  });
+
+  // === VALIDAZIONE ===
+  let valid = true;
+  const microchipRegex = /^[a-zA-Z0-9]{15,}$/;
+
+  if (!animale.microchipAnimale || !microchipRegex.test(animale.microchipAnimale)) {
+    document.getElementById("mod-microchip").classList.add("is-invalid");
+    errore.textContent = "Il microchip deve avere almeno 15 caratteri alfanumerici.";
+    valid = false;
+  }
+
+  if (!animale.specie) {
+    document.getElementById("mod-specie").classList.add("is-invalid");
+    errore.textContent = "La specie è obbligatoria.";
+    valid = false;
+  }
+
+  if (!animale.statoAnimale) {
+    document.getElementById("mod-stato").classList.add("is-invalid");
+    errore.textContent = "Lo stato dell'animale è obbligatorio.";
+    valid = false;
+  }
+
+  if (isNaN(animale.eta) || animale.eta < 0 || animale.eta > 20) {
+    document.getElementById("mod-eta").classList.add("is-invalid");
+    errore.textContent = "L'età deve essere un numero tra 0 e 20.";
+    valid = false;
+  }
+
+  if (!animale.vaccinazioni) {
+    document.getElementById("mod-vaccinazioni").classList.add("is-invalid");
+    errore.textContent = "Inserisci almeno una vaccinazione o 'Non vaccinato'.";
+    valid = false;
+  }
+
+  if (!valid) {
+    errore.classList.remove("d-none");
+    return;
+  }
+
+  // TUTTO OK → aggiorna
+  fetch(`${API_URL}/${animaleCorrenteId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(animale)
+  })
+  .then(() => {
+    bootstrap.Modal.getInstance(document.getElementById("modificaAnimaleModal")).hide();
+    getAnimali();
+  });
+}
+

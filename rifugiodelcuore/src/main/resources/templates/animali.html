@@ -220,6 +220,76 @@
   </div>
 </div>
 
+
+<!-- Modale modifica animale -->
+<div class="modal fade" id="modificaAnimaleModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">Modifica animale</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="erroreModifica" class="alert alert-danger d-none" role="alert"></div>
+
+        <div class="row g-2">
+          <div class="col"><input class="form-control" id="mod-nome" placeholder="Nome"></div>
+          <div class="col">
+            <select class="form-select" id="mod-specie">
+              <option value="">Specie</option>
+              <option value="Cane">Cane</option>
+              <option value="Gatto">Gatto</option>
+            </select>
+          </div>
+          <div class="col">
+            <select class="form-select" id="mod-razza">
+              <option disabled selected>Razza</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row g-2 mt-2">
+          <div class="col">
+            <select class="form-select" id="mod-genere">
+              <option value="">Genere</option>
+              <option value="Maschio">Maschio</option>
+              <option value="Femmina">Femmina</option>
+            </select>
+          </div>
+          <div class="col">
+            <input type="number" class="form-control" id="mod-eta" placeholder="Età">
+          </div>
+          <div class="col">
+            <select class="form-select" id="mod-taglia">
+              <option value="">Taglia</option>
+              <option value="Piccola">Piccola</option>
+              <option value="Media">Media</option>
+              <option value="Grande">Grande</option>
+            </select>
+          </div>
+        </div>
+
+        <input class="form-control mt-2" id="mod-microchip" placeholder="Microchip">
+        <select class="form-select mt-2" id="mod-stato">
+          <option value="">Stato Animale</option>
+          <option value="Disponibile">Disponibile</option>
+          <option value="Adottato">Adottato</option>
+          <option value="In cura">In cura</option>
+        </select>
+        <input class="form-control mt-2" id="mod-vaccinazioni" placeholder="Vaccinazioni (separate da virgola)">
+        <textarea class="form-control mt-2" id="mod-descrizione" placeholder="Descrizione"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button class="btn btn-success" onclick="salvaModificaAnimale()">Salva modifiche</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="./js/animali.js"></script>
 
