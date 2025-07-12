@@ -1,3 +1,0 @@
-2025-07-08 18:34:20.961070+02:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]VISITE"; SQL statement:
-VISITE [42000-232]
