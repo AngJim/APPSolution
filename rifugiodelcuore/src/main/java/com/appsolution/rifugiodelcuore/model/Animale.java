@@ -20,7 +20,22 @@ public class Animale {
     private String genere;
     private String taglia;
     private Integer eta;
-    private String immagineUrl;
+    private String microchipAnimale;
+    private String statoAnimale;
+    private String vaccinazioni;
+
+    public String getMicrochipAnimale() {
+        return microchipAnimale;
+    }
+    public void setMicrochipAnimale(String microchipAnimale) {
+        this.microchipAnimale = microchipAnimale;
+    }
+    public String getStatoAnimale() {
+        return statoAnimale;
+    }
+    public void setStatoAnimale(String statoAnimale) {
+        this.statoAnimale = statoAnimale;
+    }
     private String descrizione;
 
     
@@ -66,17 +81,18 @@ public class Animale {
     public void setEta(Integer eta) {
         this.eta = eta;
     }
-    public String getImmagineUrl() {
-        return immagineUrl;
-    }
-    public void setImmagineUrl(String immagineUrl) {
-        this.immagineUrl = immagineUrl;
-    }
+    
     public String getDescrizione() {
         return descrizione;
     }
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+    public String getVaccinazioni() {
+        return vaccinazioni;
+    }
+    public void setVaccinazioni(String vaccinazioni) {
+        this.vaccinazioni = vaccinazioni;
     }
 
 }

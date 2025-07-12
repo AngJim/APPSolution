@@ -138,9 +138,9 @@ function createVisita() {
     return;
   }
 
-  // Controlli per il microchip (almeno 8 cifre numeriche)
-  if (!/^\d{8,}$/.test(microchip)) {
-    mostraErrore("formError", "Il microchip deve contenere almeno 8 cifre numeriche.");
+  // Controlli per il microchip (almeno 15 cifre numeriche)
+  if (!/^\d{15,}$/.test(microchip)) {
+    mostraErrore("formError", "Il microchip deve contenere almeno 15 cifre numeriche.");
     return;
   }
 
