@@ -8,6 +8,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,13 +21,13 @@ public class Veterinario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idVeterinario;
 
-    private String nome;
-    private String cognome;
-    private String telefono;
-    private String email;
-    private String codiceFiscale;
+    @OneToOne
+    @JoinColumn(name = "codice_fiscale", referencedColumnName = "codiceFiscale")
+    private Utente utente;
+
     private String clinica;
     private String specializzazione;
+
     @Enumerated(EnumType.STRING)
     private TipoContratto tipoContratto;
     
@@ -35,35 +37,11 @@ public class Veterinario {
     public void setIdVeterinario(int idVeterinario) {
         this.idVeterinario = idVeterinario;
     }
-    public String getNome() {
-        return nome;
+    public Utente getUtente() {
+        return utente;
     }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public String getCognome() {
-        return cognome;
-    }
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-    public String getTelefono() {
-        return telefono;
-    }
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getCodiceFiscale() {
-        return codiceFiscale;
-    }
-    public void setCodiceFiscale(String codiceFiscale) {
-        this.codiceFiscale = codiceFiscale;
+    public void setUtente(Utente utente) {
+        this.utente = utente;
     }
     public String getClinica() {
         return clinica;
