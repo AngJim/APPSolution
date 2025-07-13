@@ -41,17 +41,30 @@
       <div class="card mb-4">
         <div class="card-header bg-success text-white">Aggiungi nuovo Admin</div>
         <div class="card-body">
+          <!-- Messaggio di errore -->
+          <div id="erroreForm" class="alert alert-danger d-none" role="alert">
+            Compila correttamente tutti i campi: nome, cognome, email e password.
+          </div>
+          
           <div class="row g-2">
-            <div class="col"><input class="form-control" id="nome" placeholder="Nome"></div>
-            <div class="col"><input class="form-control" id="cognome" placeholder="Cognome"></div>
+            <div class="col"><input class="form-control" id="nome" placeholder="Nome*"></div>
+            <div class="col"><input class="form-control" id="cognome" placeholder="Cognome*"></div>
           </div>
           <div class="row g-2 mt-2">
-            <div class="col"><input type="email" class="form-control" id="email" placeholder="Email"></div>
-            <div class="col"><input type="password" class="form-control" id="password" placeholder="Password"></div>
+            <div class="col">
+              <input type="email" class="form-control" id="email" placeholder="Email">
+              <div class="invalid-feedback">Inserisci un'email valida.</div>
+            </div>
+            <div class="col">
+              <input type="password" class="form-control" id="password" placeholder="Password">
+              <div class="invalid-feedback">
+                La password deve contenere almeno 8 caratteri, una lettera e un numero.
+              </div>
+            </div>
           </div>
+
           <button class="btn btn-success mt-3" onclick="createAdmin()">Aggiungi</button>
         </div>
-      </div>
 
       <!-- Tabella visualizzazione -->
       <div class="card">

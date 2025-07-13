@@ -15,49 +15,109 @@ function caricaAdmins() {
                     <td>${admin.nome}</td>
                     <td>${admin.cognome}</td>
                     <td>${admin.email}</td>
-                    <td>
-                        <button class="btn btn-sm btn-warning me-1" onclick="apriModifica(${admin.idAdmin}, '${admin.nome}', '${admin.cognome}', '${admin.email}')">Modifica</button>
-                        <button class="btn btn-sm btn-danger" onclick="eliminaAdmin(${admin.idAdmin})">Elimina</button>
-                    </td>
+                    <td></td>
                 `;
+
+                const azioniTd = row.querySelector("td:last-child");
+
+                // Bottone "Modifica"
+                const btnModifica = document.createElement("button");
+                btnModifica.className = "btn btn-sm btn-warning me-1";
+                btnModifica.textContent = "Modifica";
+                btnModifica.addEventListener("click", () => {
+                    apriModifica(admin.idAdmin, admin.nome, admin.cognome, admin.email);
+                });
+
+                // Bottone "Elimina"
+                const btnElimina = document.createElement("button");
+                btnElimina.className = "btn btn-sm btn-danger";
+                btnElimina.textContent = "Elimina";
+                btnElimina.addEventListener("click", () => {
+                    eliminaAdmin(admin.idAdmin);
+                });
+
+                azioniTd.appendChild(btnModifica);
+                azioniTd.appendChild(btnElimina);
+
                 adminBody.appendChild(row);
             });
         })
         .catch(error => console.error("Errore nel caricamento admin:", error));
 }
 
+function isValidEmail(email) {
+  // Controllo semplice ma efficace
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isStrongPassword(pwd) {
+  // Minimo 8 caratteri, almeno una lettera e un numero
+  return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pwd);
+}
+
 function createAdmin() {
-    const nome = document.getElementById("nome").value.trim();
-    const cognome = document.getElementById("cognome").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+  const nome = document.getElementById("nome");
+  const cognome = document.getElementById("cognome");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const erroreForm = document.getElementById("erroreForm");
 
-    if (!nome || !cognome || !email || !password) {
-        alert("Compila tutti i campi");
-        return;
-    }
+  // Pulisci eventuali errori visivi precedenti
+  [nome, cognome, email, password].forEach(el => el.classList.remove("is-invalid"));
+  erroreForm.classList.add("d-none");
 
-    const admin = { nome, cognome, email, password };
+  let valid = true;
 
-    fetch("/api/admin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(admin)
-    })
+  if (!nome.value.trim()) {
+    nome.classList.add("is-invalid");
+    valid = false;
+  }
+
+  if (!cognome.value.trim()) {
+    cognome.classList.add("is-invalid");
+    valid = false;
+  }
+
+  if (!isValidEmail(email.value.trim())) {
+    email.classList.add("is-invalid");
+    valid = false;
+  }
+
+  if (!isStrongPassword(password.value.trim())) {
+    password.classList.add("is-invalid");
+    valid = false;
+  }
+
+  if (!valid) {
+    erroreForm.classList.remove("d-none");
+    return;
+  }
+
+  // Se tutto è valido, invia
+  const admin = {
+    nome: nome.value.trim(),
+    cognome: cognome.value.trim(),
+    email: email.value.trim(),
+    password: password.value.trim()
+  };
+
+  fetch("/api/admin", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(admin)
+  })
     .then(response => {
-        if (!response.ok) throw new Error("Errore nella creazione admin");
-        return response.json();
+      if (!response.ok) throw new Error("Errore nella creazione admin");
+      return response.json();
     })
     .then(() => {
-        caricaAdmins();
-        // pulisci form
-        document.getElementById("nome").value = "";
-        document.getElementById("cognome").value = "";
-        document.getElementById("email").value = "";
-        document.getElementById("password").value = "";
+      caricaAdmins();
+      [nome, cognome, email, password].forEach(el => el.value = "");
     })
     .catch(error => console.error("Errore:", error));
 }
+
+
 
 function eliminaAdmin(idAdmin) {
     if (!confirm("Sei sicuro di voler eliminare questo admin?")) return;
@@ -77,7 +137,14 @@ function apriModifica(id, nome, cognome, email) {
     document.getElementById("modifica_email").value = email;
     document.getElementById("modifica_password").value = "";
 
-    var modal = new bootstrap.Modal(document.getElementById('modificaModal'));
+    const modalElement = document.getElementById('modificaModal');
+    let modal = bootstrap.Modal.getInstance(modalElement);
+
+    // Se il modale non esiste ancora, crealo
+    if (!modal) {
+        modal = new bootstrap.Modal(modalElement);
+    }
+
     modal.show();
 }
 

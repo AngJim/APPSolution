@@ -222,3 +222,14 @@ textarea:focus {
     margin-right: 8px;
 }
 
+input.form-control:invalid,
+select.form-select:invalid,
+textarea.form-control:invalid {
+  border-color: red;
+  outline: none;
+}
+
+
+input.is-invalid {
+  border-color: red;
+}
