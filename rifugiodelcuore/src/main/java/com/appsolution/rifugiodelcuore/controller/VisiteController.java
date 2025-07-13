@@ -60,7 +60,7 @@ public class VisiteController {
         visiteService.deleteVisite(id);
         return ResponseEntity.noContent().build();
     }
-    
+
     @GetMapping("/filtra")
     public List<Visite> filtraVisite(
     @RequestParam(required = false) String microchip,
@@ -72,10 +72,4 @@ public class VisiteController {
         return visiteService.filtra(microchip, codiceFiscale, dataVisita, tipoVisita, urgenza);
     }
 
-
-
-   
-    
 }
-
-
