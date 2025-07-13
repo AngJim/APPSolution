@@ -21,14 +21,20 @@
 
   <!-- SIDEBAR -->
   <div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4">
-    <img src="/images/logo.png" class="logo-tondo mb-3" alt="Logo">
+    <img src="/images/logo.png" alt="Logo" class="logo-tondo mb-3">
     <h4>Menù</h4>
     <ul class="nav flex-column text-center w-100">
-      <li class="nav-item"><a class="nav-link text-white" href="#">Home</a></li>
-      <a class="nav-link text-white" th:href="@{/animali}">Animali</a>
-      <a class="nav-link text-white" th:href="@{/adozioni}">Adozioni</a>
-      <a class="nav-link text-white" th:href="@{/visite}">Visite Mediche</a>
-      <a class="nav-link text-white" th:href="@{/donazioni}">Donazioni</a>
+      <li class="nav-item"><a class="nav-link text-white" th:href="@{/admin}">Admin</a></li>
+      <li class="nav-item"><a class="nav-link text-white" th:href="@{/animali}">Animali</a></li>
+      <li class="nav-item"><a class="nav-link text-white" th:href="@{/adozioni}">Adozioni</a></li>
+      <li class="nav-item dropdown w-100">
+        <a class="nav-link text-white dropdown-toggle" href="#" id="visiteMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Visite mediche</a>
+        <ul class="dropdown-menu dropdown-menu-dark bg-success border-0 w-100" aria-labelledby="visiteMenu">
+          <li><a class="dropdown-item text-white text-center" th:href="@{/visite}">Gestione visite</a></li>
+          <li><a class="dropdown-item text-white text-center" th:href="@{/veterinari}">Elenco veterinari</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link text-white" th:href="@{/donazioni}">Donazioni</a></li>
     </ul>
   </div>
 
@@ -41,30 +47,30 @@
       <div class="card mb-4">
         <div class="card-header bg-success text-white">Aggiungi nuovo Admin</div>
         <div class="card-body">
-          <!-- Messaggio di errore -->
-          <div id="erroreForm" class="alert alert-danger d-none" role="alert">
+          <div id="erroreForm" class="alert alert-danger d-none py-2 px-3 mb-3 small" role="alert">
             Compila correttamente tutti i campi: nome, cognome, email e password.
           </div>
-          
-          <div class="row g-2">
-            <div class="col"><input class="form-control" id="nome" placeholder="Nome*"></div>
-            <div class="col"><input class="form-control" id="cognome" placeholder="Cognome*"></div>
-          </div>
-          <div class="row g-2 mt-2">
-            <div class="col">
-              <input type="email" class="form-control" id="email" placeholder="Email">
-              <div class="invalid-feedback">Inserisci un'email valida.</div>
+          <div class="mb-2">
+            <div class="row g-2">
+              <div class="col"><input type="text" class="form-control" id="nome" placeholder="Nome*"></div>
+              <div class="col"><input type="text" class="form-control" id="cognome" placeholder="Cognome*"></div>
             </div>
-            <div class="col">
-              <input type="password" class="form-control" id="password" placeholder="Password">
-              <div class="invalid-feedback">
-                La password deve contenere almeno 8 caratteri, una lettera e un numero.
+          </div>
+          <div class="mb-2">
+            <div class="row g-2">
+              <div class="col">
+                <input type="email" class="form-control" id="email" placeholder="Email">
+                <div class="invalid-feedback">Inserisci un'email valida.</div>
+              </div>
+              <div class="col">
+                <input type="password" class="form-control" id="password" placeholder="Password">
+                <div class="invalid-feedback">La password deve contenere almeno 8 caratteri, una lettera e un numero.</div>
               </div>
             </div>
           </div>
-
-          <button class="btn btn-success mt-3" onclick="createAdmin()">Aggiungi</button>
+          <button type="button" class="btn btn-success mt-2" onclick="createAdmin()">Aggiungi</button>
         </div>
+      </div>
 
       <!-- Tabella visualizzazione -->
       <div class="card">
@@ -84,9 +90,45 @@
           </table>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
-
-
+<!-- MODALE MODIFICA ADMIN -->
+<div class="modal fade" id="modificaModal" tabindex="-1" aria-labelledby="modificaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header bg-warning">
+        <h5 class="modal-title" id="modificaModalLabel">Modifica Admin</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+      </div>
+      <div class="modal-body">
+        <div id="erroreModificaForm" class="alert alert-danger d-none py-2 px-3 small" role="alert">
+          Compila correttamente i campi obbligatori.
+        </div>
+        <input type="hidden" id="modificaId">
+        <div class="mb-2">
+          <label for="modificaNome" class="form-label">Nome*</label>
+          <input type="text" class="form-control" id="modificaNome" placeholder="Nome*">
+        </div>
+        <div class="mb-2">
+          <label for="modificaCognome" class="form-label">Cognome*</label>
+          <input type="text" class="form-control" id="modificaCognome" placeholder="Cognome*">
+        </div>
+        <div class="mb-2">
+          <label for="modificaEmail" class="form-label">Email*</label>
+          <input type="email" class="form-control" id="modificaEmail" placeholder="Email*">
+          <div class="invalid-feedback">Inserisci un'email valida.</div>
+        </div>
+        <div class="mb-2">
+          <label for="modificaPassword" class="form-label">Nuova password (opzionale)</label>
+          <input type="password" class="form-control" id="modificaPassword" placeholder="Nuova password (opzionale)">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-warning" onclick="salvaModificaAdmin()">Salva modifiche</button>
+      </div>
     </div>
   </div>
 </div>

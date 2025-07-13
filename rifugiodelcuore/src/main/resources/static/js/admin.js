@@ -20,8 +20,14 @@ function caricaAdmins() {
 
                 const azioniTd = row.querySelector("td:last-child");
 
+                const btnModifica = document.createElement("button");
+                btnModifica.className = "btn btn-sm btn-warning me-2";
+                btnModifica.textContent = "Modifica";
+                btnModifica.addEventListener("click", () => {
+                    mostraFormModifica(admin);
+                });
+                azioniTd.appendChild(btnModifica);
                 
-
                 // Bottone "Elimina"
                 const btnElimina = document.createElement("button");
                 btnElimina.className = "btn btn-sm btn-danger";
@@ -144,3 +150,49 @@ window.addEventListener('scroll', function () {
   }
   lastScrollTop = currentScroll;
 });
+
+
+
+
+function mostraFormModifica(admin) {
+    document.getElementById("modificaId").value = admin.idAdmin;
+    document.getElementById("modificaNome").value = admin.nome;
+    document.getElementById("modificaCognome").value = admin.cognome;
+    document.getElementById("modificaEmail").value = admin.email;
+    document.getElementById("modificaPassword").value = "";
+
+    const modal = new bootstrap.Modal(document.getElementById("modificaModal"));
+    modal.show();
+}
+
+
+
+
+function salvaModificaAdmin() {
+    const id = document.getElementById("modificaId").value;
+    const nome = document.getElementById("modificaNome").value.trim();
+    const cognome = document.getElementById("modificaCognome").value.trim();
+    const email = document.getElementById("modificaEmail").value.trim();
+    const password = document.getElementById("modificaPassword").value.trim();
+
+    const adminModificato = { nome, cognome, email };
+    if (password) {
+        adminModificato.password = password;
+    }
+
+    fetch(`/api/admin/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(adminModificato)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Errore nella modifica admin");
+        return response.json();
+    })
+    .then(() => {
+        caricaAdmins();
+        const modal = bootstrap.Modal.getInstance(document.getElementById("modificaModal"));
+        modal.hide();
+    })
+    .catch(error => console.error("Errore modifica:", error));
+}
