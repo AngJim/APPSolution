@@ -1,8 +1,10 @@
-package com.appsolution.rifugiodelcuore.model;
+package com.appsolution.rifugiodelcuore.dto;
 
 import java.time.LocalDate;
 
 import org.springframework.cglib.core.Local;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class VeterinarioDTO {
     
@@ -12,6 +14,7 @@ public class VeterinarioDTO {
     private String telefono;
     private String email;
     private String codiceFiscale;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascita;
 
     // Dati specifici del veterinario
