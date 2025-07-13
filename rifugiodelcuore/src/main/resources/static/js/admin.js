@@ -32,9 +32,47 @@ function caricaAdmins() {
                 const btnElimina = document.createElement("button");
                 btnElimina.className = "btn btn-sm btn-danger";
                 btnElimina.textContent = "Elimina";
+
+                // Contenitore conferma
+                const confermaBox = document.createElement("div");
+                confermaBox.className = "text-center mt-1";
+                confermaBox.innerHTML = `
+                <div class="text-danger small">Confermi?</div>
+                <div class="d-flex justify-content-center gap-1 mt-1">
+                    <button class="btn btn-sm btn-danger" title="Conferma"><i class="bi bi-check2"></i></button>
+                    <button class="btn btn-sm btn-secondary" title="Annulla"><i class="bi bi-x"></i></button>
+                </div>
+                `;
+                confermaBox.style.display = "none";
+
+                // Mostra conferma al click su "Elimina"
                 btnElimina.addEventListener("click", () => {
-                    eliminaAdmin(admin.idAdmin);
+                btnElimina.style.display = "none";
+                confermaBox.style.display = "block";
                 });
+
+                // Pulsanti azioni
+                const btnConferma = confermaBox.querySelector(".btn-danger");
+                const btnAnnulla = confermaBox.querySelector(".btn-secondary");
+
+                btnConferma.addEventListener("click", () => {
+                fetch(`/api/admin/${admin.idAdmin}`, { method: "DELETE" })
+                    .then(response => {
+                    if (!response.ok) throw new Error("Errore nell'eliminazione");
+                    caricaAdmins();
+                    })
+                    .catch(error => console.error("Errore:", error));
+                });
+
+                btnAnnulla.addEventListener("click", () => {
+                confermaBox.style.display = "none";
+                btnElimina.style.display = "inline-block";
+                });
+
+                // Aggiungi entrambi
+                azioniTd.appendChild(btnElimina);
+                azioniTd.appendChild(confermaBox);
+
 
                 
                 azioniTd.appendChild(btnElimina);
@@ -119,16 +157,7 @@ function createAdmin() {
 
 
 
-function eliminaAdmin(idAdmin) {
-    if (!confirm("Sei sicuro di voler eliminare questo admin?")) return;
 
-    fetch(`/api/admin/${idAdmin}`, { method: "DELETE" })
-        .then(response => {
-            if (!response.ok) throw new Error("Errore nell'eliminazione");
-            caricaAdmins();
-        })
-        .catch(error => console.error("Errore:", error));
-}
 
 
 
