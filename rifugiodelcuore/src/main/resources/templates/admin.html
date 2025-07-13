@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <title>Gestione Admin - Rifugio del Cuore</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Se hai un CSS personalizzato puoi inserirlo qui -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
 
@@ -20,30 +22,23 @@
 <div class="main-wrapper d-flex">
 
   <!-- SIDEBAR -->
-<div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4" style="width: 250px; min-height: 100vh;">
-<img src="/images/logo.png" class="logo-tondo mb-3" alt="Logo" style="max-height: 60px;">
-<h4>Menù</h4>
-<ul class="nav flex-column text-center w-100 px-2">
-    <li class="nav-item">
-    <a class="nav-link text-white" href="/home">Home</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link text-white" href="/admin">Gestione Admin</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link text-white" href="/animali">Gestione Animali</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link text-white" href="/visite">Visite Mediche</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link text-white" href="/adozioni">Adozioni</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link text-white" href="/donazioni">Donazioni</a>
-    </li>
-</ul>
-</div>
+  <div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4">
+    <img src="/images/logo.png" alt="Logo" class="logo-tondo mb-3">
+    <h4>Menù</h4>
+    <ul class="nav flex-column text-center w-100">
+      <li class="nav-item"><a class="nav-link text-white" th:href="@{/admin}">Admin</a></li>
+      <li class="nav-item"><a class="nav-link text-white" th:href="@{/animali}">Animali</a></li>
+      <li class="nav-item"><a class="nav-link text-white" th:href="@{/adozioni}">Adozioni</a></li>
+      <li class="nav-item dropdown w-100">
+        <a class="nav-link text-white dropdown-toggle" href="#" id="visiteMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Visite mediche</a>
+        <ul class="dropdown-menu dropdown-menu-dark bg-success border-0 w-100" aria-labelledby="visiteMenu">
+          <li><a class="dropdown-item text-white text-center" th:href="@{/visite}">Gestione visite</a></li>
+          <li><a class="dropdown-item text-white text-center" th:href="@{/veterinari}">Elenco veterinari</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link text-white" th:href="@{/donazioni}">Donazioni</a></li>
+    </ul>
+  </div>
 
   <!-- CONTENUTO PRINCIPALE -->
   <div class="main-content flex-grow-1 px-4 py-4">
@@ -54,15 +49,35 @@
       <div class="card mb-4">
         <div class="card-header bg-success text-white">Aggiungi nuovo Admin</div>
         <div class="card-body">
-          <div class="row g-2">
-            <div class="col"><input class="form-control" id="nome" placeholder="Nome"></div>
-            <div class="col"><input class="form-control" id="cognome" placeholder="Cognome"></div>
+          <div id="erroreForm" class="alert alert-danger d-none py-2 px-3 mb-3 small" role="alert">
+            Compila correttamente tutti i campi: nome, cognome, email e password.
           </div>
-          <div class="row g-2 mt-2">
-            <div class="col"><input type="email" class="form-control" id="email" placeholder="Email"></div>
-            <div class="col"><input type="password" class="form-control" id="password" placeholder="Password"></div>
+          <div class="mb-2">
+            <div class="row g-2">
+              <div class="col"><input type="text" class="form-control" id="nome" placeholder="Nome*"></div>
+              <div class="col"><input type="text" class="form-control" id="cognome" placeholder="Cognome*"></div>
+            </div>
           </div>
-          <button class="btn btn-success mt-3" onclick="createAdmin()">Aggiungi</button>
+          <div class="mb-2">
+            <div class="row g-2">
+              <div class="col">
+                <input type="email" class="form-control" id="email" placeholder="Email">
+                <div class="invalid-feedback">Inserisci un'email valida.</div>
+              </div>
+              <div class="col">
+                <div class="input-group">
+                <input type="password" class="form-control" id="password" placeholder="Password">
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword" tabindex="-1">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <div class="invalid-feedback">
+                  La password deve contenere almeno 8 caratteri, una lettera e un numero.
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-success mt-2" onclick="createAdmin()">Aggiungi</button>
         </div>
       </div>
 
@@ -84,30 +99,51 @@
           </table>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
-      <!-- Modale modifica admin -->
-      <div class="modal fade" id="modificaModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-              <h5 class="modal-title">Modifica Admin</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" id="modifica_idAdmin">
-              <div class="mb-2"><input class="form-control" id="modifica_nome" placeholder="Nome"></div>
-              <div class="mb-2"><input class="form-control" id="modifica_cognome" placeholder="Cognome"></div>
-              <div class="mb-2"><input class="form-control" id="modifica_email" placeholder="Email"></div>
-              <div class="mb-2"><input type="password" class="form-control" id="modifica_password" placeholder="Password"></div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-              <button class="btn btn-success" onclick="salvaModifica()">Salva modifiche</button>
-            </div>
-          </div>
+<!-- MODALE MODIFICA ADMIN -->
+<div class="modal fade" id="modificaModal" tabindex="-1" aria-labelledby="modificaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modificaModalLabel">Modifica Admin</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+      </div>
+      <div class="modal-body">
+        <div id="erroreModificaForm" class="alert alert-danger d-none py-2 px-3 small" role="alert">
+          Compila correttamente i campi obbligatori.
+        </div>
+        <input type="hidden" id="modificaId">
+        <div class="mb-2">
+          <label for="modificaNome" class="form-label">Nome*</label>
+          <input type="text" class="form-control" id="modificaNome" placeholder="Nome*">
+        </div>
+        <div class="mb-2">
+          <label for="modificaCognome" class="form-label">Cognome*</label>
+          <input type="text" class="form-control" id="modificaCognome" placeholder="Cognome*">
+        </div>
+        <div class="mb-2">
+          <label for="modificaEmail" class="form-label">Email*</label>
+          <input type="email" class="form-control" id="modificaEmail" placeholder="Email*">
+          <div class="invalid-feedback">Inserisci un'email valida.</div>
+        </div>
+        <div class="mb-2">
+          <label for="modificaPassword" class="form-label">Nuova password (opzionale)</label>
+          <div class="input-group">
+          <input type="password" class="form-control" id="modificaPassword" placeholder="Nuova password (opzionale)">
+          <button class="btn btn-outline-secondary" type="button" id="toggleModificaPassword" tabindex="-1">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+
         </div>
       </div>
-
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-success" onclick="salvaModificaAdmin()">Salva modifiche</button>
+      </div>
     </div>
   </div>
 </div>
