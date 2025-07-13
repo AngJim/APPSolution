@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Elenco veterinari – Rifugio del Cuore</title>
+
+  <!-- foglio generale già usato nelle altre pagine -->
+  <link rel="stylesheet" th:href="@{/css/visite.css}">
+  <!-- Bootstrap -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <!-- foglio specifico per questa pagina -->
+  <link rel="stylesheet" th:href="@{/css/veterinari.css}">
+</head>
+
+<body>
+<!-- ▸ Banner superiore ---------------------------------------------------- -->
+<div class="header-banner bg-white py-3 shadow-sm">
+  <div class="container d-flex align-items-center justify-content-center justify-content-md-start">
+    <img src="/images/logo.png" alt="Logo Rifugio" class="logo-tondo me-3">
+    <h1 class="mb-0">Rifugio del Cuore</h1>
+  </div>
+</div>
+
+<!-- ▸ Struttura a due colonne -------------------------------------------- -->
+<div class="main-wrapper d-flex">
+
+  <!-- ▸ Sidebar -->
+  <div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4">
+    <img src="/images/logo.png" class="logo-tondo mb-3" alt="Logo">
+    <h4>Menù</h4>
+    <ul class="nav flex-column text-center w-100">
+      <li class="nav-item"><a class="nav-link text-white" href="#">Home</a></li>
+      <a class="nav-link text-white" th:href="@{/animali}">Animali</a>
+      <a class="nav-link text-white" th:href="@{/adozioni}">Adozioni</a>
+      <a class="nav-link text-white" th:href="@{/visite}">Visite Mediche</a>
+      <a class="nav-link text-white" th:href="@{/donazioni}">Donazioni</a>
+    </ul>
+  </div>
+
+  <!-- ▸ Contenuto principale -->
+  <main class="main-content flex-grow-1 px-4">
+    <div class="container">
+      <h1 class="mb-4 text-center">Elenco veterinari</h1>
+
+      <!-- ▶ Filtro rapido -------------------------------------------------- -->
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white">Filtra</div>
+        <div class="card-body">
+          <div class="row g-2">
+            <div class="col"><input class="form-control" id="f_nome"     placeholder="Nome"></div>
+            <div class="col"><input class="form-control" id="f_cognome"  placeholder="Cognome"></div>
+            <div class="col"><input class="form-control" id="f_cf"       placeholder="Codice fiscale"></div>
+            <div class="col"><input class="form-control" id="f_clinica"  placeholder="Clinica"></div>
+            <div class="col"><input class="form-control" id="f_special"  placeholder="Specializzazione"></div>
+            <div class="col-12 col-md-auto">
+              <button class="btn btn-secondary w-100" onclick="filtraVets()">Applica</button>
+            </div>
+              <div class="col-12 col-md-auto">
+              <button class="btn btn-outline-secondary w-100" onclick="resetFiltri()">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▸ Tabella elenco con header sticky -->
+      <div class="vets-table-wrapper">
+        <table class="table table-bordered table-hover mb-0 vets-table" id="vetsTable">
+          <colgroup>
+            <col style="width:11%">   <!-- Cod. fiscale -->
+            <col style="width:8%">    <!-- Nome         -->
+            <col style="width:10%">   <!-- Cognome      -->
+            <col style="width:11%">   <!-- Telefono     -->
+            <col style="width:15%">   <!-- Email        -->
+            <col style="width:9%">    <!-- Nascita      -->
+            <col style="width:13%">   <!-- Clinica      -->
+            <col style="width:13%">   <!-- Specializz.  -->
+            <col style="width:10%">   <!-- Tipo contr.  -->
+          </colgroup>
+        
+          <thead class="table-light">
+            <tr>
+              <th>Cod. fiscale</th>
+              <th>Nome</th>
+              <th>Cognome</th>
+              <th>Telefono</th>
+              <th>Email</th>
+              <th>Nascita</th>
+              <th>Clinica</th>
+              <th>Specializzazione</th>
+              <th>Tipo contratto</th>
+            </tr>
+          </thead>
+        
+          <tbody id="vetsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ▸ Script -------------------------------------------------------------- -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/veterinari.js}"></script>
+</body>
+</html>
