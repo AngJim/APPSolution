@@ -7,6 +7,7 @@ import com.appsolution.rifugiodelcuore.model.Admin;
 import com.appsolution.rifugiodelcuore.repository.AdminRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -30,4 +31,22 @@ public class AdminService {
     public void deleteById(Integer id) {
         adminRepository.deleteById(id);
     }
+
+
+
+    public Optional<Admin> aggiornaAdmin(Integer id, Admin nuovoAdmin) {
+    return adminRepository.findById(id).map(adminEsistente -> {
+        adminEsistente.setNome(nuovoAdmin.getNome());
+        adminEsistente.setCognome(nuovoAdmin.getCognome());
+        adminEsistente.setEmail(nuovoAdmin.getEmail());
+
+        if (nuovoAdmin.getPassword() != null && !nuovoAdmin.getPassword().isBlank()) {
+            adminEsistente.setPassword(nuovoAdmin.getPassword());
+        }
+
+        return adminRepository.save(adminEsistente);
+    });
+}
+
+
 }

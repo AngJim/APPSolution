@@ -2,6 +2,7 @@ package com.appsolution.rifugiodelcuore.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.appsolution.rifugiodelcuore.model.Admin;
@@ -35,4 +36,15 @@ public class AdminController {
     public void deleteAdmin(@PathVariable Integer id) {
         adminService.deleteById(id);
     }
+
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Admin> update(@PathVariable Integer id, @RequestBody Admin nuovoAdmin) {
+        return adminService.aggiornaAdmin(id, nuovoAdmin)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
 }

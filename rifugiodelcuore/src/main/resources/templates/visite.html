@@ -22,17 +22,66 @@
 <div class="main-wrapper d-flex">
   
   <!-- SIDEBAR -->
-  <div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4">
-    <img src="/images/logo.png" class="logo-tondo mb-3" alt="Logo">
-    <h4>Menù</h4>
-    <ul class="nav flex-column text-center w-100">
-      <li class="nav-item"><a class="nav-link text-white" href="#">Home</a></li>
+<div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4">
+
+  <img src="/images/logo.png" alt="Logo" class="logo-tondo mb-3">
+  <h4>Menù</h4>
+
+  <ul class="nav flex-column text-center w-100">
+
+    <!-- Home -->
+    <li class="nav-item">
+      <a class="nav-link text-white" th:href="@{/}">Home</a>
+    </li>
+
+    <!-- Animali -->
+    <li class="nav-item">
       <a class="nav-link text-white" th:href="@{/animali}">Animali</a>
+    </li>
+
+    <!-- Adozioni -->
+    <li class="nav-item">
       <a class="nav-link text-white" th:href="@{/adozioni}">Adozioni</a>
-      <a class="nav-link text-white" th:href="@{/visite}">Visite Mediche</a>
+    </li>
+
+    <!-- ▼ Visite mediche -->
+    <li class="nav-item dropdown w-100">
+      <!-- toggle -->
+      <a  class="nav-link text-white dropdown-toggle"
+          href="#"
+          id="visiteMenu"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Visite mediche
+      </a>
+
+      <!-- tendina -->
+      <ul class="dropdown-menu dropdown-menu-dark bg-success border-0 w-100"
+          aria-labelledby="visiteMenu">
+        <li>
+          <a class="dropdown-item text-white text-center"
+             th:href="@{/visite}">
+             Gestione visite
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item text-white text-center"
+             th:href="@{/veterinari}">
+             Elenco veterinari
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- ▲ fine Visite mediche -->
+
+    <!-- Donazioni -->
+    <li class="nav-item">
       <a class="nav-link text-white" th:href="@{/donazioni}">Donazioni</a>
-    </ul>
-  </div>
+    </li>
+
+  </ul>
+</div>
 
   <!-- CONTENUTO PRINCIPALE -->
   <div class="main-content flex-grow-1 px-4">
@@ -99,7 +148,13 @@
     </div>
     <textarea class="form-control mt-2" id="note_Aggiuntive" placeholder="note aggiuntive"></textarea>
     <button class="btn btn-success mt-3" onclick="createVisita()">Aggiungi visita</button>
-  </div>
+    <!-- 🔵 Bottone “Aggiungi veterinario” -->
+    <button class="btn btn-primary mt-3 ms-2"        
+            data-bs-toggle="modal"
+            data-bs-target="#addVeterinarioModal">
+      Aggiungi veterinario
+    </button>
+    </div>
 </div>
 
 
@@ -184,10 +239,7 @@
     </div>
   </div>
 
-
-
-
-
+ 
 <!-- Modale modifica visita -->
 <div class="modal fade" id="modificaModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -198,7 +250,7 @@
       </div>
       <div class="modal-body">
         <div id="modificaError" class="alert alert-danger d-none" role="alert"></div>
-        <input type="hidden" id="modifica_idVisita">
+          <input type="hidden" id="modifica_idVisita">
         <div class="row g-2">
           <div class="col"><input class="form-control" id="modifica_microchipAnimale" placeholder="microchip Animale"></div>
           <div class="col"><input class="form-control" id="modifica_codiceFiscaleVeterinario" placeholder="codice Fiscale Veterinario"></div>
@@ -208,59 +260,103 @@
           <div class="col"><input type="time" class="form-control" id="modifica_orarioVisita"></div>
         </div>
         <div class="row g-2 mt-2">
-          <div class="col"><select class="form-select" id="modifica_tipoVisita">
-          <option value="">Seleziona tipo visita</option>
-            <optgroup label="Routine">
-              <option value="Controllo generale">Controllo generale</option>
-              <option value="Visita post-adozione">Visita post-adozione</option>
-            </optgroup>
-            <optgroup label="Prevenzione">
-              <option value="Vaccinazione">Vaccinazione</option>
-              <option value="Sverminazione">Sverminazione</option>
-              <option value="Trattamento antipulci/zecche">Trattamento antipulci/zecche</option>
-            </optgroup>
-            <optgroup label="Diagnostica">
-              <option value="Analisi di laboratorio">Analisi di laboratorio</option>
-              <option value="Radiografia">Radiografia</option>
-              <option value="Ecografia">Ecografia</option>
-              <option value="Endoscopia">Endoscopia</option>
-              <option value="Biopsia">Biopsia</option>
-            </optgroup>
-            <optgroup label="Chirurgia">
-              <option value="Sterilizzazione">Sterilizzazione</option>
-              <option value="Chirurgia ortopedica">Chirurgia ortopedica</option>
-              <option value="Rimozione neoplasie">Rimozione neoplasie</option>
-            </optgroup>
-            <optgroup label="Emergenze">
-              <option value="Emergenza">Emergenza</option>
-            </optgroup>
-            <optgroup label="Altro">
-              <option value="Valutazione comportamentale">Valutazione comportamentale</option>
-              <option value="Controllo post-operatorio">Controllo post-operatorio</option>
-              <option value="Terapia farmacologica">Terapia farmacologica</option>
-            </optgroup>
+          <div class="col">
+            <select class="form-select" id="modifica_tipoVisita">
+              <option value="">Seleziona tipo visita</option>
+              <optgroup label="Routine">
+                <option value="Controllo generale">Controllo generale</option>
+                <option value="Visita post-adozione">Visita post-adozione</option>
+              </optgroup>
+              <optgroup label="Prevenzione">
+                <option value="Vaccinazione">Vaccinazione</option>
+                <option value="Sverminazione">Sverminazione</option>
+                <option value="Trattamento antipulci/zecche">Trattamento antipulci/zecche</option>
+              </optgroup>
+              <optgroup label="Diagnostica">
+                <option value="Analisi di laboratorio">Analisi di laboratorio</option>
+                <option value="Radiografia">Radiografia</option>
+                <option value="Ecografia">Ecografia</option>
+                <option value="Endoscopia">Endoscopia</option>
+                <option value="Biopsia">Biopsia</option>
+              </optgroup>
+              <optgroup label="Chirurgia">
+                <option value="Sterilizzazione">Sterilizzazione</option>
+                <option value="Chirurgia ortopedica">Chirurgia ortopedica</option>
+                <option value="Rimozione neoplasie">Rimozione neoplasie</option>
+              </optgroup>
+              <optgroup label="Emergenze">
+                <option value="Emergenza">Emergenza</option>
+              </optgroup>
+              <optgroup label="Altro">
+                <option value="Valutazione comportamentale">Valutazione comportamentale</option>
+                <option value="Controllo post-operatorio">Controllo post-operatorio</option>
+                <option value="Terapia farmacologica">Terapia farmacologica</option>
+              </optgroup>
             </select>
-            </div>
-            <div class="col">
-              <select class="form-select" id="modifica_urgenza">
-                <option value="Bassa">Bassa</option>
-                <option value="Media">Media</option>
-                <option value="Alta">Alta</option>
+          </div>
+          <div class="col">
+            <select class="form-select" id="modifica_urgenza">
+              <option value="Bassa">Bassa</option>
+              <option value="Media">Media</option>
+              <option value="Alta">Alta</option>
             </select>
           </div>
         </div>
-        <textarea class="form-control mt-2" id="modifica_noteAggiuntive" placeholder="note aggiuntive (facoltativo)"></textarea>
+      <textarea class="form-control mt-2" id="modifica_noteAggiuntive" placeholder="note aggiuntive (facoltativo)"></textarea>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
         <button class="btn btn-success" onclick="salvaModifica()">Salva modifiche</button>
-
       </div>
     </div>
   </div>
+</div>
 
+<!-- 🔵 Modale inserimento veterinario -->
+<div class="modal fade" id="addVeterinarioModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Nuovo veterinario</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
+      <div class="modal-body">
+        <div id="vetAlert" class="alert d-none"></div>
 
+        <div class="row g-2">
+          <div class="col"><input class="form-control" id="vet_nome"  placeholder="Nome*"></div>
+          <div class="col"><input class="form-control" id="vet_cognome" placeholder="Cognome*"></div>
+        </div>
+        <div class="row g-2 mt-2">
+          <div class="col"><input class="form-control" id="vet_telefono" placeholder="Telefono*"></div>
+          <div class="col"><input class="form-control" id="vet_email"    placeholder="Email"></div>
+          <div class="col"><input class="form-control" id="vet_cf"       placeholder="Codice fiscale*"></div>
+          <div class="col"><input type="date" class="form-control" id="vet_datanascita" placeholder="Data di nascita*">
+</div>
+        </div>
+        <div class="row g-2 mt-2">
+          <div class="col"><input class="form-control" id="vet_clinica"         placeholder="Clinica"></div>
+          <div class="col"><input class="form-control" id="vet_specializzazione" placeholder="Specializzazione"></div>
+        </div>
+        <select class="form-select mt-2" id="vet_tipoContratto">
+          <option value="TEMPO_INDETERMINATO">Tempo indeterminato</option>
+          <option value="TEMPO_DETERMINATO">Tempo determinato</option>
+          <option value="PARTITA_IVA">Partita IVA</option>
+          <option value="PRESTAZIONE_OCCASIONALE">Prestazione occasionale</option>
+          <option value="CONVENZIONE_CLINICA">Convenzione clinica</option>
+          <option value="VOLONTARIATO">Volontariato</option>
+          <option value="ALTRO">Altro</option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+        <button class="btn btn-primary" onclick="salvaVeterinario()">Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
   <!-- chiusura corretta del body e html -->
