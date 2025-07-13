@@ -249,3 +249,17 @@ document.addEventListener("DOMContentLoaded", function () {
     this.innerHTML = isPassword ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
   });
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleModificaPassword = document.getElementById("toggleModificaPassword");
+  const modificaPasswordInput = document.getElementById("modificaPassword");
+
+  toggleModificaPassword.addEventListener("click", function () {
+    const isPassword = modificaPasswordInput.type === "password";
+    modificaPasswordInput.type = isPassword ? "text" : "password";
+    this.innerHTML = isPassword ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+  });
+});
