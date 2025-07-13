@@ -2,44 +2,83 @@ package com.appsolution.rifugiodelcuore.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import com.appsolution.rifugiodelcuore.dto.VeterinarioDTO;
 import com.appsolution.rifugiodelcuore.model.Veterinario;
 import com.appsolution.rifugiodelcuore.service.VeterinarioService;
 
 @RestController
 @RequestMapping("/api/veterinari")
 public class VeterinarioController {
-    
-    @Autowired
-    private VeterinarioService veterinarioService;
 
+    private final VeterinarioService veterinarioService;
+
+    public VeterinarioController(VeterinarioService veterinarioService) {
+        this.veterinarioService = veterinarioService;
+    }
+
+    /* ---------- CRUD BASE ---------- */
+
+    /** Elenco completo */
     @GetMapping
-    public List<Veterinario> getAllVeterinari(){
+    public List<Veterinario> getAllVeterinari() {
         return veterinarioService.getAllVeterinari();
     }
 
-    @PostMapping
-    public ResponseEntity<?> createVeterinario(@RequestBody Veterinario veterinario) {
+    /** Singolo veterinario per ID */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getVeterinarioById(@PathVariable int id) {
         try {
-            Veterinario saved = veterinarioService.saveVeterinario(veterinario);
+            return ResponseEntity.ok(veterinarioService.getVeterinarioById(id));
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /** Crea veterinario + utente */
+    @PostMapping
+    public ResponseEntity<?> createVeterinario(@RequestBody VeterinarioDTO dto) {
+        try {
+            Veterinario saved = veterinarioService.salvaVeterinarioConUtente(dto);
             return ResponseEntity.ok(saved);
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
-    @GetMapping("/search")
-    public List<Veterinario> searchVeterinari(@RequestParam String query) {
-        return veterinarioService.searchVeterinari(query);
+
+    /** Aggiorna veterinario e anagrafica */
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateVeterinario( @PathVariable int id,
+                                                @RequestBody Veterinario updated) {
+        try {
+            Veterinario mod = veterinarioService.updateVeterinario(id, updated);
+            return ResponseEntity.ok(mod);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    
-}  
+    /** Cancella veterinario */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteVeterinario(@PathVariable int id) {
+        try {
+            veterinarioService.deleteVeterinario(id);
+            return ResponseEntity.ok("Veterinario eliminato con successo");
+        } catch (RuntimeException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /* ---------- RICERCA ---------- */
+
+@GetMapping("/search")
+public List<Veterinario> search(
+        @RequestParam(required = false) String cf,
+        @RequestParam(required = false) String nome,
+        @RequestParam(required = false) String cognome) {
+
+    return veterinarioService.searchVeterinari(cf, nome, cognome);
+}
+}
