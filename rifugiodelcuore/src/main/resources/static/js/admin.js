@@ -20,13 +20,7 @@ function caricaAdmins() {
 
                 const azioniTd = row.querySelector("td:last-child");
 
-                // Bottone "Modifica"
-                const btnModifica = document.createElement("button");
-                btnModifica.className = "btn btn-sm btn-warning me-1";
-                btnModifica.textContent = "Modifica";
-                btnModifica.addEventListener("click", () => {
-                    apriModifica(admin.idAdmin, admin.nome, admin.cognome, admin.email);
-                });
+                
 
                 // Bottone "Elimina"
                 const btnElimina = document.createElement("button");
@@ -36,7 +30,7 @@ function caricaAdmins() {
                     eliminaAdmin(admin.idAdmin);
                 });
 
-                azioniTd.appendChild(btnModifica);
+                
                 azioniTd.appendChild(btnElimina);
 
                 adminBody.appendChild(row);
@@ -130,50 +124,9 @@ function eliminaAdmin(idAdmin) {
         .catch(error => console.error("Errore:", error));
 }
 
-function apriModifica(id, nome, cognome, email) {
-    document.getElementById("modifica_idAdmin").value = id;
-    document.getElementById("modifica_nome").value = nome;
-    document.getElementById("modifica_cognome").value = cognome;
-    document.getElementById("modifica_email").value = email;
-    document.getElementById("modifica_password").value = "";
 
-    const modalElement = document.getElementById('modificaModal');
-    let modal = bootstrap.Modal.getInstance(modalElement);
 
-    // Se il modale non esiste ancora, crealo
-    if (!modal) {
-        modal = new bootstrap.Modal(modalElement);
-    }
 
-    modal.show();
-}
-
-function salvaModifica() {
-    const idAdmin = document.getElementById("modifica_idAdmin").value;
-    const nome = document.getElementById("modifica_nome").value.trim();
-    const cognome = document.getElementById("modifica_cognome").value.trim();
-    const email = document.getElementById("modifica_email").value.trim();
-    const password = document.getElementById("modifica_password").value.trim();
-
-    const admin = { nome, cognome, email };
-    if (password) admin.password = password;
-
-    fetch(`/api/admin`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idAdmin, ...admin })
-    })
-    .then(response => {
-        if (!response.ok) throw new Error("Errore nella modifica admin");
-        return response.json();
-    })
-    .then(() => {
-        var modal = bootstrap.Modal.getInstance(document.getElementById('modificaModal'));
-        modal.hide();
-        caricaAdmins();
-    })
-    .catch(error => console.error("Errore:", error));
-}
 
 
 
