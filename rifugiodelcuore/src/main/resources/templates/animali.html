@@ -24,17 +24,60 @@
 
   <!-- SIDEBAR -->
 
-  <div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4">
-    <img src="/images/logo.png" class="logo-tondo mb-3" alt="Logo">
-    <h4>Menù</h4>
-    <ul class="nav flex-column text-center w-100">
-      <li class="nav-item"><a class="nav-link text-white" href="#">Home</a></li>
+<div class="sidebar bg-success text-white d-flex flex-column align-items-center py-4">
+
+  <img src="/images/logo.png" alt="Logo" class="logo-tondo mb-3">
+  <h4>Menù</h4>
+
+  <ul class="nav flex-column text-center w-100">
+
+    <!-- Home -->
+    <li class="nav-item">
+      <a class="nav-link text-white" th:href="@{/}">Home</a>
+    </li>
+
+    <!-- Animali -->
+    <li class="nav-item">
       <a class="nav-link text-white" th:href="@{/animali}">Animali</a>
+    </li>
+
+    <!-- Adozioni -->
+    <li class="nav-item">
       <a class="nav-link text-white" th:href="@{/adozioni}">Adozioni</a>
-      <a class="nav-link text-white" th:href="@{/visite}">Visite Mediche</a>
+    </li>
+
+    <!-- ▼ Visite mediche -->
+    <li class="nav-item dropdown w-100">
+      <!-- toggle -->
+      <a  class="nav-link text-white dropdown-toggle"
+          href="#"
+          id="visiteMenu"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Visite mediche
+      </a>
+
+      <!-- tendina -->
+      <ul class="dropdown-menu dropdown-menu-dark bg-success border-0 w-100"
+          aria-labelledby="visiteMenu">
+        <li>
+          <a class="dropdown-item text-white text-center"
+             th:href="@{/veterinari}">
+             Elenco veterinari
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- ▲ fine Visite mediche -->
+
+    <!-- Donazioni -->
+    <li class="nav-item">
       <a class="nav-link text-white" th:href="@{/donazioni}">Donazioni</a>
-    </ul>
-  </div>
+    </li>
+
+  </ul>
+</div>
 
 
   <!-- CONTENUTO PRINCIPALE -->

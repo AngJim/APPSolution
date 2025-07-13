@@ -1,0 +1,59 @@
+/* ======== LINK ATTIVO NELLA SIDEBAR ======== */
+.sidebar .nav .active{
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ============  MENU A TENDINA NELLA SIDEBAR  ============ */
+.sidebar .nav-item.dropdown{            /* NEW – posizione d’origine
+                                           per il dropdown assoluto   */
+  position: relative;                   /* NEW */
+}
+
+/* fa comparire il menu al passaggio del mouse               */
+.sidebar .dropdown:hover .dropdown-menu{
+  display: block;
+}
+
+/* il menu ora è sovrapposto, non altera più il layout        */
+.sidebar .dropdown-menu{                /* NEW blocco */
+  position: absolute;                   /* si sovrappone                */
+  left: 0;
+  top: 100%;                            /* subito sotto l’etichetta      */
+  width: 220px;                         /* scegli la larghezza che vuoi  */
+  z-index: 20;
+}
+
+/* effetto hover sulla singola voce                            */
+.sidebar .dropdown-menu .dropdown-item:hover{
+  background: rgba(255,255,255,.15);
+}
+/* ===========================================
+   TABELLA VETERINARI – header sticky + body scroll
+   =========================================== */
+
+/* contenitore che gestisce lo scroll verticale */
+.vets-table-wrapper{
+  max-height:70vh;       /* 70% dell’altezza viewport  */
+  overflow-y:auto;       /* solo scroll verticale       */
+}
+
+/* tabella vera e propria */
+.vets-table{
+  width:100%;
+  table-layout:fixed;    /* larghezze dettate dal <colgroup> */
+}
+
+/* celle: evita overflow di testi lunghi */
+.vets-table th,
+.vets-table td{
+  word-break:break-word;
+}
+
+/* header fisso durante lo scroll */
+.vets-table thead th{
+  position:sticky;
+  top:0;
+  background:#f8f9fa;    /* stesso colore del .table-light   */
+  z-index:5;             /* sopra le celle del tbody         */
+}
