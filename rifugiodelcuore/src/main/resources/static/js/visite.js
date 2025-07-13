@@ -303,3 +303,87 @@ window.addEventListener('scroll', function () {
   }
   lastScrollTop = currentScroll;
 });
+
+
+// Funzione per mostrare il modal di aggiunta veterinario
+
+async function salvaVeterinario() {
+  const alertBox = document.getElementById('vetAlert');
+
+  // raccogli valori
+  const dto = {
+    nome:               document.getElementById('vet_nome').value.trim(),
+    cognome:            document.getElementById('vet_cognome').value.trim(),
+    telefono:           document.getElementById('vet_telefono').value.trim(),
+    email:              document.getElementById('vet_email').value.trim(),
+    dataNascita:         document.getElementById('vet_datanascita').value,
+    codiceFiscale:      document.getElementById('vet_cf').value.trim().toUpperCase(),
+    clinica:            document.getElementById('vet_clinica').value.trim(),
+    specializzazione:   document.getElementById('vet_specializzazione').value.trim(),
+    tipoContratto:      document.getElementById('vet_tipoContratto').value
+
+  };
+
+  // mini-validazione client
+if (!dto.nome || !dto.cognome || !dto.telefono ||
+    !dto.codiceFiscale || !dto.tipoContratto) {
+    mostraMsg('Compila i campi obbligatori.', 'danger');
+    return;
+}
+
+  try {
+    const res = await fetch('/api/veterinari', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify(dto)
+    });
+
+    if (res.ok) {
+      mostraMsg('Veterinario salvato con successo!', 'success');
+      // se vuoi chiudere subito:
+      setTimeout(() => bootstrap.Modal.getOrCreateInstance(
+                    document.getElementById('addVeterinarioModal')).hide(), 900);
+    } else {
+      const msg = await res.text();
+      mostraMsg(msg || 'Errore salvataggio', 'danger');
+    }
+  } catch (e) {
+    mostraMsg('Errore di rete: ' + e, 'danger');
+  }
+
+  function mostraMsg(txt, type) {
+    alertBox.className = 'alert alert-' + type;
+    alertBox.textContent = txt;
+    alertBox.classList.remove('d-none');
+  }
+}
+
+/* ---------- funzione di pulizia ---------- */
+function clearVetForm() {
+  document.getElementById('vet_nome').value              = '';
+  document.getElementById('vet_cognome').value           = '';
+  document.getElementById('vet_telefono').value          = '';
+  document.getElementById('vet_email').value             = '';
+  document.getElementById('vet_cf').value                = '';
+  document.getElementById('vet_clinica').value           = '';
+  document.getElementById('vet_specializzazione').value  = '';
+  document.getElementById('vet_datanascita').value       = '';
+  document.getElementById('vet_tipoContratto').value     = '';
+
+  const alertBox = document.getElementById('vetAlert');
+  if (alertBox) {
+    alertBox.classList.add('d-none');
+    alertBox.textContent = '';
+  }
+} 
+
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM caricato');
+  getVisite();
+
+  /* reset modale a ogni apertura */
+  const modalEl = document.getElementById('addVeterinarioModal');
+  if (modalEl) {
+    modalEl.addEventListener('show.bs.modal', clearVetForm);
+  }
+});
