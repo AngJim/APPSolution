@@ -24,7 +24,7 @@ public class VeterinarioController {
     /** Elenco completo */
     @GetMapping
     public List<Veterinario> getAllVeterinari() {
-        return veterinarioService.getAllVeterinari();
+        return veterinarioService.findAll();
     }
 
     /** Singolo veterinario per ID */

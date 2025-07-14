@@ -28,9 +28,9 @@
 
   <ul class="nav flex-column text-center w-100">
 
-    <!-- Home -->
+    <!-- admin -->
     <li class="nav-item">
-      <a class="nav-link text-white" th:href="@{/}">Home</a>
+      <a class="nav-link text-white" th:href="@{/admin}">admin</a>
     </li>
 
     <!-- Animali -->
@@ -58,6 +58,12 @@
       <!-- tendina -->
       <ul class="dropdown-menu dropdown-menu-dark bg-success border-0 w-100"
           aria-labelledby="visiteMenu">
+		<li>
+          <a class="dropdown-item text-white text-center"
+             th:href="@{/visite}">
+             Gestione visite
+          </a>
+		</li>
         <li>
           <a class="dropdown-item text-white text-center"
              th:href="@{/veterinari}">

@@ -26,4 +26,6 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Intege
                                            @Param("cognome") String cognome);
 
     Optional<Veterinario> findByUtente(Utente utente);
+
+    List<Veterinario> findAll();
 }

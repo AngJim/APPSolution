@@ -14,7 +14,7 @@ import com.appsolution.rifugiodelcuore.model.Utente;
 import com.appsolution.rifugiodelcuore.service.UtenteService;
 
 @RestController
-@RequestMapping("/utenti")
+@RequestMapping("/utente")
 public class UtenteController {
 
     @Autowired

@@ -23,7 +23,7 @@ public class VeterinarioService {
     }
 
     // Restituisce tutti i veterinari
-    public List<Veterinario> getAllVeterinari() {
+    public List<Veterinario> findAll() {
         return veterinarioRepository.findAll();
     }
 
